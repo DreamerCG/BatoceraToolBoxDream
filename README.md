@@ -22,6 +22,7 @@ Based on the works of:
 - foclabroc
 - Batocera Nation
 - uureel
+- TronFNBlow
 
 <br></br>
 
