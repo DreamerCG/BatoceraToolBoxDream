@@ -39,7 +39,7 @@ sleep 3
 curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh -o /userdata/roms/ports/DreamerCGToolBox.sh
 
 # Add bsa-switch-tools.keys to "ports"
-curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh.keys -o /userdata/roms/ports/DreamerCGToolBox.keys
+curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh.keys -o /userdata/roms/ports/DreamerCGToolBox.sh.keys
 
 # Set execute permissions for the downloaded scripts
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
