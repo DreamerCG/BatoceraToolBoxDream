@@ -1,11 +1,6 @@
 # Batocera Switch Add-on (BSA)
 
 ![BSA: Main Menu](./screenshots/BSA-MainMenu.png)
-![BSA: Install Menu](./screenshots/BSA-InstallMenu.png)
-![BSA: Packages Menu](./screenshots/BSA-PackagesMenu.png)
-![BSA: Saves Menu](./screenshots/BSA-SavesMenu.png)
-![BSA: Uninstall Menu](./screenshots/BSA-UninstallMenu.png)
-
 <br></br>
 
 
