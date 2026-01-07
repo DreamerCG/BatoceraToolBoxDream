@@ -45,11 +45,69 @@ curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/h
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
 
 
+# Refresh the Ports menu
+echo "Refreshing Ports menu..."
+curl http://127.0.0.1:1234/reloadgames
+
+
+# Installation de xmlstarlet si absent.
+XMLSTARLET_DIR="/userdata/system/pro/extra"
+XMLSTARLET_BIN="$XMLSTARLET_DIR/xmlstarlet"
+XMLSTARLET_URL="https://github.com/foclabroc/toolbox/raw/refs/heads/main/app/xmlstarlet"
+XMLSTARLET_SYMLINK="/usr/bin/xmlstarlet"
+CUSTOM_SH="/userdata/system/custom.sh"
+
+if [ -f "$XMLSTARLET_BIN" ]; then
+    echo -e "\e[1;34mXMLStarlet est déjà installé, passage à la suite...\e[1;37m"
+else
+    echo -e "\e[1;34mInstallation de XMLStarlet (pour l'édition du gamelist)...\e[1;37m"
+    mkdir -p "$XMLSTARLET_DIR"
+
+    echo "Téléchargement de XMLStarlet..."
+    curl -# -L "$XMLSTARLET_URL" -o "$XMLSTARLET_BIN"
+
+    echo "Rendre XMLStarlet exécutable..."
+    chmod +x "$XMLSTARLET_BIN"
+
+    echo "Création du lien symbolique dans /usr/bin/xmlstarlet pour un usage immédiat..."
+    ln -sf "$XMLSTARLET_BIN" "$XMLSTARLET_SYMLINK"
+    
+    # Assure-toi que le fichier custom.sh existe
+    if [ ! -f "$CUSTOM_SH" ]; then
+        echo "#!/bin/bash" > "$CUSTOM_SH"
+        chmod +x "$CUSTOM_SH"
+    fi
+
+    # Ajoute la création du lien symbolique au démarrage (si non déjà présent)
+    if ! grep -q "ln -sf $XMLSTARLET_BIN $XMLSTARLET_SYMLINK" "$CUSTOM_SH"; then
+        echo "ln -sf $XMLSTARLET_BIN $XMLSTARLET_SYMLINK" >> "$CUSTOM_SH"
+    fi
+fi
+
+xmlstarlet ed -L \
+    -s "/gameList" -t elem -n "game" -v "" \
+    -s "/gameList/game[last()]" -t elem -n "path" -v "./DreamerCGToolBox.sh" \
+    -s "/gameList/game[last()]" -t elem -n "name" -v "DreamerCG Toolbox" \
+    -s "/gameList/game[last()]" -t elem -n "desc" -v "Boite à outils de DreamerCG permettant l'installation de la Switch " \
+    -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG" \
+    -s "/gameList/game[last()]" -t elem -n "publisher" -v "DreamerCG" \
+    -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
+    -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
+    -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
+    -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/STBIcon.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/STBIcon.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/STBIcon.png" \
+    "$gamelist_file"
+# Add an entry to gamelist.xml#################################xmledit#########################################################
+
+killall -9 emulationstation
+
+sleep 1
+
 echo "BSA Installed!"
 echo ""
 echo "*** Remember to place your files in the appropriate BSA folders before installing ***"
 echo ""
-echo "Usage:"
-echo "	cd /userdata/BSA"
-echo "	./BSA.sh"
+echo "Launch DreamerCG ToolBox from the Ports menu."
 echo ""
