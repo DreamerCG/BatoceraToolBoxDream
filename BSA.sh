@@ -319,7 +319,7 @@ main_menu() {
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
 		"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
-		"EXIT|Exit to the Street|cmd|clear && exit"
+		"EXIT|Exit to the Street|cmd|exit_tools"
 	)
 	while true; do
 		create_dialog_list_menu \
@@ -331,11 +331,17 @@ main_menu() {
 		case $exit_status in
 			1|255)
 				# Cancel
-				clear
+				clear			
 				exit
 			;;
 		esac
 	done
+}
+
+exit_tools() {
+                killall -9 xterm
+                clear
+                exit 0
 }
 
 
