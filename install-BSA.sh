@@ -45,6 +45,10 @@ curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/h
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
 
 
+# Refresh the Ports menu
+echo "Refreshing Ports menu..."
+curl http://127.0.0.1:1234/reloadgames
+
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 ports_dir="/userdata/roms/ports"
 mkdir -p "$ports_dir"
@@ -124,6 +128,7 @@ xmlstarlet ed -L \
 
 # Refresh the Ports menu
 echo "Refreshing Ports menu..."
+curl http://127.0.0.1:1234/reloadgames
 
 killall -9 emulationstation
 
