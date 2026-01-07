@@ -210,7 +210,7 @@ packages_menu() {
 		"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
 		"Yuzu Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
 		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
-		#"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
+		"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
 	)
 	unset RAN_UNPACK_PACKAGES_COMMON
 	unset RAN_UNPACK_PACKAGES_COMMON_YUZU
@@ -312,14 +312,14 @@ main_menu() {
 	local menu_items=(
 		"INSTALL|Install Batocera Switch Add-on|fn|install_menu"
 		"UPDATES|Updates|fn|updates_menu"
-		"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
+		#"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
 		#"ROMS|ROMs Options|fn|roms_menu"
 		"SAVES|Saves Options|fn|saves_menu"
 		"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
 		"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
-		"EXIT|Exit to the Street|cmd|exit_tools"
+		"EXIT|Exit to the Street|fn|exit_tools"
 	)
 	while true; do
 		create_dialog_list_menu \
@@ -340,7 +340,6 @@ main_menu() {
 
 exit_tools() {
                 killall -9 xterm
-				killall -9 emulationstation
                 clear
                 exit 0
 }
