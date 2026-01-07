@@ -12,7 +12,7 @@ echo "Attempting to Install BSA ..."
 (
 	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/tags/ToolBoxDreamMain.tar.gz"
 	
-	BSA_path="/userdata/BSA_BETA"
+	BSA_path="/userdata/DreamerCGToolBox"
 
 	# Retrieve and Extract BSA to /userdata/BSA (will overwrite)
 	temp_file=$(mktemp) || { echo "ERROR: Failed to create temp file"; exit 1; }
@@ -43,8 +43,6 @@ curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/h
 
 # Set execute permissions for the downloaded scripts
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
-
-
 
 
 # Add an entry to gamelist.xml#################################xmledit#########################################################

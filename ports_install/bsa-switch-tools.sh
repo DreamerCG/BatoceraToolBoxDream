@@ -9,5 +9,5 @@ xterm -hold \
   -fa "DejaVuSansMono" \
   -fs 12 \
   -en UTF-8 \
-  -e "cd /userdata/BSA_BETA && ./BSA.sh"
+  -e "cd /userdata/DreamerCGToolBox && ./BSA.sh"
 
