@@ -210,7 +210,7 @@ packages_menu() {
 		"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
 		"Yuzu Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
 		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
-		"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
+		#"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
 	)
 	unset RAN_UNPACK_PACKAGES_COMMON
 	unset RAN_UNPACK_PACKAGES_COMMON_YUZU
