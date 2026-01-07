@@ -10,9 +10,9 @@ echo ""
 echo "Attempting to Install BSA ..."
 
 (
-	url="https://github.com/TronFNBlow/BSA/archive/refs/heads/main.tar.gz"
+	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/tags/main.tar.gz"
 	
-	BSA_path="/userdata/BSA"
+	BSA_path="/userdata/BSA_BETA"
 
 	# Retrieve and Extract BSA to /userdata/BSA (will overwrite)
 	temp_file=$(mktemp) || { echo "ERROR: Failed to create temp file"; exit 1; }
@@ -28,22 +28,21 @@ echo "Attempting to Install BSA ..."
 
 	# Make BSA executable
 	cd "$BSA_path" || { echo "ERROR: Extraction failed, $BSA_path directory not found"; exit 1; }
-	dos2unix BSA.sh
+	dos2unix BSA.sh 
 	chmod a+x BSA.sh
 )
 
-
+ 
 echo "Installation de BSA_TOOLBOX dans Ports..."
 sleep 3
 # Add bsa-switch-tools.sh to "ports"
-curl -L https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foclabroc-tools.sh -o /userdata/roms/ports/bsa-switch-tools.sh
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh -o /userdata/roms/ports/bsa-switch-tools_beta.sh
 
 # Add bsa-switch-tools.keys to "ports"
-curl -L  https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foclabroc-tools.sh.keys -o /userdata/roms/ports/bsa-switch-tools.sh.keys
+curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh.keys -o /userdata/roms/ports/bsa-switch-tools_beta.sh.keys
 
 # Set execute permissions for the downloaded scripts
-chmod +x /userdata/roms/ports/bsa-switch-tools.sh
-
+chmod +x /userdata/roms/ports/bsa-switch-tools_beta.sh
 
 
 echo "BSA Installed!"
