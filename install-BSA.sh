@@ -55,12 +55,12 @@ ports_dir="/userdata/roms/ports"
 mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
-screenshot_url="https://static.wikitide.net/zenithwiki/0/0c/STBIcon.png"
-screenshot_path="$ports_dir/images/DreamerCGToolBox_image.jpg"
-logo_url="https://static.wikitide.net/zenithwiki/0/0c/STBIcon.png"
-logo_path="$ports_dir/images/DreamerCGToolBox_logo.png"
-box_url="https://static.wikitide.net/zenithwiki/0/0c/STBIcon.png"
-box_path="$ports_dir/images/DreamerCGToolBox_thumbnail.png"
+screenshot_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-screenshot.jpg"
+screenshot_path="$ports_dir/images/foctool-screenshot.jpg"
+logo_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-wheel.png"
+logo_path="$ports_dir/images/foctool-wheel.png"
+box_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-box.png"
+box_path="$ports_dir/images/foctool-box.png"
 
 # Ensure the logo directory exists and download the logo
 mkdir -p "$(dirname "$logo_path")"
@@ -124,9 +124,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/DreamerCGToolBox_image.jpg" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/DreamerCGToolBox_logo.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/DreamerCGToolBox_thumbnail.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/foctool-screenshot.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/foctool-wheel.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/foctool-box.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 
