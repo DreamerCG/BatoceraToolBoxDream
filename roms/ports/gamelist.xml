@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<gameList>
+	<game>
+		<path>./Sudachi Qlauncher.sh</path>
+		<name>Sudachi Qlauncher</name>
+		<desc>Sudachi Switch QLaunch</desc>
+		<image>./images/Sudachi Qlauncher-mix.png</image>
+		<marquee>./images/Sudachi Qlauncher-wheel.png</marquee>
+		<thumbnail>./images/Sudachi Qlauncher-boxart.png</thumbnail>
+		<titleshot>./images/Sudachi Qlauncher-screenshot.png</titleshot>
+		<rating>0</rating>
+		<releasedate>19691231T180000</releasedate>
+		<lang>en</lang>
+	</game>
+</gameList>

@@ -1,0 +1,26 @@
+-=[ BATOCERA :: SWITCH // ADD-ON :: LOG }]=-
+
+ -------------------
+[2026/01/07 13:13:50]
+ -------------------
+<<< [ BACKUP RYUJINX SAVES ]>>>
+CURRENT RYUJINX SAVES BACKED-UP: /userdata/saves/switch/saves-ryujinx_20260107_131800.zip
+<<< [ BACKUP YUZU SAVES ]>>>
+CURRENT YUZU SAVES BACKED-UP: /userdata/saves/switch/saves-yuzu_20260107_131800.zip
+<<< [ BACKUP RYUJINX SAVES TO BSA PACKAGES ]>>>
+BSA PACKAGES RYUJINX SAVES RENAMED AS: 
+CURRENT RYUJINX SAVES BACKED-UP TO BSA PACKAGES
+<<< [ BACKUP RYUJINX SAVES TO BSA PACKAGES ]>>>
+BSA PACKAGES RYUJINX SAVES RENAMED AS: /userdata/BSA/packages/saves-ryujinx_20260107_133104.zip
+
+zip error: Nothing to do! (try: zip -rq9 - . -i .)
+CURRENT RYUJINX SAVES BACKED-UP TO BSA PACKAGES
+<<< [ BACKUP RYUJINX SAVES TO BSA PACKAGES ]>>>
+BSA PACKAGES RYUJINX SAVES RENAMED AS: /userdata/BSA/packages/saves-ryujinx_20260107_133308.zip
+
+zip error: Nothing to do! (try: zip -rq9 - . -i .)
+CURRENT RYUJINX SAVES BACKED-UP TO BSA PACKAGES
+<<< [ BACKUP RYUJINX SAVES ]>>>
+CURRENT RYUJINX SAVES BACKED-UP: /userdata/saves/switch/saves-ryujinx_20260107_133426.zip
+<<< [ BACKUP YUZU SAVES ]>>>
+CURRENT YUZU SAVES BACKED-UP: /userdata/saves/switch/saves-yuzu_20260107_133426.zip
