@@ -62,6 +62,7 @@ logo_path="$ports_dir/images/DreamerCG-wheel.png"
 box_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-box.png"
 box_path="$ports_dir/images/DreamerCG-box.png"
 
+
 # Ensure the logo directory exists and download the logo
 mkdir -p "$(dirname "$logo_path")"
 curl -L -o "$logo_path" "$logo_url"
