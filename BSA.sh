@@ -330,11 +330,11 @@ main_menu() {
 		#"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
 		#"ROMS|ROMs Options|fn|roms_menu"
 		"SAVES|Saves Options|fn|saves_menu"
-		#"FIXES|Fix directory structure & others|fn|fixes_menu"
+		"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
-		"TOOLS|Tools Menu|fn|tools_menu"
-		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
-		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
+		#"TOOLS|Tools Menu|fn|tools_menu"
+		"DISPLAY LOG|Display Install Log|fn|display_install_log"
+		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 		"EXIT|Exit to the Street|fn|exit_tools"
 	)
 	while true; do
