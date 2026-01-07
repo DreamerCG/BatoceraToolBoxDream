@@ -12,6 +12,8 @@ echo "Attempting to Install BSA ..."
 (
 	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/heads/main.tar.gz"
 	
+    echo url;
+
 	BSA_path="/userdata/DreamerCGToolBox"
 
 	# Retrieve and Extract BSA to /userdata/BSA (will overwrite)
