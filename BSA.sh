@@ -340,6 +340,7 @@ main_menu() {
 
 exit_tools() {
                 killall -9 xterm
+				killall -9 emulationstation
                 clear
                 exit 0
 }
