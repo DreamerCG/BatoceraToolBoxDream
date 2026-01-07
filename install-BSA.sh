@@ -56,11 +56,11 @@ mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
 screenshot_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-screenshot.jpg"
-screenshot_path="$ports_dir/images/foctool-screenshot.jpg"
+screenshot_path="$ports_dir/images/DreamerCG-screenshot.jpg"
 logo_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-wheel.png"
-logo_path="$ports_dir/images/foctool-wheel.png"
+logo_path="$ports_dir/images/DreamerCG-wheel.png"
 box_url="https://raw.githubusercontent.com/foclabroc/toolbox/refs/heads/main/app/foctool-box.png"
-box_path="$ports_dir/images/foctool-box.png"
+box_path="$ports_dir/images/DreamerCG-box.png"
 
 # Ensure the logo directory exists and download the logo
 mkdir -p "$(dirname "$logo_path")"
@@ -76,8 +76,6 @@ if [ ! -f "$gamelist_file" ]; then
 fi
 
 curl http://127.0.0.1:1234/reloadgames
-
-
 
 # Installation de xmlstarlet si absent.
 XMLSTARLET_DIR="/userdata/system/pro/extra"
@@ -124,9 +122,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/foctool-screenshot.jpg" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/foctool-wheel.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/foctool-box.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/DreamerCG-screenshot.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/DreamerCG-wheel.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/DreamerCG-box.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 
