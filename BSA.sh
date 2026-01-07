@@ -306,6 +306,23 @@ confirm_purge_install_log() {
 	fi
 }
 
+
+tools_menu() {
+	local menu_items=(
+		"FIXES|Fix directory structure & others|fn|fixes_menu"
+		"DISPLAY LOG|Display Install Log|fn|display_install_log"
+		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
+	)
+	create_dialog_checkbox_menu \
+		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
+		"RUN" "CANCEL" "on" \
+		"Select Tools to Run" \
+		"Confirm Tools" "Run?" \
+		"BSA :: TOOLS" "" \
+		"RUNNING" "COMPLETED" \
+		"${menu_items[@]}"
+}
+
 # Main Menu
 main_menu() {
 	local exit_status
@@ -317,6 +334,7 @@ main_menu() {
 		"SAVES|Saves Options|fn|saves_menu"
 		"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
+		"Tools|Tools Menu|fn|tools_menu"
 		"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 		"EXIT|Exit to the Street|fn|exit_tools"
