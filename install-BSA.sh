@@ -50,6 +50,35 @@ echo "Refreshing Ports menu..."
 curl http://127.0.0.1:1234/reloadgames
 
 
+# Add an entry to gamelist.xml#################################xmledit#########################################################
+ports_dir="/userdata/roms/ports"
+mkdir -p "$ports_dir"
+echo "Ajout toolbox dans le gamelist.xml..."
+gamelist_file="$ports_dir/gamelist.xml"
+screenshot_url="https://static.wikitide.net/zenithwiki/0/0c/STBIcon.png"
+screenshot_path="$ports_dir/images/DreamerCGToolBox_image.jpg"
+logo_url="https://static.wikitide.net/zenithwiki/0/0c/STBIcon.png"
+logo_path="$ports_dir/images/DreamerCGToolBox_logo.png"
+box_url="https://static.wikitide.net/zenithwiki/0/0c/STBIcon.png"
+box_path="$ports_dir/images/DreamerCGToolBox_thumbnail.png"
+
+# Ensure the logo directory exists and download the logo
+mkdir -p "$(dirname "$logo_path")"
+curl -L -o "$logo_path" "$logo_url"
+mkdir -p "$(dirname "$screenshot_path")"
+curl -L -o "$screenshot_path" "$screenshot_url"
+mkdir -p "$(dirname "$box_path")"
+curl -L -o "$box_path" "$box_url"
+
+# Ensure the gamelist.xml exists
+if [ ! -f "$gamelist_file" ]; then
+    echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
+fi
+
+curl http://127.0.0.1:1234/reloadgames
+
+
+
 # Installation de xmlstarlet si absent.
 XMLSTARLET_DIR="/userdata/system/pro/extra"
 XMLSTARLET_BIN="$XMLSTARLET_DIR/xmlstarlet"
@@ -95,9 +124,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/STBIcon.jpg" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/STBIcon.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/STBIcon.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/DreamerCGToolBox_image.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/DreamerCGToolBox_logo.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/DreamerCGToolBox_thumbnail.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 
