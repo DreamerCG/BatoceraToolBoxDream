@@ -10,3 +10,4 @@ xterm -hold \
   -fs 12 \
   -en UTF-8 \
   -e "cd /userdata/BSA_BETA && ./BSA.sh"
+
