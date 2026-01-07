@@ -313,13 +313,10 @@ tools_menu() {
 		"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 	)
-	create_dialog_checkbox_menu \
+	create_dialog_list_menu \
 		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
-		"RUN" "CANCEL" "on" \
-		"Select Tools to Run" \
-		"Confirm Tools" "Run?" \
-		"BSA :: TOOLS" "" \
-		"RUNNING" "COMPLETED" \
+		"OPEN" "CANCEL" "off" \
+		"DO YOU WANT TO SWITCH?" \
 		"${menu_items[@]}"
 }
 
