@@ -320,7 +320,6 @@ tools_menu() {
 		"${menu_items[@]}"
 }
 
-
 # Main Menu
 main_menu() {
 	local exit_status
