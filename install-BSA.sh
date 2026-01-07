@@ -10,7 +10,7 @@ echo ""
 echo "Attempting to Install BSA ..."
 
 (
-	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/tags/ToolBoxDreamMain.tar.gz"
+	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/heads/main.tar.gz"
 	
 	BSA_path="/userdata/DreamerCGToolBox"
 
