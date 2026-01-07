@@ -1063,32 +1063,8 @@ create_dialog_checkbox_menu() {
 #										<exit label> \
 #										<text file>
 
-setup_dialog_theme() {
-	local dialogrc="/tmp/dialogrc_switch_theme"
-
-	cat > "$dialogrc" <<'EOF'
-use_shadow = OFF
-screen_color = (WHITE,BLACK,ON)
-shadow_color = (BLACK,BLACK,ON)
-
-dialog_color = (WHITE,BLACK,ON)
-title_color = (CYAN,BLACK,ON)
-border_color = (CYAN,BLACK,ON)
-
-button_active_color = (BLACK,CYAN,ON)
-button_inactive_color = (WHITE,BLACK,ON)
-button_key_active_color = (YELLOW,CYAN,ON)
-button_key_inactive_color = (YELLOW,BLACK,ON)
-
-textbox_color = (WHITE,BLACK,ON)
-EOF
-
-	export DIALOGRC="${DIALOGRC:-/etc/dialogrc}"
-}
-
-
 create_dialog_textbox() {
-	setup_dialog_theme
+
 	# get textbox settings from parameters (shift to next set of parameters)
 	local title="$1"
 	local height=$2
