@@ -57,7 +57,7 @@ DOES NOT INCLUDE
 ## HOW-TO BSA
 - Terminal:
 <pre>
-curl -sL https://bit.ly/BatoceraToolBoxDream | bash
+curl -sL https://bit.ly/DreamerCGToolBox | bash
 </pre>
 - Put Emulators in '/userdata/BSA/emus' (Optional, as will attempt remote if missing.)
 - Put Firmware, Keys, Saves & Amiibo in '/userdata/BSA/packages' (Will skip if missing.)
