@@ -45,9 +45,6 @@ curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/h
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
 
 
-# Refresh the Ports menu
-echo "Refreshing Ports menu..."
-curl http://127.0.0.1:1234/reloadgames
 
 
 # Add an entry to gamelist.xml#################################xmledit#########################################################
@@ -75,8 +72,6 @@ curl -L -o "$box_path" "$box_url"
 if [ ! -f "$gamelist_file" ]; then
     echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
 fi
-
-curl http://127.0.0.1:1234/reloadgames
 
 # Installation de xmlstarlet si absent.
 XMLSTARLET_DIR="/userdata/system/pro/extra"
@@ -128,6 +123,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/DreamerCG-box.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
+
+# Refresh the Ports menu
+echo "Refreshing Ports menu..."
 
 killall -9 emulationstation
 
