@@ -313,7 +313,7 @@ main_menu() {
 		"INSTALL|Install Batocera Switch Add-on|fn|install_menu"
 		"UPDATES|Updates|fn|updates_menu"
 		"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
-		"ROMS|ROMs Options|fn|roms_menu"
+		#"ROMS|ROMs Options|fn|roms_menu"
 		"SAVES|Saves Options|fn|saves_menu"
 		"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
