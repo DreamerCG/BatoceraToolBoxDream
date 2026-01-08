@@ -144,7 +144,7 @@ backup_saves_yuzu_bsa() {
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
-menu_title="BATOCERA Switch Add-On - Version Batocera : $batocera_version"
+menu_title="Toolbox Switch - Version Batocera : $batocera_version"
 menu_width=65
 menu_height=20
 menu_list_height=12
