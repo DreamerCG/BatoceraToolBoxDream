@@ -353,7 +353,9 @@ main_menu() {
 }
 
 exit_tools() {
-sleep 2 && killall -9 BSA 2>/dev/null && curl http://127.0.0.1:1234/reloadgames && exit 0; exit 1
+	killall -9 BSA 2>/dev/null 
+	exit 0; 
+	exit 1
 }
 
 
