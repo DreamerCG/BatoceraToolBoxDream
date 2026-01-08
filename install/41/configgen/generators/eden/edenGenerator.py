@@ -32,101 +32,17 @@ class EdenGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
         #handles chmod so you just need to download eden.AppImage
-        if os.path.exists("/userdata/system/switch/eden.AppImage"):
-            st = os.stat("/userdata/system/switch/eden.AppImage")
-            os.chmod("/userdata/system/switch/eden.AppImage", st.st_mode | stat.S_IEXEC)
+        if os.path.exists("/userdata/system/switch/eden/eden.AppImage"):
+            st = os.stat("/userdata/system/switch/eden/eden.AppImage")
+            os.chmod("/userdata/system/switch/edeneden.AppImage", st.st_mode | stat.S_IEXEC)
 
-            # #chmod eden app
-            # st = os.stat("/userdata/system/switch/extra/batocera-config-eden")
-            # os.chmod("/userdata/system/switch/extra/batocera-config-eden", st.st_mode | stat.S_IEXEC)
-
-        if not os.path.exists("/lib/libthai.so.0.3.1"):
-            copyfile("/userdata/system/switch/extra/libthai.so.0.3.1", "/lib/libthai.so.0.3.1")
-        if not os.path.exists("/lib/libthai.so.0"):
-            st = os.symlink("/lib/libthai.so.0.3.1","/lib/libthai.so.0")
-
-        #Create Keys Folder
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/keys"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/keys")
-
-        #Create OS Saves folder
-        if not os.path.exists(batoceraFiles.SAVES + "/yuzu"):
-            os.mkdir(batoceraFiles.SAVES + "/yuzu")        
-
-        #Remove eden if it exists and isnt' a link
-        if os.path.exists("/userdata/system/configs/eden"):
-            if not os.path.islink("/userdata/system/configs/eden"):
-                shutil.rmtree("/userdata/system/configs/eden")
-
-        #Create OS eden folder
-        if not os.path.exists("/userdata/system/configs/eden"):
-            os.mkdir("/userdata/system/configs/eden")
-            
-        #Link yuzu/eden nand/key/config.ini
-        if not os.path.exists("/userdata/system/configs/eden/amiibo"):
-            st = os.symlink("/userdata/system/configs/yuzu/amiibo","/userdata/system/configs/eden/amiibo")
-        if not os.path.exists("/userdata/system/configs/eden/custom"):
-            st = os.symlink("/userdata/system/configs/yuzu/custom","/userdata/system/configs/eden/custom")
-        if not os.path.exists("/userdata/system/configs/eden/screenshots"):
-            st = os.symlink("/userdata/system/configs/yuzu/screenshots","/userdata/system/configs/eden/screenshots")
-        if not os.path.exists("/userdata/system/configs/eden/sdmc"):
-            st = os.symlink("/userdata/system/configs/yuzu/sdmc","/userdata/system/configs/eden/sdmc")
-        if not os.path.exists("/userdata/system/configs/eden/nand"):
-            st = os.symlink("/userdata/system/configs/yuzu/nand","/userdata/system/configs/eden/nand")
-        if not os.path.exists("/userdata/system/configs/eden/keys"):
-            st = os.symlink("/userdata/system/configs/yuzu/keys","/userdata/system/configs/eden/keys")
-        if not os.path.exists("/userdata/system/configs/eden/load"):
-            st = os.symlink("/userdata/system/configs/yuzu/load","/userdata/system/configs/eden/load")
-        if not os.path.exists("/userdata/system/configs/eden/shader"):
-            st = os.symlink("/userdata/system/configs/yuzu/shader","/userdata/system/configs/eden/shader")
-
-        if os.path.exists("/userdata/system/configs/eden/qt-config.ini"):
-            if not os.path.islink("/userdata/system/configs/eden/qt-config.ini"):
-                os.remove("/userdata/system/configs/eden/qt-config.ini")
-        if not os.path.exists("/userdata/system/configs/eden/qt-config.ini"):
-            st = os.symlink("/userdata/system/configs/yuzu/qt-config.ini","/userdata/system/configs/eden/qt-config.ini")
-
-        #Remove Old SUYU link
-        if os.path.islink("/userdata/system/.local/share/suyu"):
-            os.unlink("/userdata/system/.local/share/suyu")
-        if os.path.exists("/userdata/system/.local/share/suyu"):
-            shutil.rmtree("/userdata/system/.local/share/suyu")
-
-        if os.path.islink("/userdata/system/.config/suyu"):
-            os.unlink("/userdata/system/.config/suyu")
-        if os.path.exists("/userdata/system/.config/suyu"):
-            shutil.rmtree("/userdata/system/.config/suyu")
-
-        if os.path.islink("/userdata/system/configs/suyu"):
-            os.unlink("/userdata/system/configs/suyu")
-        if os.path.exists("/userdata/system/configs/suyu"):
-            shutil.rmtree("/userdata/system/configs/suyu")
-
-        if os.path.islink("/userdata/system/.cache/suyu"):
-            os.unlink("/userdata/system/.cache/suyu")
-        if os.path.exists("/userdata/system/.cache/suyu"): 
-            shutil.rmtree("/userdata/system/.cache/suyu")
-
-        #Link Yuzu Saves Directory to /userdata/saves/yuzu
-        if not os.path.exists("/userdata/system/.cache"):
-            os.mkdir("/userdata/system/.cache")
-
-        if not os.path.exists("/userdata/system/.cache/eden"):
-            os.mkdir("/userdata/system/.cache/eden")
-
-        #remove game_list if it exists and isn't a link
-        if os.path.exists("/userdata/system/.cache/eden/game_list"):
-            shutil.rmtree("/userdata/system/.cache/eden/game_list")
-
+        
         yuzuConfig = batoceraFiles.CONF + '/yuzu/qt-config.ini'
         beforeyuzuConfig = batoceraFiles.CONF + '/yuzu/before-qt-config.ini'
         
         EdenGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
         if system.config['emulator'] == 'eden':
-            commandArray = ["/userdata/system/switch/eden.AppImage", "-f",  "-g", rom ]
+            commandArray = ["/userdata/system/switch/eden/eden.AppImage", "-f",  "-g", rom ]
                       # "XDG_DATA_HOME":yuzuSaves, , "XDG_CACHE_HOME":batoceraFiles.CACHE, "XDG_CONFIG_HOME":yuzuHome,
         return Command.Command(
             array=commandArray,
@@ -134,7 +50,7 @@ class EdenGenerator(Generator):
                  "XDG_CONFIG_HOME":"/userdata/system/configs",
                  "XDG_CACHE_HOME":"/userdata/system/configs",
                  "QT_QPA_PLATFORM_PLUGIN_PATH":"${QT_PLUGIN_PATH}",
-                 "QT_PLUGIN_PATH":"/userdata/system/switch/eden.AppImage",
+                 "QT_PLUGIN_PATH":"/userdata/system/switch/eden/eden.AppImage",
                  "QT_QPA_PLATFORM": "xcb",
                  "DRI_PRIME":"1", 
                  "AMD_VULKAN_ICD":"RADV",
@@ -157,7 +73,7 @@ class EdenGenerator(Generator):
     def writeYuzuConfig(yuzuConfigFile, beforeyuzuConfigFile, system, playersControllers):
         # pads
         
-        os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/extra/sdl/"
+        os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
         
         yuzuButtons = {
             "button_a":      "a",

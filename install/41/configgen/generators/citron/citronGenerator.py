@@ -36,8 +36,8 @@ class CitronGenerator(Generator):
             st = os.stat("/userdata/system/switch/citron/citron.AppImage")
             os.chmod("/userdata/system/switch/citron/citron.AppImage", st.st_mode | stat.S_IEXEC)
 
-        yuzuConfig = batoceraFiles.CONF + '/yuzu/qt-config.ini'
-        beforeyuzuConfig = batoceraFiles.CONF + '/yuzu/before-qt-config.ini'
+        yuzuConfig = batoceraFiles.CONF + '/citron/qt-config.ini'
+        beforeyuzuConfig = batoceraFiles.CONF + '/citron/before-qt-config.ini'
         
         CitronGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
         if system.config['emulator'] == 'citron':
@@ -70,7 +70,7 @@ class CitronGenerator(Generator):
     def writeYuzuConfig(yuzuConfigFile, beforeyuzuConfigFile, system, playersControllers):
         # pads
         
-        os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/extra/sdl/"
+         os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
         
         yuzuButtons = {
             "button_a":      "a",
