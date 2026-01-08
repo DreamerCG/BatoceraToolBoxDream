@@ -306,7 +306,6 @@ confirm_purge_install_log() {
 	fi
 }
 
-
 tools_menu() {
 	local menu_items=(
 		"FIXES|Fix directory structure & others|fn|fixes_menu"
