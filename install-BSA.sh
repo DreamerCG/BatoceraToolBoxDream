@@ -78,7 +78,7 @@ fi
 # Installation de xmlstarlet si absent.
 XMLSTARLET_DIR="/userdata/system/pro/extra"
 XMLSTARLET_BIN="$XMLSTARLET_DIR/xmlstarlet"
-XMLSTARLET_URL="https://github.com/foclabroc/toolbox/raw/refs/heads/main/app/xmlstarlet"
+XMLSTARLET_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/app/xmlstarlet"
 XMLSTARLET_SYMLINK="/usr/bin/xmlstarlet"
 CUSTOM_SH="/userdata/system/custom.sh"
 
