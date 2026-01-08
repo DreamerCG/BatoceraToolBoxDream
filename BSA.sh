@@ -144,7 +144,7 @@ backup_saves_yuzu_bsa() {
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
-menu_title="BATOCERA Switch Add-On"
+menu_title="BATOCERA Switch Add-On - Version Batocera en cours : $batocera_version"
 menu_width=65
 menu_height=20
 menu_list_height=12
@@ -210,7 +210,7 @@ packages_menu() {
 		#"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
 		"Yuzu Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
 		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
-		"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
+		#"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
 	)
 	unset RAN_UNPACK_PACKAGES_COMMON
 	unset RAN_UNPACK_PACKAGES_COMMON_YUZU
@@ -262,11 +262,11 @@ saves_menu() {
 # Fixes Menu
 fixes_menu() {
 	local menu_items=(
-		"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
-		"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
+		#"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
 		"Eden|Fix Eden Structure|off|fn|initialize_eden"
 		"Citron|Fix Citron Structure|off|fn|initialize_citron"
-		"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
+		"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
+		#"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
 	)
 	unset RAN_INITIALIZE_COMMON
 	create_dialog_checkbox_menu \
@@ -353,10 +353,13 @@ main_menu() {
 }
 
 exit_tools() {
-	killall -9 BSA 2>/dev/null 
-	exit 0; 
-	exit 1
+                killall -9 xterm
+                clear
+				killall -9 emulationstation
+                exit 0
+				exit 1
 }
+
 
 
 # ******************************************************************************
