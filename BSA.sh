@@ -144,7 +144,7 @@ backup_saves_yuzu_bsa() {
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
-menu_title="BATOCERA Switch Add-On - Version Batocera en cours : $batocera_version"
+menu_title="BATOCERA Switch Add-On - Version Batocera : $batocera_version"
 menu_width=65
 menu_height=20
 menu_list_height=12
@@ -161,7 +161,7 @@ install_menu() {
 		#"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
 		"Eden|Install Eden|on|fn|full_install "eden""
 		"Citron|Install Citron|off|fn|full_install "citron""
-		"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
+		#"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
 		#"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
 	)
 	unset RAN_POST_INSTALL_COMMON
@@ -181,8 +181,8 @@ updates_menu() {
 	local menu_items=(
 		#"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
 		#"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
-		"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
-		"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
+		#"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
+		#"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
 		"Eden Local|Update Eden Local|off|fn|update_emulator "eden" "local""
 		"Eden Remote|Update Eden Remote|off|fn|update_emulator "eden" "remote""
 		"Citron Local|Update Citron Local|off|fn|update_emulator "citron" "local""
@@ -204,11 +204,11 @@ updates_menu() {
 packages_menu() {
 	local menu_items=(
 		#"Ryujinx Firmware|Unpack Ryujinx Firmware|off|fn|unpack_packages_ryujinx_firmware"
-		"Yuzu Firmware|Unpack Yuzu Firmware|off|fn|unpack_packages_yuzu_firmware"
+		"Eden/Citron/YUZU Firmware|Unpack Yuzu Firmware|off|fn|unpack_packages_yuzu_firmware"
 		#"Ryujinx Keys|Unpack Ryujinx Keys|off|fn|unpack_packages_ryujinx_keys"
-		"Yuzu Keys|Unpack Yuzu Keys|off|fn|unpack_packages_yuzu_keys"
+		"Eden/Citron/YUZU Keys|Unpack Yuzu Keys|off|fn|unpack_packages_yuzu_keys"
 		#"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
-		"Yuzu Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
+		"Eden/Citron/YUZU Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
 		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
 		#"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
 	)
@@ -244,10 +244,10 @@ roms_menu() {
 # Saves Menu
 saves_menu() {
 	local menu_items=(
-		"BACKUP RYUJINX|Backup Ryujinx Saves|on|fn|backup_saves_ryujinx"
-		"BACKUP YUZU|Backup Yuzu Saves|on|fn|backup_saves_yuzu"
-		"BSA RYUJINX|Backup Ryujinx Saves to BSA Packages|off|fn|backup_saves_ryujinx_bsa"
-		"BSA YUZU|Backup Yuzu Saves to BSA Packages|off|fn|backup_saves_yuzu_bsa"
+		#"BACKUP RYUJINX|Backup Ryujinx Saves|on|fn|backup_saves_ryujinx"
+		"BACKUP Eden/Citron/YUZU|Backup Yuzu Saves|on|fn|backup_saves_yuzu"
+		#"BSA RYUJINX|Backup Ryujinx Saves to BSA Packages|off|fn|backup_saves_ryujinx_bsa"
+		"BSA Eden/Citron/YUZU|Backup Yuzu Saves to BSA Packages|off|fn|backup_saves_yuzu_bsa"
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Saves" "$menu_height" "$menu_width" "$menu_list_height" \
@@ -265,7 +265,7 @@ fixes_menu() {
 		#"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
 		"Eden|Fix Eden Structure|off|fn|initialize_eden"
 		"Citron|Fix Citron Structure|off|fn|initialize_citron"
-		"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
+		#"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
 		#"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
 	)
 	unset RAN_INITIALIZE_COMMON
