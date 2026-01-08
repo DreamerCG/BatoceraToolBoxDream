@@ -6,7 +6,7 @@ import os
 import shutil
 import stat
 import batoceraFiles
-import configgen.controller as controllersConfig
+import controllersConfig as controllersConfig
 import configparser
 import logging
 from shutil import copyfile
@@ -16,9 +16,9 @@ from typing import TYPE_CHECKING, Final
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from configgen.controller import ControllerMapping
-    from Emulator import Emulator
-    from configgen.types import HotkeysContext
+    from ...controllersConfig import ControllerMapping
+    from ...Emulator import Emulator
+    from ...types import HotkeysContext
 
 eslog = logging.getLogger(__name__)
 
@@ -31,8 +31,19 @@ class CitronGenerator(Generator):
         }
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
-        yuzuConfig = batoceraFiles.CONF + '/citron/qt-config.ini'
-        beforeyuzuConfig = batoceraFiles.CONF + '/citron/before-qt-config.ini'
+		
+        #handles chmod so you just need to download citron.AppImage
+        if os.path.exists("/userdata/system/switch/citron/citron.AppImage"):
+            st = os.stat("/userdata/system/switch/citron/citron.AppImage")
+            os.chmod("/userdata/system/switch/citron/citron.AppImage", st.st_mode | stat.S_IEXEC)
+
+        if not os.path.exists("/lib/libthai.so.0.3.1"):
+            copyfile("/userdata/system/switch/lib/libthai.so.0.3.1", "/lib/libthai.so.0.3.1")
+        if not os.path.exists("/lib/libthai.so.0"):
+            st = os.symlink("/lib/libthai.so.0.3.1","/lib/libthai.so.0")
+
+        yuzuConfig = batoceraFiles.CONF + '/yuzu/qt-config.ini'
+        beforeyuzuConfig = batoceraFiles.CONF + '/yuzu/before-qt-config.ini'
         
         CitronGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
         if system.config['emulator'] == 'citron':
@@ -115,8 +126,8 @@ class CitronGenerator(Generator):
         yuzuConfig.set("UI", "displayTitleBars", "false")
         yuzuConfig.set("UI", "displayTitleBars\\default", "false")
 
-        if system.isOptSet('citron_enable_discord_presence'):
-            yuzuConfig.set("UI", "enable_discord_presence", system.config["citron_enable_discord_presence"])
+        if system.isOptSet('yuzu_enable_discord_presence'):
+            yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
         else:
             yuzuConfig.set("UI", "enable_discord_presence", "false")
 
@@ -176,33 +187,33 @@ class CitronGenerator(Generator):
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\2\\context", "1")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\2\\repeat", "false")
 
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Fullscreen\KeySeq", "F4")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Fullscreen\KeySeq\\default", "false")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Fullscreen\Controller_KeySeq", "Minus+B")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Fullscreen\Controller_KeySeq\default", "false")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Exit%20Fullscreen\Controller_KeySeq", "Home+ZL")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Exit%20Fullscreen\Controller_KeySeq\\default", "false")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Exit%20Fullscreen\KeySeq", "Esc")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Exit%20Fullscreen\KeySeq\\default", "false")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Continue\Pause%20Emulation\KeySeq", "P")
-        yuzuConfig.set("UI", r"Shortcuts\Main%20Window\Continue\Pause%20Emulation\KeySeq\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Fullscreen\KeySeq", "F4")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Fullscreen\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Fullscreen\Controller_KeySeq", "Minus+B")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Fullscreen\Controller_KeySeq\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Exit%20Fullscreen\Controller_KeySeq", "Home+ZL")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Exit%20Fullscreen\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Exit%20Fullscreen\KeySeq", "Esc")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Exit%20Fullscreen\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Continue\Pause%20Emulation\KeySeq", "P")
+        yuzuConfig.set("UI", "Shortcuts\Main%20Window\Continue\Pause%20Emulation\KeySeq\default", "false")
 
     # Data Storage section
         if not yuzuConfig.has_section("Data%20Storage"):
             yuzuConfig.add_section("Data%20Storage")
-        yuzuConfig.set("Data%20Storage", "dump_directory", "/userdata/system/configs/citron/dump")
+        yuzuConfig.set("Data%20Storage", "dump_directory", "/userdata/system/configs/yuzu/dump")
         yuzuConfig.set("Data%20Storage", "dump_directory\\default", "true")
 
-        yuzuConfig.set("Data%20Storage", "load_directory", "/userdata/system/configs/citron/load")
+        yuzuConfig.set("Data%20Storage", "load_directory", "/userdata/system/configs/yuzu/load")
         yuzuConfig.set("Data%20Storage", "load_directory\\default", "true")
 
-        yuzuConfig.set("Data%20Storage", "nand_directory", "/userdata/system/configs/citron/nand")
+        yuzuConfig.set("Data%20Storage", "nand_directory", "/userdata/system/configs/yuzu/nand")
         yuzuConfig.set("Data%20Storage", "nand_directory\\default", "true")
 
-        yuzuConfig.set("Data%20Storage", "sdmc_directory", "/userdata/system/configs/citron/sdmc")
+        yuzuConfig.set("Data%20Storage", "sdmc_directory", "/userdata/system/configs/yuzu/sdmc")
         yuzuConfig.set("Data%20Storage", "sdmc_directory\\default", "true")
 
-        yuzuConfig.set("Data%20Storage", "tas_directory", "/userdata/system/configs/citron/tas")
+        yuzuConfig.set("Data%20Storage", "tas_directory", "/userdata/system/configs/yuzu/tas")
         yuzuConfig.set("Data%20Storage", "tas_directory\\default", "true")
 
         yuzuConfig.set("Data%20Storage", "use_virtual_sd", "true")
@@ -225,18 +236,18 @@ class CitronGenerator(Generator):
             yuzuConfig.add_section("Renderer")
 
         # Aspect ratio
-        if system.isOptSet('citron_ratio'):
-            yuzuConfig.set("Renderer", "aspect_ratio", system.config["citron_ratio"])
+        if system.isOptSet('suyu_ratio'):
+            yuzuConfig.set("Renderer", "aspect_ratio", system.config["suyu_ratio"])
             yuzuConfig.set("Renderer", "aspect_ratio\\default", "false")
         else:
             yuzuConfig.set("Renderer", "aspect_ratio", "5")
             yuzuConfig.set("Renderer", "aspect_ratio\\default", "false")
 
         # Graphical backend
-        if system.isOptSet('citron_backend'):
-            yuzuConfig.set("Renderer", "backend", system.config["citron_backend"])
+        if system.isOptSet('yuzu_backend'):
+            yuzuConfig.set("Renderer", "backend", system.config["yuzu_backend"])
         else:
-            yuzuConfig.set("Renderer", "backend", "1")
+            yuzuConfig.set("Renderer", "backend", "0")
         yuzuConfig.set("Renderer", "backend\\default", "false")
 
         # Async Shader compilation
@@ -419,7 +430,7 @@ class CitronGenerator(Generator):
         if not yuzuConfig.has_section("Controls"):
             yuzuConfig.add_section("Controls")
             
-        if ((system.isOptSet('citron_auto_controller_config') and not (system.config["citron_auto_controller_config"] == "0")) or not system.isOptSet('citron_auto_controller_config')):
+        if ((system.isOptSet('yuzu_auto_controller_config') and not (system.config["yuzu_auto_controller_config"] == "0")) or not system.isOptSet('yuzu_auto_controller_config')):
 
             known_reversed_guids = ["03000000c82d00000631000014010000"]
             #These are controllers that use Batocera mappings for some reason
@@ -661,9 +672,9 @@ class CitronGenerator(Generator):
             eslog.debug("Joysticks: {}".format(sdl_devices))
 
 
-            if system.isOptSet("citron_enable_rumble"):
-                yuzuConfig.set("Controls", "vibration_enabled", system.config["citron_enable_rumble"])
-                yuzuConfig.set("Controls", "vibration_enabled\\default", system.config["citron_enable_rumble"])
+            if system.isOptSet("yuzu_enable_rumble"):
+                yuzuConfig.set("Controls", "vibration_enabled", system.config["yuzu_enable_rumble"])
+                yuzuConfig.set("Controls", "vibration_enabled\\default", system.config["yuzu_enable_rumble"])
             else:
                 yuzuConfig.set("Controls", "vibration_enabled", "true")
                 yuzuConfig.set("Controls", "vibration_enabled\\default", "true")
@@ -671,7 +682,8 @@ class CitronGenerator(Generator):
 
             cguid = [0 for x in range(10)]
             lastplayer = 0
-            for index, controller in enumerate(playersControllers):
+            for index in playersControllers :
+                controller = playersControllers[index]
 
 
                 if(controller.guid != "050000007e0500000620000001800000" and controller.guid != "050000007e0500000720000001800000"):
@@ -688,11 +700,11 @@ class CitronGenerator(Generator):
                         eslog.debug("Which Pad: {}".format(which_pad))
 
 
-                    if(playersControllers[index].real_name == 'Nintendo Switch Combined Joy-Cons'):  #works in Batocera v37
+                    if(playersControllers[index].realName == 'Nintendo Switch Combined Joy-Cons'):  #works in Batocera v37
                         outputpath = "nintendo_joycons_combined"
                         sdl_mapping = next((item for item in sdl_devices if (item["path"] == outputpath or item["path"] == '/devices/virtual')),None)
                     else:
-                        command = "udevadm info --query=path --name=" + controller.device_path
+                        command = "udevadm info --query=path --name=" + playersControllers[index].dev
                         outputpath = ((subprocess.check_output(command, shell=True)).decode()).partition('/input/')[0]
                         sdl_mapping = next((item for item in sdl_devices if item["path"] == outputpath),None)
 
@@ -866,9 +878,9 @@ class CitronGenerator(Generator):
 
                         yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "true")
 
-                        if system.isOptSet("citron_enable_rumble"):
-                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                        if system.isOptSet("yuzu_enable_rumble"):
+                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                         else:
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -938,9 +950,9 @@ class CitronGenerator(Generator):
                             #Forcing to left joycon
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type", "2")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "false")
-                            if system.isOptSet("citron_enable_rumble"):
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                            if system.isOptSet("yuzu_enable_rumble"):
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                             else:
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -983,9 +995,9 @@ class CitronGenerator(Generator):
                             #Forcing to right joycons
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type", "3")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "false")
-                            if system.isOptSet("citron_enable_rumble"):
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                            if system.isOptSet("yuzu_enable_rumble"):
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                             else:
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -1032,9 +1044,9 @@ class CitronGenerator(Generator):
                             #Forcing to right joycons
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type", "3")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "false")
-                            if system.isOptSet("citron_enable_rumble"):
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                            if system.isOptSet("yuzu_enable_rumble"):
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                             else:
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -1076,9 +1088,9 @@ class CitronGenerator(Generator):
                             #Forcing to left joycon
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type", "2")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "false")
-                            if system.isOptSet("citron_enable_rumble"):
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                            if system.isOptSet("yuzu_enable_rumble"):
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                             else:
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -1116,9 +1128,9 @@ class CitronGenerator(Generator):
                             #Forcing to dual joycons
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type", "1")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "false")
-                            if system.isOptSet("citron_enable_rumble"):
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                            if system.isOptSet("yuzu_enable_rumble"):
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                                yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                             else:
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -1399,9 +1411,9 @@ class CitronGenerator(Generator):
                         yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "true")
 
 
-                        if system.isOptSet("citron_enable_rumble"):
-                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["citron_enable_rumble"])
-                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["citron_enable_rumble"])
+                        if system.isOptSet("yuzu_enable_rumble"):
+                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", system.config["yuzu_enable_rumble"])
+                            yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", system.config["yuzu_enable_rumble"])
                         else:
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
                             yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled\\default", "true")
@@ -1467,7 +1479,7 @@ class CitronGenerator(Generator):
 
 
                 yuzuConfig.set("Controls", "player_" + controllernumber + "_connected", "false")
-                yuzuConfig.set("Controls", "player_" + controllernumber + "_connected\\default", "true")
+                yuzuConfig.set("Controls", "player_" + controllernumber + "_connected\default", "true")
                 yuzuConfig.set("Controls", "player_" + controllernumber + "_type", "0")
                 yuzuConfig.set("Controls", "player_" + controllernumber + "_type\\default", "true")
                 yuzuConfig.set("Controls", "player_" + controllernumber + "_vibration_enabled", "true")
