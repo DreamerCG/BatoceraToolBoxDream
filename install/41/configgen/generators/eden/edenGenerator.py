@@ -36,7 +36,7 @@ class EdenGenerator(Generator):
             st = os.stat("/userdata/system/switch/eden/eden.AppImage")
             os.chmod("/userdata/system/switch/edeneden.AppImage", st.st_mode | stat.S_IEXEC)
 
-        
+
         yuzuConfig = batoceraFiles.CONF + '/yuzu/qt-config.ini'
         beforeyuzuConfig = batoceraFiles.CONF + '/yuzu/before-qt-config.ini'
         
