@@ -34,7 +34,7 @@ class EdenGenerator(Generator):
         #handles chmod so you just need to download eden.AppImage
         if os.path.exists("/userdata/system/switch/eden/eden.AppImage"):
             st = os.stat("/userdata/system/switch/eden/eden.AppImage")
-            os.chmod("/userdata/system/switch/edeneden.AppImage", st.st_mode | stat.S_IEXEC)
+            os.chmod("/userdata/system/switch/eden/eden.AppImage", st.st_mode | stat.S_IEXEC)
 
 
         yuzuConfig = batoceraFiles.CONF + '/yuzu/qt-config.ini'
