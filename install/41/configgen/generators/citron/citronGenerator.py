@@ -32,142 +32,16 @@ class CitronGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
         #handles chmod so you just need to download citron.AppImage
-        if os.path.exists("/userdata/system/switch/citron.AppImage"):
-            st = os.stat("/userdata/system/switch/citron.AppImage")
-            os.chmod("/userdata/system/switch/citron.AppImage", st.st_mode | stat.S_IEXEC)
-
-            #chmod citron app
-            st = os.stat("/userdata/system/switch/extra/batocera-config-citron")
-            os.chmod("/userdata/system/switch/extra/batocera-config-citron", st.st_mode | stat.S_IEXEC)
-
-        if not os.path.exists("/lib/libthai.so.0.3.1"):
-            copyfile("/userdata/system/switch/extra/libthai.so.0.3.1", "/lib/libthai.so.0.3.1")
-        if not os.path.exists("/lib/libthai.so.0"):
-            st = os.symlink("/lib/libthai.so.0.3.1","/lib/libthai.so.0")
-
-        #Create Keys Folder
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/keys"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/keys")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/amiibo"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/amiibo")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/crash_dumps"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/crash_dumps")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/custom"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/custom")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/dump"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/dump")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/game_list"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/game_list")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/icons"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/icons")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/load"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/load")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/log"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/log")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/nand"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/nand")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/play_time"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/play_time")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/screenshots"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/screenshots")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/sdmc"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/sdmc")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/shader"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/shader")
-
-        if not os.path.exists(batoceraFiles.CONF + "/yuzu/tas"):
-            os.mkdir(batoceraFiles.CONF + "/yuzu/tas")
-        #Create OS Saves folder
-        if not os.path.exists(batoceraFiles.SAVES + "/yuzu"):
-            os.mkdir(batoceraFiles.SAVES + "/yuzu")        
-
-        #Remove citron if it exists and isnt' a link
-        if os.path.exists("/userdata/system/configs/citron"):
-            if not os.path.islink("/userdata/system/configs/citron"):
-                shutil.rmtree("/userdata/system/configs/citron")
-
-        #Create OS citron folder
-        if not os.path.exists("/userdata/system/configs/citron"):
-            os.mkdir("/userdata/system/configs/citron")
-            
-        #Link yuzu/citron nand/key/config.ini
-        if not os.path.exists("/userdata/system/configs/citron/amiibo"):
-            st = os.symlink("/userdata/system/configs/yuzu/amiibo","/userdata/system/configs/citron/amiibo")
-        if not os.path.exists("/userdata/system/configs/citron/custom"):
-            st = os.symlink("/userdata/system/configs/yuzu/custom","/userdata/system/configs/citron/custom")
-        if not os.path.exists("/userdata/system/configs/citron/screenshots"):
-            st = os.symlink("/userdata/system/configs/yuzu/screenshots","/userdata/system/configs/citron/screenshots")
-        if not os.path.exists("/userdata/system/configs/citron/sdmc"):
-            st = os.symlink("/userdata/system/configs/yuzu/sdmc","/userdata/system/configs/citron/sdmc")
-        if not os.path.exists("/userdata/system/configs/citron/nand"):
-            st = os.symlink("/userdata/system/configs/yuzu/nand","/userdata/system/configs/citron/nand")
-        if not os.path.exists("/userdata/system/configs/citron/keys"):
-            st = os.symlink("/userdata/system/configs/yuzu/keys","/userdata/system/configs/citron/keys")
-        if not os.path.exists("/userdata/system/configs/citron/load"):
-            st = os.symlink("/userdata/system/configs/yuzu/load","/userdata/system/configs/citron/load")
-        if not os.path.exists("/userdata/system/configs/citron/shader"):
-            st = os.symlink("/userdata/system/configs/yuzu/shader","/userdata/system/configs/citron/shader")
-
-        if os.path.exists("/userdata/system/configs/citron/qt-config.ini"):
-            if not os.path.islink("/userdata/system/configs/citron/qt-config.ini"):
-                os.remove("/userdata/system/configs/citron/qt-config.ini")
-        if not os.path.exists("/userdata/system/configs/citron/qt-config.ini"):
-            st = os.symlink("/userdata/system/configs/yuzu/qt-config.ini","/userdata/system/configs/citron/qt-config.ini")
-
-        #Remove Old SUYU link
-        if os.path.islink("/userdata/system/.local/share/suyu"):
-            os.unlink("/userdata/system/.local/share/suyu")
-        if os.path.exists("/userdata/system/.local/share/suyu"):
-            shutil.rmtree("/userdata/system/.local/share/suyu")
-
-        if os.path.islink("/userdata/system/.config/suyu"):
-            os.unlink("/userdata/system/.config/suyu")
-        if os.path.exists("/userdata/system/.config/suyu"):
-            shutil.rmtree("/userdata/system/.config/suyu")
-
-        if os.path.islink("/userdata/system/configs/suyu"):
-            os.unlink("/userdata/system/configs/suyu")
-        if os.path.exists("/userdata/system/configs/suyu"):
-            shutil.rmtree("/userdata/system/configs/suyu")
-
-        if os.path.islink("/userdata/system/.cache/suyu"):
-            os.unlink("/userdata/system/.cache/suyu")
-        if os.path.exists("/userdata/system/.cache/suyu"): 
-            shutil.rmtree("/userdata/system/.cache/suyu")
-
-        #Link Yuzu Saves Directory to /userdata/saves/yuzu
-        if not os.path.exists("/userdata/system/.cache"):
-            os.mkdir("/userdata/system/.cache")
-
-        if not os.path.exists("/userdata/system/.cache/citron"):
-            os.mkdir("/userdata/system/.cache/citron")
-
-        #remove game_list if it exists and isn't a link
-        if os.path.exists("/userdata/system/.cache/citron/game_list"):
-            shutil.rmtree("/userdata/system/.cache/citron/game_list")
+        if os.path.exists("/userdata/system/switch/citron/citron.AppImage"):
+            st = os.stat("/userdata/system/switch/citron/citron.AppImage")
+            os.chmod("/userdata/system/switch/citron/citron.AppImage", st.st_mode | stat.S_IEXEC)
 
         yuzuConfig = batoceraFiles.CONF + '/yuzu/qt-config.ini'
         beforeyuzuConfig = batoceraFiles.CONF + '/yuzu/before-qt-config.ini'
         
         CitronGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
         if system.config['emulator'] == 'citron':
-            commandArray = ["/userdata/system/switch/citron.AppImage", "-f",  "-g", rom ]
+            commandArray = ["/userdata/system/switch/citron/citron.AppImage", "-f",  "-g", rom ]
                       # "XDG_DATA_HOME":yuzuSaves, , "XDG_CACHE_HOME":batoceraFiles.CACHE, "XDG_CONFIG_HOME":yuzuHome,
         return Command.Command(
             array=commandArray,
@@ -175,7 +49,7 @@ class CitronGenerator(Generator):
                  "XDG_CONFIG_HOME":"/userdata/system/configs",
                  "XDG_CACHE_HOME":"/userdata/system/configs",
                  "QT_QPA_PLATFORM_PLUGIN_PATH":"${QT_PLUGIN_PATH}",
-                 "QT_PLUGIN_PATH":"/userdata/system/switch/citron.AppImage",
+                 "QT_PLUGIN_PATH":"/userdata/system/switch/citron/citron.AppImage",
                  "QT_QPA_PLATFORM": "xcb",
                  "DRI_PRIME":"1", 
                  "AMD_VULKAN_ICD":"RADV",
