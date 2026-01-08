@@ -51,11 +51,6 @@
             "target": "KEY_RIGHT"
         },
         {
-            "trigger": "select",
-            "type": "exec",
-            "target": "killall -9 xterm; exit 0"
-        },
-        {
             "trigger": "pageup",
             "type": "exec",
             "target": "batocera-audio setSystemVolume -5"
