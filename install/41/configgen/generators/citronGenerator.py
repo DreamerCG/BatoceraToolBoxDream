@@ -125,6 +125,8 @@ class CitronGenerator(Generator):
         yuzuConfig.set("UI", "firstStart\\default", "false")
         yuzuConfig.set("UI", "displayTitleBars", "false")
         yuzuConfig.set("UI", "displayTitleBars\\default", "false")
+        yuzuConfig.set("UI", "check_for_updates_on_start", "false")
+        yuzuConfig.set("UI", "check_for_updates_on_start\\default", "false")
 
         if system.isOptSet('yuzu_enable_discord_presence'):
             yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
