@@ -54,12 +54,12 @@ ports_dir="/userdata/roms/ports"
 mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
-screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolBox-image.png"
-screenshot_path="$ports_dir/images/toolBox-screenshot.jpg"
-logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolBox-logo.png"
-logo_path="$ports_dir/images/toolBox-wheel.png"
-box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolBox-box.png"
-box_path="$ports_dir/images/toolBox-box.png"
+screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolbox-image.png"
+screenshot_path="$ports_dir/images/toolbox-image.jpg"
+logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolbox-logo.png"
+logo_path="$ports_dir/images/toolbox-logo.png"
+box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolbox-box.png"
+box_path="$ports_dir/images/toolbox-box.png"
 
 
 # Ensure the logo directory exists and download the logo
@@ -120,9 +120,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolBox-image.jpg" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolBox-logo.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolBox-box.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolbox-box.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 
