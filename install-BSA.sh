@@ -134,7 +134,7 @@ killall -9 emulationstation
 
 sleep 1
 
-echo "BSA Installed!"
+echo "ToolBox Installed!"
 echo ""
 echo "*** Remember to place your files in the appropriate BSA folders before installing ***"
 echo ""
