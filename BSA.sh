@@ -356,8 +356,7 @@ main_menu() {
 
 update_bsa_toolbox() {
                 clear
-                DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash" 
-                ;;
+                DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
 }
 
 
