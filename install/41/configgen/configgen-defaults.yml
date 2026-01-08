@@ -12,6 +12,6 @@ default:
 
 switch:
   emulator: eden
-  core:     yuzu-early-access
+  core:     eden
   options:
     forceNoBezel: true
