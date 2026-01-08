@@ -120,9 +120,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/DreamerCG-screenshot.jpg" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/DreamerCG-wheel.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/DreamerCG-box.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/ToolBox-image.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/ToolBox-logo.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/ToolBox-box.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 
