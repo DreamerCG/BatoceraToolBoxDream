@@ -55,11 +55,11 @@ mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
 screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/Toolbox-image.png"
-screenshot_path="$ports_dir/images/DreamerCG-screenshot.jpg"
+screenshot_path="$ports_dir/images/Toolbox-screenshot.jpg"
 logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/ToolBox-logo.png"
-logo_path="$ports_dir/images/DreamerCG-wheel.png"
+logo_path="$ports_dir/images/Toolbox-wheel.png"
 box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/ToolBox-box.png"
-box_path="$ports_dir/images/DreamerCG-box.png"
+box_path="$ports_dir/images/Toolbox-box.png"
 
 
 # Ensure the logo directory exists and download the logo
