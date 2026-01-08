@@ -331,7 +331,7 @@ main_menu() {
 		#"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
 		"TOOLS|Tools Menu|fn|tools_menu"
-		"UPDATE TOOLBOX|Update ToolBox Script|cmd|update_bsa_toolbox"
+		"UPDATE TOOLBOX|Update ToolBox Script|fn|update_bsa_toolbox"
 		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 		"EXIT|Exit to the Street|cmd|killall -9 xterm; exit 0"
