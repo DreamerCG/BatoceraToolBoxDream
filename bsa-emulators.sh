@@ -16,7 +16,9 @@ install_emulator_ryujinx() {
 	# Get lastest version from database & set the version for download
 	ryujinx_release_html="$(curl -s "https://release-monitoring.org/project/377871/")"
 	ryujinx_release_version="$(echo "$ryujinx_release_html" | grep -Eo 'Canary-[0-9]+\.[0-9]+\.[0-9]+' | head -n1 | cut -d'-' -f2)"
-	ryujinx_install_url="https://git.ryujinx.app/api/v4/projects/68/packages/generic/Ryubing-Canary/${ryujinx_release_version}/ryujinx-canary-${ryujinx_release_version}-x64.AppImage"
+	#ryujinx_install_url="https://git.ryujinx.app/api/v4/projects/68/packages/generic/Ryubing-Canary/${ryujinx_release_version}/ryujinx-canary-${ryujinx_release_version}-x64.AppImage"
+	ryujinx_install_url="https://git.ryujinx.app/api/v4/projects/1/packages/generic/Ryubing/1.3.3/ryujinx-1.3.3-x64.AppImage"
+	
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$ryujinx_install_url" "$switch_install_emus_dir/$ryujinx_install_file" "Ryujinx (Ryubing)"
 	if [ $wget_exit_code -eq 0 ]; then

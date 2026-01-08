@@ -158,7 +158,7 @@ display_install_log() {
 # Install Menu
 install_menu() {
 	local menu_items=(
-		#"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
+		"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
 		"Eden|Install Eden|on|fn|full_install "eden""
 		"Citron|Install Citron|off|fn|full_install "citron""
 		#"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
@@ -179,8 +179,8 @@ install_menu() {
 # Updates Menu
 updates_menu() {
 	local menu_items=(
-		#"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
-		#"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
+		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
+		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
 		#"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
 		#"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
 		"Eden Local|Update Eden Local|off|fn|update_emulator "eden" "local""
