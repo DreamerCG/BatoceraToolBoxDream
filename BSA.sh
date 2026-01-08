@@ -315,7 +315,7 @@ tools_menu() {
 	)
 	create_dialog_list_menu \
 		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
-		"OPEN" "CANCEL" "off" \
+		"OPEN" "CANCEL" "on" \
 		"DO YOU WANT TO SWITCH?" \
 		"${menu_items[@]}"
 }
@@ -331,7 +331,7 @@ main_menu() {
 		"SAVES|Saves Options|fn|saves_menu"
 		"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
-		#"TOOLS|Tools Menu|fn|tools_menu"
+		"TOOLS|Tools Menu|fn|tools_menu"
 		"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 		"EXIT|Exit to the Street|fn|exit_tools"
@@ -354,9 +354,7 @@ main_menu() {
 }
 
 exit_tools() {
-                killall -9 xterm
-                clear
-                exit 0
+sleep 2 && killall -9 BSA 2>/dev/null && curl http://127.0.0.1:1234/reloadgames && exit 0; exit 1
 }
 
 
