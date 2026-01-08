@@ -158,9 +158,9 @@ display_install_log() {
 # Install Menu
 install_menu() {
 	local menu_items=(
-		"Eden|Install Eden|on|fn|full_install "eden""
-		"Citron|Install Citron|on|fn|full_install "citron""
-		"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
+		"Eden|Install Eden|off|fn|full_install "eden""
+		"Citron|Install Citron|off|fn|full_install "citron""
+		"Ryujinx|Install Ryujinx|off|fn|full_install "ryujinx""
 		#"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
 		#"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
 	)
