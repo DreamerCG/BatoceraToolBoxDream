@@ -352,12 +352,6 @@ main_menu() {
 	done
 }
 
-exit_tools() {
-                killall -9 xterm
-                exit 0
-				exit 1
-
-}
 
 
 
