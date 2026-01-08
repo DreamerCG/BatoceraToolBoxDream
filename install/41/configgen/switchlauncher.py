@@ -187,9 +187,6 @@ def start_rom(args, maxnbplayers, rom, romConfiguration):
     # find the generator
     generator = GeneratorImporter.getGenerator(system.config['emulator'])
 
-
-    eslog(f"Using generator: {generator.name()}")
-
     # the resolution must be changed before configuration while the configuration may depend on it (ie bezels)
     wantedGameMode = generator.getResolutionMode(system.config)
     systemMode = videoMode.getCurrentMode()

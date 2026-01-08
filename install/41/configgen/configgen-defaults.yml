@@ -11,7 +11,7 @@ default:
     forceNoBezel:   false
 
 switch:
-  emulator: eden
-  core:     eden
+  emulator: yuzu-early-access
+  core:     yuzu-early-access
   options:
     forceNoBezel: true
