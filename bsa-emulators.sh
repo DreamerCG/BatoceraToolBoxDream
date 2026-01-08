@@ -61,8 +61,6 @@ install_emulator_eden() {
 }
 
 
-
-
 install_emulator_citron() {
 	message "log" "$addon_log" "<<< [ INSTALL : CITRON ]>>>"
 
