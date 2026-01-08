@@ -158,10 +158,10 @@ display_install_log() {
 # Install Menu
 install_menu() {
 	local menu_items=(
-		"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
 		"Eden|Install Eden|on|fn|full_install "eden""
 		"Citron|Install Citron|off|fn|full_install "citron""
-		"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
+		"Ryujinx|Install Ryujinx|off|fn|full_install "ryujinx""
+		#"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
 		#"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
 	)
 	unset RAN_POST_INSTALL_COMMON
@@ -179,14 +179,14 @@ install_menu() {
 # Updates Menu
 updates_menu() {
 	local menu_items=(
-		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
-		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
-		"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
-		"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
+		#"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
+		#"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
 		"Eden Local|Update Eden Local|off|fn|update_emulator "eden" "local""
 		"Eden Remote|Update Eden Remote|off|fn|update_emulator "eden" "remote""
 		"Citron Local|Update Citron Local|off|fn|update_emulator "citron" "local""
 		"Citron Remote|Update Citron Remote|off|fn|update_emulator "citron" "remote""
+		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
+		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
 		#"Sudachi Local|Update Sudachi Local|off|fn|update_emulator "sudachi" "local""
 		#"Sudachi Remote|Update Sudachi Remote|off|fn|update_emulator "sudachi" "remote""
 	)
@@ -265,8 +265,8 @@ fixes_menu() {
 		"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
 		"Eden|Fix Eden Structure|off|fn|initialize_eden"
 		"Citron|Fix Citron Structure|off|fn|initialize_citron"
-		"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
-		"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
+		#"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
+		#"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
 	)
 	unset RAN_INITIALIZE_COMMON
 	create_dialog_checkbox_menu \
@@ -355,9 +355,10 @@ main_menu() {
 exit_tools() {
                 killall -9 xterm
                 clear
-				killall -9 emulationstation
+				# killall -9 emulationstation
                 exit 0
 				exit 1
+				
 }
 
 
