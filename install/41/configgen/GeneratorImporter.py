@@ -8,34 +8,26 @@ if TYPE_CHECKING:
 # not the nicest way, possibly one of the faster i think
 # some naming rules may allow to modify this function to less than 10 lines
 
-def getGenerator(emulator: str) -> Generator:
+def getgenerator(emulator: str) -> Generator:
 
     if emulator == 'eden':
-        from generators.eden.edenGenerator import EdenGenerator
+        from generators.edenGenerator import EdenGenerator
         return EdenGenerator()
-
+    
     if emulator == 'citron':
-        from generators.citron.citronGenerator import CitronGenerator
+        from generators.citronGenerator import CitronGenerator
         return CitronGenerator()
 
     if emulator == 'sudachi':
-        from generators.sudachi.sudachiGenerator import SudachiGenerator
+        from generators.sudachiGenerator import SudachiGenerator
         return SudachiGenerator()
 
-    if emulator == 'yuzu-early-access':
-        from generators.yuzu.yuzuMainlineGenerator import YuzuMainlineGenerator
-        return YuzuMainlineGenerator()
+    if emulator == 'yuzu':
+        from generators.yuzuGenerator import YuzuGenerator
+        return YuzuGenerator()
 
     if emulator == 'ryujinx':
-        from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
-        return RyujinxMainlineGenerator()
-
-    if emulator == 'ryujinx-continuous':
-        from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
-        return RyujinxMainlineGenerator()
-
-    if emulator == 'ryujinx-avalonia':
-        from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
-        return RyujinxMainlineGenerator()
+        from generators.ryujinxGenerator import RyujinxGenerator
+        return RyujinxGenerator()
 
     raise Exception(f"no generator found for emulator {emulator}")
