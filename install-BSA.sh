@@ -54,12 +54,12 @@ ports_dir="/userdata/roms/ports"
 mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
-screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/Toolbox-image.png"
-screenshot_path="$ports_dir/images/Toolbox-screenshot.jpg"
-logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/ToolBox-logo.png"
-logo_path="$ports_dir/images/Toolbox-wheel.png"
-box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/ToolBox-box.png"
-box_path="$ports_dir/images/Toolbox-box.png"
+screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolBox-image.png"
+screenshot_path="$ports_dir/images/toolBox-screenshot.jpg"
+logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolBox-logo.png"
+logo_path="$ports_dir/images/toolBox-wheel.png"
+box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolBox-box.png"
+box_path="$ports_dir/images/toolBox-box.png"
 
 
 # Ensure the logo directory exists and download the logo
@@ -112,7 +112,7 @@ fi
 xmlstarlet ed -L \
     -s "/gameList" -t elem -n "game" -v "" \
     -s "/gameList/game[last()]" -t elem -n "path" -v "./DreamerCGToolBox.sh" \
-    -s "/gameList/game[last()]" -t elem -n "name" -v "DreamerCG Toolbox" \
+    -s "/gameList/game[last()]" -t elem -n "name" -v "Toolbox Switch" \
     -s "/gameList/game[last()]" -t elem -n "desc" -v "Boite à outils de DreamerCG permettant l'installation de la Switch " \
     -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG" \
     -s "/gameList/game[last()]" -t elem -n "publisher" -v "DreamerCG" \
@@ -120,9 +120,9 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/ToolBox-image.jpg" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/ToolBox-logo.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/ToolBox-box.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolBox-image.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolBox-logo.png" \
+    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolBox-box.png" \
     "$gamelist_file"
 # Add an entry to gamelist.xml#################################xmledit#########################################################
 
