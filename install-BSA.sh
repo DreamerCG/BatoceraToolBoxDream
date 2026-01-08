@@ -112,7 +112,7 @@ fi
 xmlstarlet ed -L \
     -s "/gameList" -t elem -n "game" -v "" \
     -s "/gameList/game[last()]" -t elem -n "path" -v "./DreamerCGToolBox.sh" \
-    -s "/gameList/game[last()]" -t elem -n "name" -v "Toolbox Switch" \
+    -s "/gameList/game[last()]" -t elem -n "name" -v "A Toolbox Switch" \
     -s "/gameList/game[last()]" -t elem -n "desc" -v "Boite à outils de DreamerCG permettant l'installation de la Switch " \
     -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG" \
     -s "/gameList/game[last()]" -t elem -n "publisher" -v "DreamerCG" \
