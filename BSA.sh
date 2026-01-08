@@ -158,11 +158,11 @@ display_install_log() {
 # Install Menu
 install_menu() {
 	local menu_items=(
-		"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
-		"Yuzu|Install Yuzu|on|fn|full_install "yuzu""
+		#"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
 		"Eden|Install Eden|on|fn|full_install "eden""
-		"Citron|Install Citron|on|fn|full_install "citron""
-		"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
+		"Citron|Install Citron|off|fn|full_install "citron""
+		"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
+		#"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
 	)
 	unset RAN_POST_INSTALL_COMMON
 	unset RAN_POST_INSTALL_COMMON_YUZU
@@ -179,16 +179,16 @@ install_menu() {
 # Updates Menu
 updates_menu() {
 	local menu_items=(
-		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
-		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
+		#"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
+		#"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
 		"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
 		"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
 		"Eden Local|Update Eden Local|off|fn|update_emulator "eden" "local""
 		"Eden Remote|Update Eden Remote|off|fn|update_emulator "eden" "remote""
 		"Citron Local|Update Citron Local|off|fn|update_emulator "citron" "local""
 		"Citron Remote|Update Citron Remote|off|fn|update_emulator "citron" "remote""
-		"Sudachi Local|Update Sudachi Local|off|fn|update_emulator "sudachi" "local""
-		"Sudachi Remote|Update Sudachi Remote|off|fn|update_emulator "sudachi" "remote""
+		#"Sudachi Local|Update Sudachi Local|off|fn|update_emulator "sudachi" "local""
+		#"Sudachi Remote|Update Sudachi Remote|off|fn|update_emulator "sudachi" "remote""
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Update" "$menu_height" "$menu_width" "$menu_list_height" \
@@ -203,11 +203,11 @@ updates_menu() {
 # Packages Menu
 packages_menu() {
 	local menu_items=(
-		"Ryujinx Firmware|Unpack Ryujinx Firmware|off|fn|unpack_packages_ryujinx_firmware"
+		#"Ryujinx Firmware|Unpack Ryujinx Firmware|off|fn|unpack_packages_ryujinx_firmware"
 		"Yuzu Firmware|Unpack Yuzu Firmware|off|fn|unpack_packages_yuzu_firmware"
-		"Ryujinx Keys|Unpack Ryujinx Keys|off|fn|unpack_packages_ryujinx_keys"
+		#"Ryujinx Keys|Unpack Ryujinx Keys|off|fn|unpack_packages_ryujinx_keys"
 		"Yuzu Keys|Unpack Yuzu Keys|off|fn|unpack_packages_yuzu_keys"
-		"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
+		#"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
 		"Yuzu Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
 		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
 		"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
@@ -328,11 +328,11 @@ main_menu() {
 		#"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
 		#"ROMS|ROMs Options|fn|roms_menu"
 		"SAVES|Saves Options|fn|saves_menu"
-		"FIXES|Fix directory structure & others|fn|fixes_menu"
+		#"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
 		"TOOLS|Tools Menu|fn|tools_menu"
-		"DISPLAY LOG|Display Install Log|fn|display_install_log"
-		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
+		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
+		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 		"EXIT|Exit to the Street|fn|exit_tools"
 	)
 	while true; do
