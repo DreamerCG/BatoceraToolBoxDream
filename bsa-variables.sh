@@ -42,6 +42,22 @@ SOURCED_VARIABLES=true
 # BATOCERA VERSION
 batocera_version="$(batocera-es-swissknife --version | grep -oE '^[0-9]+')"
 
+case "$batocera_version" in
+	3[9]|40)
+		folder_version=40
+		;;
+	41)
+		folder_version=41
+		;;
+	4[2-3])
+		folder_version=42
+		;;
+	*)
+		echo "Unsupported Batocera version: $batocera_version" >&2
+		exit 1
+		;;
+esac
+
 
 # ******************************************************************************
 # COLORS FOR SCREEN OUTPUT (PRINTF)
@@ -102,17 +118,17 @@ DIALOG_PIPE_FILE=""
 # INSTALLATION: ROOT :: Current directory that the Install Script is running from.
 switch_install_script_dir="$( cd -- $( dirname -- ${BASH_SOURCE[0]} ) &> /dev/null && pwd )"
 # INSTALLATION: PACKAGES :: Post Installation Packages [Firmware, Keys, Saves, Etc.]
-switch_install_packages_dir="$switch_install_script_dir/packages"
+switch_install_packages_dir="$switch_install_script_dir/install/$folder_version/packages"
 # INSTALLATION: ICONS :: Icons use for desktop files [F1-Applications Menu]
 switch_install_icons_dir="$switch_install_script_dir/icons"
 # INSTALLATION: EMULATORS :: AppImages and Archives of Emulators to install
 switch_install_emus_dir="$switch_install_script_dir/emus"
 # INSTALLATION: SCRIPTS :: Scripts to install
-switch_install_scripts_dir="$switch_install_script_dir/scripts"
+switch_install_scripts_dir="$switch_install_script_dir/install/$folder_version/scripts"
 # INSTALLATION: SYSTEM CONFIGS :: System Config Files (EmulationStation, evmapy, etc.)
-switch_install_configs_dir="$switch_install_script_dir/configs"
+switch_install_configs_dir="$switch_install_script_dir/install/$folder_version/configs"
 # INSTALLATION: CONFIG GENERATORS :: Configuration Generation Scripts
-switch_install_configgen_dir="$switch_install_script_dir/configgen"
+switch_install_configgen_dir="$switch_install_script_dir/install/$folder_version/configgen"
 # INSTALLATION: ROMS :: Roms to Install in Post
 switch_install_roms_dir="$switch_install_script_dir/roms"
 # INSTALLATION: SWITCH ROMS :: Switch Roms to Install in Post
