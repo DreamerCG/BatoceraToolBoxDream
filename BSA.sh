@@ -161,7 +161,7 @@ install_menu() {
 		"Ryujinx|Install Ryujinx|on|fn|full_install "ryujinx""
 		"Eden|Install Eden|on|fn|full_install "eden""
 		"Citron|Install Citron|off|fn|full_install "citron""
-		#"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
+		"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
 		#"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
 	)
 	unset RAN_POST_INSTALL_COMMON
@@ -181,8 +181,8 @@ updates_menu() {
 	local menu_items=(
 		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
 		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
-		#"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
-		#"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
+		"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
+		"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
 		"Eden Local|Update Eden Local|off|fn|update_emulator "eden" "local""
 		"Eden Remote|Update Eden Remote|off|fn|update_emulator "eden" "remote""
 		"Citron Local|Update Citron Local|off|fn|update_emulator "citron" "local""
