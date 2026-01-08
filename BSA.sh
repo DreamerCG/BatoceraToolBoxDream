@@ -333,7 +333,7 @@ main_menu() {
 		"TOOLS|Tools Menu|fn|tools_menu"
 		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
-		"EXIT|Exit to the Street|fn|exit_tools"
+		"EXIT|Exit to the Street|cmd|killall -9 xterm; exit 0"
 	)
 	while true; do
 		create_dialog_list_menu \
@@ -354,8 +354,6 @@ main_menu() {
 
 exit_tools() {
                 killall -9 xterm
-                clear
-				# killall -9 emulationstation
                 exit 0
 				exit 1
 
