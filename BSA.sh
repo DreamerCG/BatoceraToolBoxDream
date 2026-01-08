@@ -203,11 +203,11 @@ updates_menu() {
 # Packages Menu
 packages_menu() {
 	local menu_items=(
-		#"Ryujinx Firmware|Unpack Ryujinx Firmware|off|fn|unpack_packages_ryujinx_firmware"
+		"Ryujinx Firmware|Unpack Ryujinx Firmware|off|fn|unpack_packages_ryujinx_firmware"
 		"Eden/Citron/YUZU Firmware|Unpack Yuzu Firmware|off|fn|unpack_packages_yuzu_firmware"
-		#"Ryujinx Keys|Unpack Ryujinx Keys|off|fn|unpack_packages_ryujinx_keys"
+		"Ryujinx Keys|Unpack Ryujinx Keys|off|fn|unpack_packages_ryujinx_keys"
 		"Eden/Citron/YUZU Keys|Unpack Yuzu Keys|off|fn|unpack_packages_yuzu_keys"
-		#"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
+		"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
 		"Eden/Citron/YUZU Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
 		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
 		#"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
@@ -244,9 +244,9 @@ roms_menu() {
 # Saves Menu
 saves_menu() {
 	local menu_items=(
-		#"BACKUP RYUJINX|Backup Ryujinx Saves|on|fn|backup_saves_ryujinx"
+		"BACKUP RYUJINX|Backup Ryujinx Saves|on|fn|backup_saves_ryujinx"
 		"BACKUP Eden/Citron/YUZU|Backup Yuzu Saves|on|fn|backup_saves_yuzu"
-		#"BSA RYUJINX|Backup Ryujinx Saves to BSA Packages|off|fn|backup_saves_ryujinx_bsa"
+		"BSA RYUJINX|Backup Ryujinx Saves to BSA Packages|off|fn|backup_saves_ryujinx_bsa"
 		"BSA Eden/Citron/YUZU|Backup Yuzu Saves to BSA Packages|off|fn|backup_saves_yuzu_bsa"
 	)
 	create_dialog_checkbox_menu \
@@ -262,11 +262,11 @@ saves_menu() {
 # Fixes Menu
 fixes_menu() {
 	local menu_items=(
-		#"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
+		"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
 		"Eden|Fix Eden Structure|off|fn|initialize_eden"
 		"Citron|Fix Citron Structure|off|fn|initialize_citron"
-		#"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
-		#"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
+		"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
+		"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
 	)
 	unset RAN_INITIALIZE_COMMON
 	create_dialog_checkbox_menu \
