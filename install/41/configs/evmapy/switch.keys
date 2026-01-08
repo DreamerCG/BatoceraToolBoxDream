@@ -6,13 +6,7 @@
                 "start"
             ],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
-        },
-        {
-            "trigger": ["hotkey", "start"],
-            "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
+            "target": ["unclutter-remote -h && killall -9 eden sudachi sudachi-room Sudachi citron Citron citron.AppImage AppRun.wrapped suyu suyu.AppImage suyu-room yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         },
         {
             "trigger": ["start"],
@@ -34,25 +28,41 @@
                 "start"
             ],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
+            "target": ["unclutter-remote -h && killall -9 citron Citron citron.AppImage yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         },
         {
-            "trigger": ["hotkey", "start"],
+            "trigger": ["hotkey", "l2"],
             "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
+            "target": ["KEY_ESC"],
+            "description": "Press Esc"
         },
         {
-            "trigger": ["start"],
+            "trigger": ["hotkey", "r2"],
             "type": "key",
             "target": ["KEY_ENTER"],
-            "description": "Press enter"
+            "description": "Press Enter"
         },
         {
-            "trigger": ["hotkey", "b"],
+            "trigger": ["hotkey", "r3"],
             "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
+            "target": ["KEY_ENTER"],
+            "description": "Press enter shortcut 1"
+        },
+        {
+            "trigger": ["hotkey", "l3"],
+            "type": "key",
+            "target": ["KEY_F11"],
+            "description": "Press F11"
+        },        
+        {
+            "trigger": ["select", "l3"],
+            "type": "exec",
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
+        },        
+        {
+            "trigger": ["start", "r3"],
+            "type": "exec",
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         }
 	],
     "actions_player3": [
@@ -62,25 +72,41 @@
                 "start"
             ],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         },
         {
-            "trigger": ["hotkey", "start"],
+            "trigger": ["hotkey", "l2"],
             "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
+            "target": ["KEY_ESC"],
+            "description": "Press Esc"
         },
         {
-            "trigger": ["start"],
+            "trigger": ["hotkey", "r2"],
             "type": "key",
             "target": ["KEY_ENTER"],
-            "description": "Press enter"
+            "description": "Press Enter"
         },
         {
-            "trigger": ["hotkey", "b"],
+            "trigger": ["hotkey", "r3"],
             "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
+            "target": ["KEY_ENTER"],
+            "description": "Press enter shortcut 1"
+        },
+        {
+            "trigger": ["hotkey", "l3"],
+            "type": "key",
+            "target": ["KEY_F11"],
+            "description": "Press F11"
+        },        
+        {
+            "trigger": ["select", "l3"],
+            "type": "exec",
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
+        },        
+        {
+            "trigger": ["start", "r3"],
+            "type": "exec",
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         }
 	],
     "actions_player4": [
@@ -90,25 +116,41 @@
                 "start"
             ],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         },
         {
-            "trigger": ["hotkey", "start"],
+            "trigger": ["hotkey", "l2"],
             "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
+            "target": ["KEY_ESC"],
+            "description": "Press Esc"
         },
         {
-            "trigger": ["start"],
+            "trigger": ["hotkey", "r2"],
             "type": "key",
             "target": ["KEY_ENTER"],
-            "description": "Press enter"
+            "description": "Press Enter"
         },
         {
-            "trigger": ["hotkey", "b"],
+            "trigger": ["hotkey", "r3"],
             "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
+            "target": ["KEY_ENTER"],
+            "description": "Press enter shortcut 1"
+        },
+        {
+            "trigger": ["hotkey", "l3"],
+            "type": "key",
+            "target": ["KEY_F11"],
+            "description": "Press F11"
+        },        
+        {
+            "trigger": ["select", "l3"],
+            "type": "exec",
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
+        },        
+        {
+            "trigger": ["start", "r3"],
+            "type": "exec",
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         }
 	],
     "actions_player5": [
@@ -118,109 +160,41 @@
                 "start"
             ],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         },
         {
-            "trigger": ["hotkey", "start"],
+            "trigger": ["hotkey", "l2"],
             "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
+            "target": ["KEY_ESC"],
+            "description": "Press Esc"
         },
         {
-            "trigger": ["start"],
+            "trigger": ["hotkey", "r2"],
             "type": "key",
             "target": ["KEY_ENTER"],
-            "description": "Press enter"
+            "description": "Press Enter"
         },
         {
-            "trigger": ["hotkey", "b"],
+            "trigger": ["hotkey", "r3"],
             "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
-        }
-	],
-    "actions_player6": [
+            "target": ["KEY_ENTER"],
+            "description": "Press enter shortcut 1"
+        },
         {
-            "trigger": [
-                "hotkey",
-                "start"
-            ],
+            "trigger": ["hotkey", "l3"],
+            "type": "key",
+            "target": ["KEY_F11"],
+            "description": "Press F11"
+        },        
+        {
+            "trigger": ["select", "l3"],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
-        },
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
+        },        
         {
-            "trigger": ["hotkey", "start"],
-            "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
-        },
-        {
-            "trigger": ["start"],
-            "type": "key",
-            "target": ["KEY_ENTER"],
-            "description": "Press enter"
-        },
-        {
-            "trigger": ["hotkey", "b"],
-            "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
-        }
-	],
-    "actions_player7": [
-        {
-            "trigger": [
-                "hotkey",
-                "start"
-            ],
+            "trigger": ["start", "r3"],
             "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
-        },
-        {
-            "trigger": ["hotkey", "start"],
-            "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
-        },
-        {
-            "trigger": ["start"],
-            "type": "key",
-            "target": ["KEY_ENTER"],
-            "description": "Press enter"
-        },
-        {
-            "trigger": ["hotkey", "b"],
-            "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
-        }
-	],
-    "actions_player8": [
-        {
-            "trigger": [
-                "hotkey",
-                "start"
-            ],
-            "type": "exec",
-            "target": ["unclutter-remote -h && killall -9 AppRun.wrapped yuzu.AppImage yuzu yuzuEA.AppImage yuzuEA eden.AppImage eden citron.AppImage citron sudachi.AppImage sudachi Ryujinx.AppImage Ryujinx 2>/dev/null"]
-        },
-        {
-            "trigger": ["hotkey", "start"],
-            "type": "key",
-            "target": ["KEY_LEFTALT", "KEY_F4"],
-            "description": "Exit"
-        },
-        {
-            "trigger": ["start"],
-            "type": "key",
-            "target": ["KEY_ENTER"],
-            "description": "Press enter"
-        },
-        {
-            "trigger": ["hotkey", "b"],
-            "type": "key",
-            "target": ["KEY_F4"],
-            "description": "Show UI"
+            "target": ["unclutter-remote -h && killall -9 yuzu yuzu-room yuzuEA yuzu.AppImage yuzuEA.AppImage ryujinx Ryujinx Ryujinx-LDN Ryujinx-Avalonia Ryujinx.AppImage Ryujinx-LDN.AppImage Ryujinx-Avalonia.AppImage 2>/dev/null"]
         }
 	]
 }
