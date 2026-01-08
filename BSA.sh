@@ -331,6 +331,7 @@ main_menu() {
 		#"FIXES|Fix directory structure & others|fn|fixes_menu"
 		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
 		"TOOLS|Tools Menu|fn|tools_menu"
+		"UPDATE TOOLBOX|Update ToolBox Script|cmd|update_bsa_toolbox"
 		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
 		"EXIT|Exit to the Street|cmd|killall -9 xterm; exit 0"
@@ -350,6 +351,13 @@ main_menu() {
 			;;
 		esac
 	done
+}
+
+
+update_bsa_toolbox() {
+                clear
+                DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash" 
+                ;;
 }
 
 
