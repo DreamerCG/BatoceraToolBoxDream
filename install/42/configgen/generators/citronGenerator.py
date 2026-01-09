@@ -12,6 +12,32 @@ import logging
 from shutil import copyfile
 import subprocess
 from typing import TYPE_CHECKING, Final
+import xml.etree.ElementTree as ET
+import sys
+
+
+# Chemin du fichier es_input.cfg
+cfg_file = "/userdata/system/configs/emulationstation/es_input.cfg"
+
+use_batocera_guids = []  # tableau final
+
+try:
+    tree = ET.parse(cfg_file)
+    root = tree.getroot()
+
+    for inputConfig in root.findall('inputConfig'):
+        guid = inputConfig.get('deviceGUID')
+        if guid:
+            use_batocera_guids.append(guid)
+
+except FileNotFoundError:
+    print(f"[INPUT] File not found: {cfg_file}", file=sys.stderr)
+except ET.ParseError as e:
+    print(f"[INPUT] XML parse error: {e}", file=sys.stderr)
+
+# Debug / vérification
+print("[INPUT] GUIDs loaded:", use_batocera_guids, file=sys.stderr)
+
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -23,6 +49,13 @@ if TYPE_CHECKING:
 eslog = logging.getLogger(__name__)
 
 class CitronGenerator(Generator):
+
+    def __init__(self):
+        self.use_batocera_guids = []
+
+    def set_guids(self, guids):
+        self.use_batocera_guids = guids
+        print("[INPUT] GUIDs set in EdenGenerator:", self.use_batocera_guids, file=sys.stderr)
 
     def getHotkeysContext(self) -> HotkeysContext:
         return {
@@ -425,7 +458,7 @@ class CitronGenerator(Generator):
 
             known_reversed_guids = ["03000000c82d00000631000014010000"]
             #These are controllers that use Batocera mappings for some reason
-            use_batocera_guids = ["050000005e0400008e02000030110000","030000005e0400008e02000014010000","0000000053696e64656e206c69676800"]
+            #use_batocera_guids = ["050000005e0400008e02000030110000","030000005e0400008e02000014010000","0000000053696e64656e206c69676800"]
             filename = "/userdata/system/switch/configgen/debugcontrollers.txt"
             if os.path.exists(filename):
                 file = open(filename, 'r')
