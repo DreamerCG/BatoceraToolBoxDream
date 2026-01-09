@@ -26,7 +26,7 @@ class YuzuGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
         return {
-            "name": "yuzu",
+            "name": "yuzu-emu",
             "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"] }
         }
 
