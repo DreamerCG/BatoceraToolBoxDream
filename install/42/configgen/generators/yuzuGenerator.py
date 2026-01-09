@@ -35,7 +35,7 @@ class YuzuGenerator(Generator):
         beforeyuzuConfig = batoceraFiles.CONF + '/yuzu/before-qt-config.ini'
         
         YuzuGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
-        if system.config['emulator'] == 'yuzu':
+        if system.config['emulator'] == 'yuzu-emu':
             commandArray = ["/userdata/system/switch/yuzu-launch.sh", "-f", "-g", rom ]
         return Command.Command(
             array=commandArray,

@@ -35,7 +35,7 @@ class EdenGenerator(Generator):
         beforeyuzuConfig = batoceraFiles.CONF + '/eden/before-qt-config.ini'
         
         EdenGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
-        if system.config['emulator'] == 'eden':
+        if system.config['emulator'] == 'eden-emu':
             commandArray = ["/userdata/system/switch/eden-launch.sh", "-f",  "-g", rom ]
         return Command.Command(
             array=commandArray,

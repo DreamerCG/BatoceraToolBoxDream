@@ -35,7 +35,7 @@ class SudachiGenerator(Generator):
         beforeyuzuConfig = batoceraFiles.CONF + '/sudachi/before-qt-config.ini'
         
         SudachiGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
-        if system.config['emulator'] == 'sudachi':
+        if system.config['emulator'] == 'sudachi-emu':
             commandArray = ["padsp", "/userdata/system/switch/sudachi-launch.sh", "-f",  "-g", rom ]
         return Command.Command(
             array=commandArray,

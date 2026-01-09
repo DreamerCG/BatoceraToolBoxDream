@@ -35,7 +35,7 @@ class CitronGenerator(Generator):
         beforeyuzuConfig = batoceraFiles.CONF + '/citron/before-qt-config.ini'
         
         CitronGenerator.writeYuzuConfig(yuzuConfig,beforeyuzuConfig, system, playersControllers)
-        if system.config['emulator'] == 'citron':
+        if system.config['emulator'] == 'citron-emu':
             commandArray = ["/userdata/system/switch/citron-launch.sh", "-f",  "-g", rom ]
         return Command.Command(
             array=commandArray,
