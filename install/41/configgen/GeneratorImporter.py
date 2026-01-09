@@ -10,15 +10,15 @@ if TYPE_CHECKING:
 
 def getGenerator(emulator: str) -> Generator:
 
-    if emulator == 'eden':
+    if emulator == 'eden-emu':
         from generators.eden.edenGenerator import EdenGenerator
         return EdenGenerator()
 
-    if emulator == 'citron':
+    if emulator == 'citron-emu':
         from generators.citron.citronGenerator import CitronGenerator
         return CitronGenerator()
 
-    if emulator == 'sudachi':
+    if emulator == 'sudachi-emu':
         from generators.sudachi.sudachiGenerator import SudachiGenerator
         return SudachiGenerator()
 
@@ -26,7 +26,7 @@ def getGenerator(emulator: str) -> Generator:
         from generators.yuzu.yuzuMainlineGenerator import YuzuMainlineGenerator
         return YuzuMainlineGenerator()
 
-    if emulator == 'ryujinx':
+    if emulator == 'ryujinx-emu':
         from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
         return RyujinxMainlineGenerator()
 

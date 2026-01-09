@@ -5,6 +5,6 @@ default:
     hud_support: false
 
 switch:
-  emulator: eden
-  core:     eden
+  emulator: eden-emu
+  core:     eden-emu
  

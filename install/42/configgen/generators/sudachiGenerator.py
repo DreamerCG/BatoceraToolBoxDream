@@ -26,7 +26,7 @@ class SudachiGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
         return {
-            "name": "sudachi",
+            "name": "sudachi-emu",
             "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"] }
         }
 

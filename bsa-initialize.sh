@@ -161,7 +161,7 @@ initialize_ryujinx() {
 	mkdir -p "$ryujinx_emu_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
-	add_emulator_to_es_systems "ryujinx"
+	add_emulator_to_es_systems "ryujinx-emu"
 }
 
 # INITIALLIZE YUZU STRUCTURES
@@ -227,7 +227,7 @@ initialize_yuzu() {
 	mkdir -p "$yuzu_emu_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
-	add_emulator_to_es_systems "yuzu"
+	add_emulator_to_es_systems "yuzu-emu"
 }
 
 
@@ -295,7 +295,7 @@ initialize_eden() {
 	mkdir -p "$eden_emu_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
-	add_emulator_to_es_systems "eden"
+	add_emulator_to_es_systems "eden-emu"
 }
 
 
@@ -363,7 +363,7 @@ initialize_citron() {
 	mkdir -p "$citron_emu_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
-	add_emulator_to_es_systems "citron"
+	add_emulator_to_es_systems "citron-emu"
 }
 
 
@@ -433,7 +433,7 @@ initialize_sudachi() {
 	mkdir -p "$sudachi_emu_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
-	add_emulator_to_es_systems "sudachi"
+	add_emulator_to_es_systems "sudachi-emu"
 }
 
 

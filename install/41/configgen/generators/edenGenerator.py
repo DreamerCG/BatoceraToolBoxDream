@@ -26,7 +26,7 @@ class EdenGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
         return {
-            "name": "eden",
+            "name": "eden-emu",
             "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"] }
         }
 
