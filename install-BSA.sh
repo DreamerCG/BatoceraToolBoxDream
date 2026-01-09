@@ -28,7 +28,6 @@ fi
 
 echo "Batocera $version détectée — poursuite de l'installation."
 
-
 set -e
 
 # Download and Install BSA

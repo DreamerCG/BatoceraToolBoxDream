@@ -34,23 +34,9 @@ class RyujinxMainlineGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
         #handles chmod so you just need to download Ryujinx.AppImage
-        if os.path.exists("/userdata/system/switch/extra/ryujinx/Ryujinx.AppImage"):
-            st = os.stat("/userdata/system/switch/extra/ryujinx/Ryujinx.AppImage")
-            os.chmod("/userdata/system/switch/extra/ryujinx/Ryujinx.AppImage", st.st_mode | stat.S_IEXEC)
-        if os.path.exists("/userdata/system/switch/extra/ryujinxavalonia/Ryujinx-Avalonia.AppImage"):
-            st = os.stat("/userdata/system/switch/extra/ryujinxavalonia/Ryujinx-Avalonia.AppImage")
-            os.chmod("/userdata/system/switch/extra/ryujinxavalonia/Ryujinx-Avalonia.AppImage", st.st_mode | stat.S_IEXEC)
-        if os.path.exists("/userdata/system/switch/Ryujinx.AppImage"):
-            st = os.stat("/userdata/system/switch/Ryujinx.AppImage")
-            os.chmod("/userdata/system/switch/Ryujinx.AppImage", st.st_mode | stat.S_IEXEC)
-        if os.path.exists("/userdata/system/switch/Ryujinx-Avalonia.AppImage"):
-            st = os.stat("/userdata/system/switch/Ryujinx-Avalonia.AppImage")
-            os.chmod("/userdata/system/switch/Ryujinx-Avalonia.AppImage", st.st_mode | stat.S_IEXEC)
-
-        if not path.isdir(batoceraFiles.CONF + "/Ryujinx"):
-            os.mkdir(batoceraFiles.CONF + "/Ryujinx")
-        if not path.isdir(batoceraFiles.CONF + "/Ryujinx/system"):
-            os.mkdir(batoceraFiles.CONF + "/Ryujinx/system")
+        if os.path.exists("/userdata/system/switch/ryujinx/Ryujinx.AppImage"):
+            st = os.stat("/userdata/system/switch/ryujinx/Ryujinx.AppImage")
+            os.chmod("/userdata/system/switch/ryujinx/Ryujinx.AppImage", st.st_mode | stat.S_IEXEC)
 
         RyujinxConfig = batoceraFiles.CONF + '/Ryujinx/Config.json'
         RyujinxHome = batoceraFiles.CONF
@@ -64,15 +50,10 @@ class RyujinxMainlineGenerator(Generator):
         RyujinxMainlineGenerator.writeRyujinxConfig(RyujinxConfig, system, playersControllers)
 
         if firstrun:  #Run Ryujinx with no rom so users can install firmware
-            if system.config['emulator'] == 'ryujinx-avalonia':
-                commandArray = ["/userdata/system/switch/Ryujinx-Avalonia.AppImage"]
-            else:
-                commandArray = ["/userdata/system/switch/Ryujinx.AppImage"]
+            commandArray = ["/userdata/system/switch/ryujinx-launch.sh"]
         else:
-            if system.config['emulator'] == 'ryujinx-avalonia':
-                commandArray = ["/userdata/system/switch/Ryujinx-Avalonia.AppImage" , rom]
-            else:
-                commandArray = ["/userdata/system/switch/Ryujinx.AppImage" , rom]
+            commandArray = ["/userdata/system/switch/ryujinx-launch.sh" , rom]
+
         eslog.debug("Controller Config before Playing: {}".format(controllersConfig.generateSdlGameControllerConfig(playersControllers)))
         # X Bos series X gamepads with dongle are very problematic
         if ((system.isOptSet('ryu_sdl_game_controller_config') and not (system.config['ryu_sdl_game_controller_config'] == '0')) or not system.isOptSet('ryu_sdl_game_controller_config')): 
@@ -85,12 +66,8 @@ class RyujinxMainlineGenerator(Generator):
     def writeRyujinxConfig(RyujinxConfigFile, system, playersControllers):
 
         #Get ryujinx version
-        if system.config['emulator'] == 'ryujinx-avalonia':
-            filename = "/userdata/system/switch/extra/ryujinxavalonia/version.txt"
-            os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/extra/ryujinxavalonia/"
-        else:
-            filename = "/userdata/system/switch/extra/ryujinx/version.txt"
-            os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/extra/ryujinx/"
+            filename = "/userdata/system/switch/ryujinx/version.txt"
+            os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
             
         if os.path.exists(filename):
             file = open(filename, 'r')

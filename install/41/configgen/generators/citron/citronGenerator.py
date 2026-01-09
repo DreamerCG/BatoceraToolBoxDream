@@ -70,7 +70,7 @@ class CitronGenerator(Generator):
     def writeYuzuConfig(yuzuConfigFile, beforeyuzuConfigFile, system, playersControllers):
         # pads
         
-         os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
+        os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
         
         yuzuButtons = {
             "button_a":      "a",
