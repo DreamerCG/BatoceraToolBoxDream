@@ -17,19 +17,22 @@ sleep 1
 
 # Vérification que la version est bien détectée
 if [[ -z "$version" ]]; then
-    dialog --msgbox "Impossible de détecter une version valide de Batocera.\nInstallation annulée." 8 60
-    clear
+    echo "ERROR: Impossible de détecter une version valide de Batocera."
+    echo "Installation annulée."
     exit 1
 fi
 
 # Vérification stricte : uniquement Batocera 43 autorisée
 if [[ "$version" -ne 43 ]]; then
-    dialog --msgbox "Version Batocera non supportée.\n\nVersion détectée : $version\nVersion requise : 43\n\nInstallation interrompue." 10 60
-    clear
+    echo "ERROR: Version Batocera non supportée."
+    echo "Version détectée : $version"
+    echo "Version requise  : 43"
+    echo "Installation interrompue."
     exit 1
 fi
 
-echo "Batocera $version détectée — poursuite de l'installation."
+echo "OK: Batocera 43 détectée — poursuite de l'installation."
+
 
 
 
