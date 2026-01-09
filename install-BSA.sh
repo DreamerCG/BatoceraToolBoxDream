@@ -13,7 +13,7 @@ echo "Attempting to Install BSA ..."
 version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
 
 echo "Detected Batocera version: $version"
-sleep 1
+
 
 # Vérification que la version est bien détectée
 if [[ -z "$version" ]]; then
