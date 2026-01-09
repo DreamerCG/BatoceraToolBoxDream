@@ -2,7 +2,7 @@
 # BATOCERA - SWITCH ADD-ON
 TERM=xterm clear > /dev/tty 2>/dev/null || printf "\033c" > /dev/tty
 
-set -e
+
 trap 'rm -f "$temp_file"' EXIT
 
 echo "BATOCERA - SWITCH ADD-ON"
@@ -34,7 +34,7 @@ fi
 echo "OK: Batocera 43 détectée — poursuite de l'installation."
 
 
-
+set -e
 
 # Download and Install BSA
 (
