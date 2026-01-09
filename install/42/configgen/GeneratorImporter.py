@@ -31,3 +31,4 @@ def get_generator(emulator: str) -> Generator:
         return RyujinxGenerator()
 
     raise Exception(f"no generator found for emulator {emulator}")
+ 
