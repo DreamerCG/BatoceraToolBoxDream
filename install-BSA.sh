@@ -11,8 +11,9 @@ echo "Attempting to Install BSA ..."
 
 # Récupération de la version principale de Batocera
 version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
-Echo "Detected Batocera version: $version"
 
+echo "Detected Batocera version: $version"
+pause 10
 
 # Vérification que la version est bien un nombre
 if [[ -z "$version" ]]; then
@@ -21,8 +22,6 @@ if [[ -z "$version" ]]; then
     exit 1
 fi
 
-
-exit 1
 
 # Download and Install BSA
 (
