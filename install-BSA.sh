@@ -8,6 +8,20 @@ trap 'rm -f "$temp_file"' EXIT
 echo "BATOCERA - SWITCH ADD-ON"
 echo ""
 echo "Attempting to Install BSA ..."
+
+# Récupération de la version principale de Batocera
+version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
+
+# Vérification que la version est bien un nombre
+if [[ -z "$version" ]]; then
+    dialog --msgbox "Impossible de détecter une version valide de Batocera. Installation annulée." 8 60
+    clear
+    exit 1
+fi
+
+echo "Detected Batocera version: $version"
+
+
 # Download and Install BSA
 (
 	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/heads/main.tar.gz"
