@@ -17,7 +17,8 @@ import sys
 
 
 # Chemin du fichier es_input.cfg
-cfg_file = "/userdata/system/configs/emulationstation/es_input.cfg"
+#cfg_file = "/userdata/system/configs/emulationstation/emulationstation/es_input.cfg"
+cfg_file = "/usr/share/emulationstation/es_input.cfg"
 
 use_batocera_guids = []  # tableau final
 
