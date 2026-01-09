@@ -22,6 +22,8 @@ if [[ -z "$version" ]]; then
 fi
 
 
+exit 1
+
 # Download and Install BSA
 (
 	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/heads/main.tar.gz"
@@ -149,8 +151,5 @@ killall -9 emulationstation
 sleep 1
 
 echo "ToolBox Installed!"
-echo ""
-echo "*** Remember to place your files in the appropriate BSA folders before installing ***"
-echo ""
 echo "Launch DreamerCG ToolBox from the Ports menu."
 echo ""
