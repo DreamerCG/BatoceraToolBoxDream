@@ -8,7 +8,7 @@ trap 'rm -f "$temp_file"' EXIT
 echo "BATOCERA - SWITCH ADD-ON"
 echo ""
 echo "Attempting to Install BSA ..."
-
+# Download and Install BSA
 (
 	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/heads/main.tar.gz"
 
