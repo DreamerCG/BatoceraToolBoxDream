@@ -17,7 +17,8 @@ import sys
 
 
 # Chemin du fichier es_input.cfg
-cfg_file = "/userdata/system/configs/emulationstation/es_input.cfg"
+cfg_file_perso = "/userdata/system/configs/emulationstation/es_input.cfg"
+cfg_file = "/usr/share/emulationstation/es_input.cfg"
 
 use_batocera_guids = []  # tableau final
 
@@ -34,6 +35,17 @@ except FileNotFoundError:
     print(f"[INPUT] File not found: {cfg_file}", file=sys.stderr)
 except ET.ParseError as e:
     print(f"[INPUT] XML parse error: {e}", file=sys.stderr)
+
+
+try:
+    tree = ET.parse(cfg_file_perso)
+    root = tree.getroot()
+
+    for inputConfig in root.findall('inputConfig'):
+        guid = inputConfig.get('deviceGUID')
+        if guid:
+            use_batocera_guids.append(guid)
+
 
 # Debug / vérification
 print("[INPUT] GUIDs loaded:", use_batocera_guids, file=sys.stderr)
