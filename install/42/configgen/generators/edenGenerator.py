@@ -54,11 +54,6 @@ except ET.ParseError as e:
 print("[INPUT] GUIDs loaded:", use_batocera_guids, file=sys.stderr)
 
 
-
-# Debug / vérification
-print("[INPUT] GUIDs loaded:", use_batocera_guids, file=sys.stderr)
-
-
 if TYPE_CHECKING:
     from pathlib import Path
 

@@ -15,7 +15,6 @@ from typing import TYPE_CHECKING, Final
 import xml.etree.ElementTree as ET
 import sys
 
-
 # Chemin du fichier es_input.cfg
 cfg_file_perso = "/userdata/system/configs/emulationstation/es_input.cfg"
 cfg_file = "/usr/share/emulationstation/es_input.cfg"
@@ -36,7 +35,6 @@ except FileNotFoundError:
 except ET.ParseError as e:
     print(f"[INPUT] XML parse error: {e}", file=sys.stderr)
 
-
 try:
     tree = ET.parse(cfg_file_perso)
     root = tree.getroot()
@@ -46,6 +44,10 @@ try:
         if guid:
             use_batocera_guids.append(guid)
 
+except FileNotFoundError:
+    print(f"[INPUT] File not found: {cfg_file}", file=sys.stderr)
+except ET.ParseError as e:
+    print(f"[INPUT] XML parse error: {e}", file=sys.stderr)
 
 # Debug / vérification
 print("[INPUT] GUIDs loaded:", use_batocera_guids, file=sys.stderr)
