@@ -13,14 +13,23 @@ echo "Attempting to Install BSA ..."
 version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
 
 echo "Detected Batocera version: $version"
+sleep 1
 
-
-# Vérification que la version est bien un nombre
+# Vérification que la version est bien détectée
 if [[ -z "$version" ]]; then
-    dialog --msgbox "Impossible de détecter une version valide de Batocera. Installation annulée." 8 60
+    dialog --msgbox "Impossible de détecter une version valide de Batocera.\nInstallation annulée." 8 60
     clear
     exit 1
 fi
+
+# Vérification stricte : uniquement Batocera 43 autorisée
+if [[ "$version" -ne 43 ]]; then
+    dialog --msgbox "Version Batocera non supportée.\n\nVersion détectée : $version\nVersion requise : 43\n\nInstallation interrompue." 10 60
+    clear
+    exit 1
+fi
+
+echo "Batocera $version détectée — poursuite de l'installation."
 
 
 
