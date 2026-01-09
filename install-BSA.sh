@@ -2,14 +2,6 @@
 # BATOCERA - SWITCH ADD-ON
 TERM=xterm clear > /dev/tty 2>/dev/null || printf "\033c" > /dev/tty
 
-set -e
-trap 'rm -f "$temp_file"' EXIT
-
-
-echo "BATOCERA - SWITCH ADD-ON"
-echo ""
-echo "Attempting to Install BSA ..."
-
 
 # Récupération de la version principale de Batocera
 version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
@@ -25,6 +17,13 @@ echo "Version détectée de Batocera $version"
 exit 1
 
 
+
+set -e
+trap 'rm -f "$temp_file"' EXIT
+
+echo "BATOCERA - SWITCH ADD-ON"
+echo ""
+echo "Attempting to Install BSA ..."
 
 (
 	url="https://github.com/DreamerCG/BatoceraToolBoxDream/archive/refs/heads/main.tar.gz"
