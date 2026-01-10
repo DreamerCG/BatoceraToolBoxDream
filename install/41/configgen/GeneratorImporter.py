@@ -18,23 +18,7 @@ def getGenerator(emulator: str) -> Generator:
         from generators.citron.citronGenerator import CitronGenerator
         return CitronGenerator()
 
-    if emulator == 'sudachi-emu':
-        from generators.sudachi.sudachiGenerator import SudachiGenerator
-        return SudachiGenerator()
-
-    if emulator == 'yuzu-early-access':
-        from generators.yuzu.yuzuMainlineGenerator import YuzuMainlineGenerator
-        return YuzuMainlineGenerator()
-
     if emulator == 'ryujinx-emu':
-        from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
-        return RyujinxMainlineGenerator()
-
-    if emulator == 'ryujinx-continuous':
-        from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
-        return RyujinxMainlineGenerator()
-
-    if emulator == 'ryujinx-avalonia':
         from generators.ryujinx.ryujinxMainlineGenerator import RyujinxMainlineGenerator
         return RyujinxMainlineGenerator()
 

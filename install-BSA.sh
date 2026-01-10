@@ -66,7 +66,6 @@ curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/h
 # Set execute permissions for the downloaded scripts
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
 
-
 # Refresh the Ports menu
 echo "Refreshing Ports menu..."
 curl http://127.0.0.1:1234/reloadgames
