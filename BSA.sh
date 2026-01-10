@@ -94,6 +94,7 @@ update_emulator() {
 	fi
 
 	"install_emulator_${emu}"
+	"unpack_packages_${emu}"
 }
 
 # MOVE ROMS
