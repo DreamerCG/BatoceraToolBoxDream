@@ -67,8 +67,8 @@ class RyujinxMainlineGenerator(Generator):
 
         #Get ryujinx version
         filename = "/userdata/system/switch/ryujinx/version.txt"
-        os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
-            
+        os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"    
+
         if os.path.exists(filename):
             file = open(filename, 'r')
             versiontxt = file.read()
