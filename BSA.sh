@@ -93,8 +93,10 @@ update_emulator() {
 		fi
 	fi
 
+	# Re-install the emulator
+	"initialize_${emu}"
 	"install_emulator_${emu}"
-	"unpack_packages_${emu}"
+	
 }
 
 # MOVE ROMS
