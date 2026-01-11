@@ -24,7 +24,6 @@ from configgen.generators.Generator import Generator
 from configgen.utils.configparser import CaseSensitiveRawConfigParser
 from configgen.input import Input, InputDict, InputMapping
 
-
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
 
 import sdl2
@@ -213,46 +212,34 @@ class YuzuMainlineGenerator(Generator):
         }
 
     def executionDirectory(self, config, rom):
-        return "/userdata/system/switch/configgen/generators"
+        return "/userdata/system/switch/"
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
         emulator = system.config['emulator']
 
-        if emulator == 'torzu':
-            emudir = 'yuzu'
-        elif emulator == 'citron-legacy':
+        if emulator == 'citron-emu':
             emudir = 'citron'
-        elif emulator == 'eden-pgo':
+        elif emulator == 'eden-emu':
             emudir = 'eden'
-        elif emulator == 'eden-legacy':
-            emudir = 'eden'
-        elif emulator == 'citron-emu':
-            emudir = 'citron'			
-            emuname = 'citron'						
         else:
             emudir = emulator
-            emuname = emulator
 
         sdlversion = 2
-        if emulator == 'citron' or emulator == 'citron-legacy':
+        if emulator == 'citron' or emulator == 'citron-emu':
             sdlversion = 3
 
+        #handles chmod so you just need to download yuzu.AppImage
+        st = os.stat("/userdata/system/switch/"+emudir+"/"+emudir+".AppImage")
+        os.chmod("/userdata/system/switch/"+emudir+"/"+emudir+".AppImage", st.st_mode | stat.S_IEXEC)
 
-        #handles chmod so you just need to download yuzu.AppImage  /userdata/system/switch/
-        st = os.stat("/userdata/system/switch/"+emudir+"/"+emuname+".AppImage")
-        os.chmod("/userdata/system/switch/"+emudir+"/"+emuname+".AppImage", st.st_mode | stat.S_IEXEC)
+        yuzuConfig = str(CONFIGS) + '/'+emudir+'/qt-config.ini'
+        print("Yuzu Config Path : " + yuzuConfig,file=sys.stderr)
+        yuzuConfigTemplate = '/userdata/system/switch/configgen/qt-config.ini.template'
 
-        yuzuConfig = str(CONFIGS) + '/"+emudir+"/qt-config.ini'
-        print("Yuzu emulator :", emudir, file=sys.stderr)
-        print("Yuzu Config :", yuzuConfig, file=sys.stderr)
+        YuzuMainlineGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emudir)
 
-        #yuzuConfigTemplate = '/userdata/system/switch/configgen/generators/"+emulator+"/before-qt-config.ini'
-        yuzuConfigTemplate = '/userdata/system/switch/configgen/generators/"+emulator+"/qt-config.ini.template'
-
-        YuzuMainlineGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emulator)
-
-        commandArray = ["/userdata/system/switch/"+emudir+"/"+emuname+".AppImage", "-f",  "-g", rom ]
+        commandArray = ["./"+emudir+"/"+emudir+".AppImage", "-f",  "-g", rom ]
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
@@ -329,14 +316,29 @@ class YuzuMainlineGenerator(Generator):
         if not yuzuConfig.has_section("UI"):
             yuzuConfig.add_section("UI")
 
-        if system.isOptSet('yuzu_enable_discord_presence'):
-            yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
+        if system.isOptSet(emulator+"_enable_discord_presence"):
+            yuzuConfig.set("UI", "enable_discord_presence", system.config[emulator+"_enable_discord_presence"])
         else:
             yuzuConfig.set("UI", "enable_discord_presence", "false")
 
         yuzuConfig.set("UI", "enable_discord_presence\\default", "false")
-
-
+        yuzuConfig.set("UI", "check_for_updates_on_start", "false")
+        yuzuConfig.set("UI", "check_for_updates_on_start\\default", "false")
+        yuzuConfig.set("UI", "hideInactiveMouse", "true")
+        yuzuConfig.set("UI", "hideInactiveMouse\\default", "true")
+        
+        # Roms path (need for load update/dlc)
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan\\default", "false")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\expanded", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\expanded\\default", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\path", "/userdata/roms/switch")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\size", "1")
+        yuzuConfig.set("UI", "Screenshots\\enable_screenshot_save_as", "true")
+        yuzuConfig.set("UI", "Screenshots\\enable_screenshot_save_as\\default", "true")
+        yuzuConfig.set("UI", "Screenshots\\screenshot_path", "/userdata/screenshots")
+        yuzuConfig.set("UI", "Screenshots\\screenshot_path\\default", "false")        
+        
         # Single Window Mode
         if system.isOptSet('single_window'):
             yuzuConfig.set("UI", "singleWindowMode", system.config["single_window"])
@@ -352,6 +354,29 @@ class YuzuMainlineGenerator(Generator):
         else:
             yuzuConfig.set("UI", "select_user_on_boot", "true")
             yuzuConfig.set("UI", "select_user_on_boot\\default", "true")
+
+
+    # Data Storage section
+        if not yuzuConfig.has_section("Data%20Storage"):
+            yuzuConfig.add_section("Data%20Storage")
+
+        yuzuConfig.set("Data%20Storage", "dump_directory", "/userdata/system/configs/"+emulator+"/dump")
+        yuzuConfig.set("Data%20Storage", "dump_directory\\default", "true")
+
+        yuzuConfig.set("Data%20Storage", "load_directory", "/userdata/system/configs/"+emulator+"/load")
+        yuzuConfig.set("Data%20Storage", "load_directory\\default", "true")
+
+        yuzuConfig.set("Data%20Storage", "nand_directory", "/userdata/system/configs/"+emulator+"/nand")
+        yuzuConfig.set("Data%20Storage", "nand_directory\\default", "true")
+
+        yuzuConfig.set("Data%20Storage", "sdmc_directory", "/userdata/system/configs/"+emulator+"/sdmc")
+        yuzuConfig.set("Data%20Storage", "sdmc_directory\\default", "true")
+
+        yuzuConfig.set("Data%20Storage", "tas_directory", "/userdata/system/configs/"+emulator+"/tas")
+        yuzuConfig.set("Data%20Storage", "tas_directory\\default", "true")
+
+        yuzuConfig.set("Data%20Storage", "use_virtual_sd", "true")
+        yuzuConfig.set("Data%20Storage", "use_virtual_sd\\default", "true")
 
 
     # Core section
@@ -371,18 +396,18 @@ class YuzuMainlineGenerator(Generator):
             yuzuConfig.add_section("Renderer")
 
         # Aspect ratio
-        if system.isOptSet('yuzu_ratio'):
-            yuzuConfig.set("Renderer", "aspect_ratio", system.config["yuzu_ratio"])
+        if system.isOptSet(emulator+'_ratio'):
+            yuzuConfig.set("Renderer", "aspect_ratio", system.config[emulator+'_ratio'])
             yuzuConfig.set("Renderer", "aspect_ratio\\default", "false")
         else:
             yuzuConfig.set("Renderer", "aspect_ratio", "0")
             yuzuConfig.set("Renderer", "aspect_ratio\\default", "true")
 
         # Graphical backend
-        if system.isOptSet('yuzu_backend'):
-            yuzuConfig.set("Renderer", "backend", system.config["yuzu_backend"])
+        if system.isOptSet(emulator+'_backend'):
+            yuzuConfig.set("Renderer", "backend", system.config[emulator+'_backend'])
         else:
-            yuzuConfig.set("Renderer", "backend", "0")
+            yuzuConfig.set("Renderer", "backend", "1")
         yuzuConfig.set("Renderer", "backend\\default", "false")
 
         # Async Shader compilation
@@ -513,7 +538,6 @@ class YuzuMainlineGenerator(Generator):
             yuzuConfig.add_section("System")
 
         # Language
-        print("Langue Perso :",system.config["language"], file=sys.stderr)
         if system.isOptSet('language'):
             yuzuConfig.set("System", "language_index", system.config["language"])
             yuzuConfig.set("System", "language_index\\default", "false")
@@ -553,8 +577,13 @@ class YuzuMainlineGenerator(Generator):
         if not yuzuConfig.has_section("Controls"):
             yuzuConfig.add_section("Controls")
 
+        print("Players Controllers Detected : ", len(playersControllers), file=sys.stderr)
+        print("Emulateur : " + emulator, file=sys.stderr)
+        print("Debug SDL Version for gamepad mapping : ", sdlversion, file=sys.stderr)
+        print("Auto Controller_Config Debug : ", system.config.get('citron_auto_controller_config'), file=sys.stderr)
+        print("Auto Controller_Config pour " + emulator + "_auto_controller_config : ", system.config.get(emulator + '_auto_controller_config'), file=sys.stderr)
 
-        if not system.isOptSet('yuzu_auto_controller_config') or system.config["yuzu_auto_controller_config"] != "0":
+        if not system.isOptSet(emulator + '_auto_controller_config') or system.config[emulator + '_auto_controller_config'] != "0":
             #get the evdev->hidraw mapping
             evdev_hidraw = evdev_to_hidraw()
             #get sdllib  hidapi/hidraw + evdev guid
@@ -575,7 +604,6 @@ class YuzuMainlineGenerator(Generator):
                 elif pad.device_path in sdl_gamepads:
                     pad.inputs = sdl_gamepads[pad.device_path]['inputs']
                 #fallback to inputs from ES
-
 
 
                 #port index is by guid
@@ -641,7 +669,7 @@ class YuzuMainlineGenerator(Generator):
 
          if key in padInputs:
 
-             if emulator in ['citron', 'sudachi'] and key in ['left', 'right', 'up', 'down']:
+             if emulator in ['citron-emu', 'eden-emu'] and key in ['left', 'right', 'up', 'down']:
                  return ("hat:0,pad:0,direction:{},guid:{},port:{},engine:sdl").format(key, padGuid, port)
 
              input = padInputs[key]
