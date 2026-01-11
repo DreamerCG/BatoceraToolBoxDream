@@ -251,19 +251,19 @@ fixes_menu() {
 # Uninstall Menu
 uninstall_menu() {
 	local menu_items=(
-		"BSA|Remove BSA not Firmware/Keys/Saves/Amiibo|off|fn|uninstall_BSA"
-		"Firmware|Remove Firmware|off|fn|uninstall_firmware"
-		"Keys|Remove Keys|off|fn|uninstall_keys"
-		"Amiibo|Remove Amiibo|off|fn|uninstall_amiibo"
-		"Saves|Remove Saves|off|fn|uninstall_saves"
+		"BSA|Supprimer BSA not Firmware/Keys/Saves/Amiibo|off|fn|uninstall_BSA"
+		"Firmware|Supprimer Firmware|off|fn|uninstall_firmware"
+		"Keys|Supprimer Keys|off|fn|uninstall_keys"
+		"Amiibo|Supprimer Amiibo|off|fn|uninstall_amiibo"
+		"Saves|Supprimer Saves|off|fn|uninstall_saves"
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Uninstall" "$menu_height" "$menu_width" "$menu_list_height" \
 		"Desinstaller" "Annuler" "on" \
-		"Select Emulators/Packages to Uninstall" \
-		"Confirm Uninstall" "Uninstall?" \
-		"BSA :: UNINSTALLING" "" \
-		"UNINSTALLING" "UNINSTALLED" \
+		"Choix des packages à désinstaller" \
+		"Confirmer la désinstallation" "Desinstaller?" \
+		":: Desinstallation" "" \
+		"Desinstallation" "Desinstallation" \
 		"${menu_items[@]}"
 }
 
