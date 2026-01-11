@@ -3,4 +3,4 @@
 source /userdata/system/switch/bsa-pre-common.sh
 
 # Run Citron
-/userdata/system/switch/citron/citron.AppImage
+/userdata/system/switch/emulateur/citron.AppImage

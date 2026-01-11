@@ -214,6 +214,8 @@ switch_configgen_dir="$switch_system_dir/configgen"
 switch_bin_dir="$switch_system_dir/bin"
 # SWITCH: LIB
 switch_lib_dir="$switch_system_dir/lib"
+# SWITCH: APPIMAGE
+switch_Appimage_dir="$switch_system_dir/emulateur"
 
 
 # ==============================================================================
@@ -242,7 +244,7 @@ ryujinx_install_file="Ryujinx.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 ryujinx_install_url=""
 # EMULATOR DIRECTORY
-ryujinx_emu_dir="$switch_system_dir/ryujinx"
+ryujinx_emu_dir="$switch_Appimage_dir"
 
 
 # ==============================================================================
@@ -269,7 +271,7 @@ yuzu_install_file="yuzu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 yuzu_install_url="https://foclabroc.freeboxos.fr:55973/share/6_FB-NuZriqYuHKt/yuzuea4176.AppImage"
 # EMULATOR DIRECTORY
-yuzu_emu_dir="$switch_system_dir/yuzu"
+yuzu_emu_dir="$switch_Appimage_dir"
 
 
 # ==============================================================================
@@ -293,7 +295,7 @@ eden_install_file="eden.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 eden_install_url=""
 # EMULATOR DIRECTORY
-eden_emu_dir="$switch_system_dir/eden"
+eden_emu_dir="$switch_Appimage_dir"
 
 
 # ==============================================================================
@@ -317,7 +319,7 @@ citron_install_file="citron.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 citron_install_url=""
 # EMULATOR DIRECTORY
-citron_emu_dir="$switch_system_dir/citron"
+citron_emu_dir="$switch_Appimage_dir"
 
 
 # ==============================================================================
@@ -341,6 +343,6 @@ sudachi_install_file="sudachi.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 sudachi_install_url="https://foclabroc.freeboxos.fr:55973/share/HYaogouYa05jIPgq/sudachi1.0.15.AppImage"
 # EMULATOR DIRECTORY
-sudachi_emu_dir="$switch_system_dir/sudachi"
+sudachi_emu_dir="$switch_Appimage_dir"
 
 

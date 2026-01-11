@@ -3,4 +3,4 @@
 source /userdata/system/switch/bsa-pre-common.sh
 
 # Run Yuzu
-/userdata/system/switch/yuzu/yuzu.AppImage
+/userdata/system/switch/emulateur/yuzu.AppImage
