@@ -43,11 +43,8 @@ SOURCED_VARIABLES=true
 batocera_version="$(batocera-es-swissknife --version | grep -oE '^[0-9]+')"
 
 case "$batocera_version" in
-	3[9]|40)
-		folder_version=40
-		;;
 	41)
-		folder_version=41
+		folder_version=41B
 		;;
 	4[2-3])
 		folder_version=42
