@@ -86,7 +86,6 @@ cd /userdata/BSA
 │   ├── citron.AppImage     # Citron AppImage
 │   ├── eden.AppImage       # Eden AppImage
 │   ├── Ryujinx.AppImage    # Ryujinx AppImage
-│   ├── sudachi.AppImage    # Sudachi AppImage
 │   └── yuzu.AppImage       # Yuzu AppImage
 │
 ├── icons/    # Icons for Desktop [F1]
@@ -135,7 +134,6 @@ cd /userdata/BSA
 │   └── xdotool.pkg.tar.zst      # XDO Tools
 │
 ├── roms/         # ROMs
-│   ├── ports/    # Adds Sudachi Q-Launcher
 │   └── roms/     # Switch ROMs
 │
 ├── scripts/    # Scripts
@@ -165,7 +163,6 @@ cd /userdata/BSA
 │       └── keys_yuzu/           # Yuzu Keys (must match Firmware)
 │
 ├── roms/
-│   ├── ports/     # Adds Sudachi Q-Launcher
 │   └── switch/    # ROMs here
 │
 ├── saves/
@@ -189,7 +186,6 @@ cd /userdata/BSA
     │   ├── yuzu/       # Symlink to /userdata/system/configs/yuzu/
     │   ├── eden/       # Symlink to /userdata/system/configs/eden
     │   ├── citron/     # Symlink to /userdata/system/configs/citron
-    │   └── sudachi/    # Symlink to /userdata/system/configs/sudachi
     │
     ├── .local/
     │   └── share/
@@ -197,7 +193,6 @@ cd /userdata/BSA
     │       ├── yuzu/       # Symlink to /userdata/system/configs/yuzu
     │       ├── eden/       # Symlink to /userdata/system/configs/eden
     │       ├── citron/     # Symlink to /userdata/system/configs/citron
-    │       └── sudachi/    # Symlink to /userdata/system/configs/sudachi
     │
     └── configs/
         ├── Ryujinx/
@@ -234,9 +229,4 @@ cd /userdata/BSA
         │   ├── amiibo/    # Symlink to /userdata/bios/switch/amiibo
         │   ├── keys/      # Symlink to /userdata/bios/switch/keys_yuzu
         │   └── nand/      # Symlink to /userdata/system/configs/yuzu/nand
-        │
-        └── sudachi/
-            ├── amiibo/    # Symlink to /userdata/bios/switch/amiibo
-            ├── keys/      # Symlink to /userdata/bios/switch/keys_yuzu
-            └── nand/      # Symlink to /userdata/system/configs/yuzu/nand
 </pre>

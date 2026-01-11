@@ -6,12 +6,6 @@
 SOURCED_POST=true
 
 
-# INSTALL PORTS (Sudachi QLauncher)
-post_install_ports() {
-	message "log" "$addon_log" "<<< [ INSTALL PORTS ]>>>"
-	copy_roms "$switch_install_roms_ports_dir" "$switch_ports_dir"
-}
-
 
 # INSTALL ROMS
 post_install_roms() {
@@ -110,17 +104,4 @@ post_install_citron() {
 	# REPLACE WITH CODE
 	message "log" "$addon_log" "N/A"
 }
-
-
-# POST INSTALL SUDACHI
-post_install_sudachi() {
-	# POST INSTALL COMMON YUZU
-	post_install_yuzu_common
-
-	message "log" "$addon_log" "<<< [ POST INSTALL FOR SUDACHI ]>>>"
-
-	# REPLACE WITH CODE
-	message "log" "$addon_log" "N/A"
-}
-
 

@@ -91,7 +91,6 @@ OPT_INSTALL_RYUJINX="TRUE"
 OPT_INSTALL_YUZU="TRUE"
 OPT_INSTALL_EDEN="TRUE"
 OPT_INSTALL_CITRON="TRUE"
-OPT_INSTALL_SUDACHI="TRUE"
 OPT_PACKAGE_BIOS_RYUJINX="TRUE"
 OPT_PACKAGE_BIOS_YUZU="TRUE"
 OPT_PACKAGE_KEYS_RYUJINX="TRUE"
@@ -103,7 +102,7 @@ OPT_FIX_DIR_LINKS_RYUJINX="FALSE"
 OPT_FIX_DIR_LINKS_YUZU="FALSE"
 OPT_FIX_DIR_LINKS_EDEN="FALSE"
 OPT_FIX_DIR_LINKS_CITRON="FALSE"
-OPT_FIX_DIR_LINKS_SUDACHI="FALSE"
+
 
 
 # ******************************************************************************
@@ -320,29 +319,4 @@ citron_install_file="citron.AppImage"
 citron_install_url=""
 # EMULATOR DIRECTORY
 citron_emu_dir="$switch_Appimage_dir"
-
-
-# ==============================================================================
-# ******************************************************************************
-#  SUDACHI VARIABLES
-# ******************************************************************************
-# ==============================================================================
-# ORIGINAL (What the AppImage Uses) CONFIG DIRECTORIES (WILL BE SYMBOLIC LINKS TO NEW CONFIG DIRECTORIES)
-sudachi_og_config_dir="$system_hidden_config_dir/sudachi"
-sudachi_og_local_config_dir="$local_share_dir/sudachi"
-# NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
-sudachi_config_dir="$system_configs_dir/sudachi" # ROOT
-sudachi_config_nand_dir="$sudachi_config_dir/nand" # NAND
-sudachi_config_firmware_dir="$sudachi_config_nand_dir/system/Contents/registered" # FIRMWARE
-sudachi_config_keys_dir="$sudachi_config_dir/keys" # KEYS
-sudachi_config_saves_dir="$sudachi_config_dir/nand/user/save" # SAVES (OLD)
-sudachi_config_amiibo_dir="$sudachi_config_dir/amiibo" # AMIIBO
-sudachi_saves_dir="$system_saves_dir/yuzu" # SAVES (NEW)
-# EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
-sudachi_install_file="sudachi.AppImage"
-# EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
-sudachi_install_url="https://foclabroc.freeboxos.fr:55973/share/HYaogouYa05jIPgq/sudachi1.0.15.AppImage"
-# EMULATOR DIRECTORY
-sudachi_emu_dir="$switch_Appimage_dir"
-
 

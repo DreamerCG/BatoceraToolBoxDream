@@ -235,7 +235,7 @@ unpack_packages_yuzu_keys() {
 # UNPACK YUZU SAVES PACKAGE
 unpack_packages_yuzu_saves() {
 	# RESTORE SAVES
-	#	Yuzu, Eden, Citron, Sudachi
+	#	Yuzu, Eden, Citron
 	#	*** Zip File structure
 	#		|-> system
 	#			|-> save
@@ -343,24 +343,4 @@ unpack_packages_citron() {
 	# UNPACK CITRON ONLY PACKAGES
 	unpack_packages_citron_only
 }
-
-
-# UNPACK SUDACHI ONLY PACKAGES
-unpack_packages_sudachi_only() {
-	message "log" "$addon_log" "<<< [ UNPACK SUDACHI PACKAGES ]>>>"
-	
-	# REPLACE WITH CODE
-	message "log" "$addon_log" "N/A"
-}
-
-
-# UNPACK PACKAGES SUDACHI
-unpack_packages_sudachi() {
-	# UNPACK COMMON PACKAGES FOR YUZU & FORKS
-	unpack_packages_common_yuzu
-
-	# UNPACK SUDACHI ONLY PACKAGES
-	unpack_packages_sudachi_only
-}
-
 

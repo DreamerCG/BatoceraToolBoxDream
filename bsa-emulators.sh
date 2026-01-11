@@ -83,22 +83,3 @@ install_emulator_citron() {
 }
 
 
-
-# INSTALL SUDACHI APPIMAGE
-install_emulator_sudachi() {
-	message "log" "$addon_log" "<<< [ INSTALL : SUDACHI ]>>>"
-
-	# INSTALL/UNPACK EMULATOR
-	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
-	message "log" "$addon_log" "Installing Sudachi Emulator App"
-	# Get lastest version from database & set the version for download
-	sudachi_release_html=""
-	sudachi_release_version=""
-	sudachi_install_url="https://foclabroc.freeboxos.fr:55973/share/HYaogouYa05jIPgq/sudachi1.0.15.AppImage"
-	download_missing_file "$sudachi_install_url" "$switch_install_emus_dir/$sudachi_install_file" "Sudachi"
-	if [ $wget_exit_code -eq 0 ]; then
-		copy_make_executable "$sudachi_install_file" "$switch_install_emus_dir" "$sudachi_emu_dir"
-	fi
-}
-
-

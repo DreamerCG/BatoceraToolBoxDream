@@ -4,7 +4,6 @@ export DISPLAY=:0.0
 reset
 clear
 
-
 # THIS SCRIPT
 this_script_file="${0##*/}"
 this_script_file_name="${this_script_file%.*}"
@@ -17,14 +16,11 @@ chmod a+x *.sh 2>>/dev/null
 dos2unix *.py 2>>/dev/null
 chmod a+x *.py 2>>/dev/null
 
-
 # GLOBAL VARIABLES
 source bsa-variables.sh
 
-
 # GLOBAL FUNCTIONS
 source bsa-functions.sh
-
 
 # ******************************************************************************
 # CHECK SYSTEM BEFORE PROCEEDING
@@ -165,7 +161,6 @@ install_menu() {
 		"Citron|Install Citron|off|fn|full_install "citron""
 		"Ryujinx|Install Ryujinx|off|fn|full_install "ryujinx""
 		"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
-		#"Sudachi|Install Sudachi|on|fn|full_install "sudachi""
 	)
 	unset RAN_POST_INSTALL_COMMON
 	unset RAN_POST_INSTALL_COMMON_YUZU
@@ -190,8 +185,6 @@ updates_menu() {
 		"Citron Remote|Update Citron Remote|off|fn|update_emulator "citron" "remote""
 		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
 		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
-		#"Sudachi Local|Update Sudachi Local|off|fn|update_emulator "sudachi" "local""
-		#"Sudachi Remote|Update Sudachi Remote|off|fn|update_emulator "sudachi" "remote""
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Update" "$menu_height" "$menu_width" "$menu_list_height" \
@@ -231,7 +224,6 @@ packages_menu() {
 roms_menu() {
 	local menu_items=(
 		"COPY ROMS|Copy ROMs from BSA|on|fn|post_install_roms"
-		"COPY PORTS|Sudachi QLauncher|off|fn|post_install_ports"
 		"MOVE ROMS|Move ROMs from BSA|off|fn|move_roms"
 	)
 	create_dialog_checkbox_menu \
@@ -268,8 +260,6 @@ fixes_menu() {
 		"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
 		"Eden|Fix Eden Structure|off|fn|initialize_eden"
 		"Citron|Fix Citron Structure|off|fn|initialize_citron"
-		#"Yuzu|Fix Yuzu Structure|off|fn|initialize_yuzu"
-		#"Sudachi|Fix Sudachi Structure|off|fn|initialize_sudachi"
 	)
 	unset RAN_INITIALIZE_COMMON
 	create_dialog_checkbox_menu \
@@ -294,7 +284,7 @@ uninstall_menu() {
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Uninstall" "$menu_height" "$menu_width" "$menu_list_height" \
-		"UNINSTALL" "CANCEL" "on" \
+		"Desinstaller" "Annuler" "on" \
 		"Select Emulators/Packages to Uninstall" \
 		"Confirm Uninstall" "Uninstall?" \
 		"BSA :: UNINSTALLING" "" \
@@ -317,7 +307,7 @@ tools_menu() {
 	)
 	create_dialog_list_menu \
 		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
-		"OPEN" "CANCEL" "on" \
+		"Ouvrir" "Annuler" "on" \
 		"DO YOU WANT TO SWITCH?" \
 		"${menu_items[@]}"
 }
@@ -326,23 +316,23 @@ tools_menu() {
 main_menu() {
 	local exit_status
 	local menu_items=(
-		"INSTALL|Install Batocera Switch Add-on|fn|install_menu"
-		"UPDATES|Updates|fn|updates_menu"
+		"INSTALL|Installation Emulateur|fn|install_menu"
+		"UPDATES|Mise à jour des Emulateurs|fn|updates_menu"
 		#"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
 		#"ROMS|ROMs Options|fn|roms_menu"
-		"SAVES|Saves Options|fn|saves_menu"
+		"SAVES|Gestion des sauvegardes|fn|saves_menu"
 		#"FIXES|Fix directory structure & others|fn|fixes_menu"
-		"UNINSTALL|Uninstall Batocera Switch Add-on|fn|uninstall_menu"
-		"TOOLS|Tools Menu|fn|tools_menu"
-		"UPDATE TOOLBOX|Update ToolBox Script|fn|update_bsa_toolbox"
+		"UNINSTALL|Desinstaller les emulateurs|fn|uninstall_menu"
+		"TOOLS|Boite à touils|fn|tools_menu"
+		"UPDATE TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
 		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
 		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
-		"EXIT|Exit to the Street|cmd|killall -9 xterm; exit 0"
+		"EXIT|Quitter|cmd|killall -9 xterm; exit 0"
 	)
 	while true; do
 		create_dialog_list_menu \
 			"$menu_title" "$menu_height" "$menu_width" "$menu_list_height" \
-			"OPEN" "CANCEL" "off" \
+			"Ouvrir" "Annuler" "off" \
 			"DO YOU WANT TO SWITCH?" \
 			"${menu_items[@]}"
 		exit_status=$?

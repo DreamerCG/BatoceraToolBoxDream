@@ -41,7 +41,7 @@ initialize_common() {
 	generate_file "$switch_bios_dir/_info.txt" \
 		"-= Firmware, Keys, Amiibo, etc. for Switch =-" \
 		"" \
-		"***NOTE: Yuzu also refers to Forks (Eden, Citron, Sudachi) as well." \
+		"***NOTE: Yuzu also refers to Forks (Eden, Citron) as well." \
 		"" \
 		"Directory Structure for the BSA (Batocera Switch Add-On}" \
 		"" \
@@ -365,75 +365,3 @@ initialize_citron() {
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "citron-emu"
 }
-
-
-# INITIALLIZE SUDACHI STRUCTURES
-initialize_sudachi() {
-
-	# Backup Yuzu Saves
-	backup_saves_yuzu
-
-	# SETUP COMMON STRUCTURES
-	initialize_common
-
-	message "log" "$addon_log" "<<< [ INITIALLIZE SUDACHI STRUCTURES ]>>>"
-
-	# SETUP FIRMWARE DIRECTORY
-	if [ ! -d "$switch_yuzu_firmware_dir" ]; then
-		message "log" "$addon_log" "Creating Firmware Directory."
-		mkdir -p "$switch_yuzu_firmware_dir" 2>>"$stderr_log"
-	fi
-
-	# SETUP KEYS DIRECTORY
-	if [ ! -d "$switch_yuzu_keys_dir" ]; then
-		message "log" "$addon_log" "Creating Keys Directory."
-		mkdir -p "$switch_yuzu_keys_dir" 2>>"$stderr_log"
-	fi
-
-	# CREATE & LINK ORIGINAL CONFIG DIRECTORIES TO NEW CONFIG DIRECTORIES (MORE CENTRALIZED)
-	message "log" "$addon_log" "Linking Original Configuration Directories to New (Centralized) Configuration Directories."
-	create_slink_directory "$sudachi_config_dir" "$sudachi_og_config_dir"
-	create_slink_directory "$sudachi_config_dir" "$sudachi_og_local_config_dir"
-
-	# ******************************************************************************
-	# START USING NEW CONFIG DIRECTORIES FROM HERE ON OUT AS LINKS CREATE
-	# ******************************************************************************
-
-	# LINK FIRMWARE/NAND DIRECTORY
-	message "log" "$addon_log" "Linking Firmware Directory. (Fork: Link Sudachi NAND -> Yuzu NAND)"
-	create_slink_directory "$yuzu_config_dir/nand" "$sudachi_config_dir/nand"
-
-	# LINK KEYS DIRECTORY
-	message "log" "$addon_log" "Linking Keys Directory."
-	create_slink_directory "$switch_yuzu_keys_dir" "$sudachi_config_keys_dir"
-
-	# LINK SAVES DIRECTORY
-	#	If Yuzu installed then taken care of by linking NAND to Yuzu NAND
-	# 		But redo in case Yuzu was not installed
-	message "log" "$addon_log" "Linking Saves Directories."
-	create_slink_directory "$yuzu_system_saves_dir" "$yuzu_config_system_saves_dir"
-	create_slink_directory "$yuzu_user_saves_dir" "$yuzu_config_user_saves_dir"
-
-	# LINK AMIIBO DIRECTORY
-	message "log" "$addon_log" "Linking Amiibo Directory."
-	create_slink_directory "$switch_amiibo_dir" "$sudachi_config_amiibo_dir"
-
-	# .DESKTOP FOR F1-APPLICATIONS MENU 
-	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	generate_desktop_file "$local_applications_dir" "$local_icons_dir" "sudachi" "Sudachi-Config"
-	generate_desktop_file "$local_applications_dir" "$local_icons_dir" "sudachiQL" "SudachiQL-Config"
-
-	# COPY LAUNCHER SCRIPTS
-	copy_make_executable "sudachi-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "sudachi-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "sudachiQL-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-
-	# CREATE EMULATOR DIRECTORY
-	message "log" "$addon_log" "Sudachi Emulator Directory Created."
-	mkdir -p "$sudachi_emu_dir" 2>>"$stderr_log"
-
-	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
-	add_emulator_to_es_systems "sudachi-emu"
-}
-
-

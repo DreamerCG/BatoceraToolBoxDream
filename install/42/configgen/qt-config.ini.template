@@ -3572,12 +3572,3 @@ Shortcuts\Main%20Window\Exit%20eden\Context\default=true
 Shortcuts\Main%20Window\Exit%20eden\Context=1
 Shortcuts\Main%20Window\Exit%20eden\Repeat\default=true
 Shortcuts\Main%20Window\Exit%20eden\Repeat=false
-Shortcuts\Main%20Window\Exit%20sudachi\KeySeq\default=false
-Shortcuts\Main%20Window\Exit%20sudachi\KeySeq=Ctrl+Q
-Shortcuts\Main%20Window\Exit%20sudachi\Controller_KeySeq\default=false
-Shortcuts\Main%20Window\Exit%20sudachi\Controller_KeySeq=
-Shortcuts\Main%20Window\Exit%20sudachi\Context\default=true
-Shortcuts\Main%20Window\Exit%20sudachi\Context=1
-Shortcuts\Main%20Window\Exit%20sudachi\Repeat\default=true
-Shortcuts\Main%20Window\Exit%20sudachi\Repeat=false
-

@@ -31,10 +31,6 @@ uninstall_BSA() {
 	delete_recursive "$local_icons_dir/eden.png" "Eden Desktop Icon" "log"
 	delete_recursive "$local_applications_dir/citron.desktop" "Citron Deskop Launcher" "log"
 	delete_recursive "$local_icons_dir/citron.png" "Citron Desktop Icon" "log"
-	delete_recursive "$local_applications_dir/sudachi.desktop" "Sudachi Deskop Launcher" "log"
-	delete_recursive "$local_icons_dir/sudachi.png" "Sudachi Desktop Icon" "log"
-	delete_recursive "$local_applications_dir/sudachiQL.desktop" "SudachiQL Deskop Launcher" "log"
-	delete_recursive "$local_icons_dir/sudachiQL.png" "SudachiQL Desktop Icon" "log"
 
 
 	# DELETE CONFIGS
@@ -51,9 +47,6 @@ uninstall_BSA() {
 	delete_recursive "$system_hidden_config_dir/citron" "Citron Config (Symbolic Link)" "log"
 	delete_recursive "$local_share_dir/citron" "Citron Config (Symbolic Link)" "log"
 	delete_recursive "$system_configs_dir/citron" "Citron Config" "log"
-	delete_recursive "$system_hidden_config_dir/sudachi" "Sudachi Config (Symbolic Link)" "log"
-	delete_recursive "$local_share_dir/sudachi" "Sudachi Config (Symbolic Link)" "log"
-	delete_recursive "$system_configs_dir/sudachi" "Sudachi Config" "log"
 
 
 	# REMOVE EMULATIONSTATION CONFIG FILES
