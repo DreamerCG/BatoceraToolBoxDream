@@ -230,8 +230,8 @@ class YuzuMainlineGenerator(Generator):
             sdlversion = 3
 
         #handles chmod so you just need to download yuzu.AppImage
-        st = os.stat("/userdata/system/switch/"+emudir+"/"+emudir+".AppImage")
-        os.chmod("/userdata/system/switch/"+emudir+"/"+emudir+".AppImage", st.st_mode | stat.S_IEXEC)
+        st = os.stat("/userdata/system/switch/emulateur/"+emudir+".AppImage")
+        os.chmod("/userdata/system/switch/emulateur/"+emudir+".AppImage", st.st_mode | stat.S_IEXEC)
 
         yuzuConfig = str(CONFIGS) + '/'+emudir+'/qt-config.ini'
         print("Yuzu Config Path : " + yuzuConfig,file=sys.stderr)
@@ -239,7 +239,7 @@ class YuzuMainlineGenerator(Generator):
 
         YuzuMainlineGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emudir)
 
-        commandArray = ["./"+emudir+"/"+emudir+".AppImage", "-f",  "-g", rom ]
+        commandArray = ["./emulateur/"+emudir+".AppImage", "-f",  "-g", rom ]
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
