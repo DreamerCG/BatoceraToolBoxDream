@@ -2,15 +2,10 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
-import yaml
-
 from importlib import import_module
+
 import configgen
-from configgen.Emulator import Emulator, _dict_merge, _load_defaults
 from configgen.emulatorlauncher import launch
-from configgen.generators import get_generator
-from typing import TYPE_CHECKING, Any
-from pathlib import Path
 
 def _new_get_generator(emulator: str):
     
