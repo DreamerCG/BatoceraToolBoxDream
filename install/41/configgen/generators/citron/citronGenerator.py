@@ -51,6 +51,7 @@ class CitronGenerator(Generator):
                  "QT_QPA_PLATFORM_PLUGIN_PATH":"${QT_PLUGIN_PATH}",
                  "QT_PLUGIN_PATH":"/userdata/system/switch/citron/citron.AppImage",
                  "QT_QPA_PLATFORM": "xcb",
+                 "LC_NUMERIC":"C",
                  "DRI_PRIME":"1", 
                  "AMD_VULKAN_ICD":"RADV",
                  "DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1":"1",

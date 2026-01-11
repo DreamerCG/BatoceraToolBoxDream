@@ -119,12 +119,3 @@ uninstall_saves() {
 	message "log" "$addon_log" "<<< [ UNINSTALL SAVES ]>>>"
 	delete_recursive "$switch_saves_dir" "Switch Saves" "log"
 }
-
-
-# UNINSTALL ROMS
-uninstall_roms() {
-	message "log" "$addon_log" "<<< [ UNINSTALL SAVES ]>>>"
-	delete_recursive "$switch_roms_dir" "ROMS" "log"
-}
-
-

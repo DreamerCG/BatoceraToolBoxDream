@@ -95,14 +95,6 @@ update_emulator() {
 	
 }
 
-# MOVE ROMS
-# This will move the ROMs from the BSA roms directory to Batocera's roms directory
-# By default the install copies the ROMs
-move_roms() {
-	message "log" "$addon_log" "<<< [ MOVE ROMS ]>>>"
-	copy_roms "$switch_install_roms_switch_dir" "$switch_roms_dir" "yes"
-}
-
 # BACKUP RYUJINX SAVES
 backup_saves_ryujinx() {
 	local save_file="$switch_saves_dir/saves-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
@@ -143,7 +135,7 @@ backup_saves_yuzu_bsa() {
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
-menu_title="Toolbox Switch - Version Batocera : $batocera_version"
+menu_title="Toolbox Switch -  Batocera : V$batocera_version"
 menu_width=65
 menu_height=20
 menu_list_height=12
@@ -157,20 +149,20 @@ display_install_log() {
 # Install Menu
 install_menu() {
 	local menu_items=(
-		"Eden|Install Eden|off|fn|full_install "eden""
-		"Citron|Install Citron|off|fn|full_install "citron""
-		"Ryujinx|Install Ryujinx|off|fn|full_install "ryujinx""
-		"Yuzu|Install Yuzu|off|fn|full_install "yuzu""
+		"Eden|Installation : Eden|off|fn|full_install "eden""
+		"Citron|Installation : Citron|off|fn|full_install "citron""
+		"Ryujinx|Installation : Ryujinx|off|fn|full_install "ryujinx""
+		"Yuzu|Installation : Yuzu|off|fn|full_install "yuzu""
 	)
 	unset RAN_POST_INSTALL_COMMON
 	unset RAN_POST_INSTALL_COMMON_YUZU
 	create_dialog_checkbox_menu \
 		"$menu_title :: Install" "$menu_height" "$menu_width" "$menu_list_height" \
-		"INSTALL" "CANCEL" "on" \
-		"Select Emulators to Install" \
-		"Confirm Install" "Install?" \
-		"BSA :: INSTALLING" "" \
-		"INSTALLING" "INSTALLED" \
+		"Lancer" "Annuler" "on" \
+		"Choix des emulateurs" \
+		"Confirmer l'installation" "Install?" \
+		"TOOLBOX :: Installation" "" \
+		"Installation" "Installation terminer" \
 		"${menu_items[@]}"
 }
 
@@ -179,19 +171,19 @@ updates_menu() {
 	local menu_items=(
 		#"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
 		#"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
-		"Eden Local|Update Eden Local|off|fn|update_emulator "eden" "local""
-		"Eden Remote|Update Eden Remote|off|fn|update_emulator "eden" "remote""
-		"Citron Local|Update Citron Local|off|fn|update_emulator "citron" "local""
-		"Citron Remote|Update Citron Remote|off|fn|update_emulator "citron" "remote""
-		"Ryujinx Local|Update Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
-		"Ryujinx Remote|Update Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
+		"Eden Local|Mise à jour Eden Local|off|fn|update_emulator "eden" "local""
+		"Eden Remote|Mise à jour Eden Remote|off|fn|update_emulator "eden" "remote""
+		"Citron Local|Mise à jour Citron Local|off|fn|update_emulator "citron" "local""
+		"Citron Remote|Mise à jour Citron Remote|off|fn|update_emulator "citron" "remote""
+		"Ryujinx Local|Mise à jour Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
+		"Ryujinx Remote|Mise à jour Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Update" "$menu_height" "$menu_width" "$menu_list_height" \
-		"UPDATE" "CANCEL" "on" \
-		"Select Emulators to Update" \
-		"Confirm Update" "Update?" \
-		"BSA :: UPDATING" "" \
+		"MISE A JOUR" "Annuler" "on" \
+		"Choix des emulateurs à mettre à jour" \
+		"Confirmer la mise à jour" "Update?" \
+		"TOOLBOX :: UPDATING" "" \
 		"UPDATING" "UPDATED" \
 		"${menu_items[@]}"
 }
@@ -212,27 +204,11 @@ packages_menu() {
 	unset RAN_UNPACK_PACKAGES_COMMON_YUZU
 	create_dialog_checkbox_menu \
 		"$menu_title :: Packages" "$menu_height" "$menu_width" "$menu_list_height" \
-		"UNPACK" "CANCEL" "on" \
+		"UNPACK" "Annuler" "on" \
 		"Select Packagess to Unpack" \
 		"Confirm Unpack" "Unpack?" \
 		"BSA :: UNPACKING" "" \
 		"UNPACKING" "UNPACKED" \
-		"${menu_items[@]}"
-}
-
-# ROMs Menu
-roms_menu() {
-	local menu_items=(
-		"COPY ROMS|Copy ROMs from BSA|on|fn|post_install_roms"
-		"MOVE ROMS|Move ROMs from BSA|off|fn|move_roms"
-	)
-	create_dialog_checkbox_menu \
-		"$menu_title :: Roms" "$menu_height" "$menu_width" "$menu_list_height" \
-		"DO IT!" "CANCEL" "on" \
-		"Select Options for ROMs" \
-		"Confirm ROMs Options" "Do it?" \
-		"BSA :: ROMS" "" \
-		"ROM OPTION" "COMPLETE" \
 		"${menu_items[@]}"
 }
 
@@ -246,7 +222,7 @@ saves_menu() {
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Saves" "$menu_height" "$menu_width" "$menu_list_height" \
-		"SAVE IT!" "CANCEL" "on" \
+		"SAVE IT!" "Annuler" "on" \
 		"Select Options for Saves" \
 		"Confirm Saves Options" "Save it?" \
 		"BSA :: SAVES" "" \
@@ -264,7 +240,7 @@ fixes_menu() {
 	unset RAN_INITIALIZE_COMMON
 	create_dialog_checkbox_menu \
 		"$menu_title :: Fixes" "$menu_height" "$menu_width" "$menu_list_height" \
-		"FIX" "CANCEL" "on" \
+		"FIX" "Annuler" "on" \
 		"Select Fixes to Apply" \
 		"Confirm Fixes" "Apply?" \
 		"BSA :: FIXING" "" \
@@ -280,7 +256,6 @@ uninstall_menu() {
 		"Keys|Remove Keys|off|fn|uninstall_keys"
 		"Amiibo|Remove Amiibo|off|fn|uninstall_amiibo"
 		"Saves|Remove Saves|off|fn|uninstall_saves"
-		"ROMs|Remove ROMS|off|fn|uninstall_roms"
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Uninstall" "$menu_height" "$menu_width" "$menu_list_height" \
@@ -307,7 +282,7 @@ tools_menu() {
 	)
 	create_dialog_list_menu \
 		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
-		"Ouvrir" "Annuler" "on" \
+		"Confirmer" "Annuler" "on" \
 		"DO YOU WANT TO SWITCH?" \
 		"${menu_items[@]}"
 }
@@ -316,29 +291,24 @@ tools_menu() {
 main_menu() {
 	local exit_status
 	local menu_items=(
-		"INSTALL|Installation Emulateur|fn|install_menu"
-		"UPDATES|Mise à jour des Emulateurs|fn|updates_menu"
-		#"PACKAGES|Packages (Firmware, Keys, Saves, Amiibo)|fn|packages_menu"
-		#"ROMS|ROMs Options|fn|roms_menu"
-		"SAVES|Gestion des sauvegardes|fn|saves_menu"
-		#"FIXES|Fix directory structure & others|fn|fixes_menu"
-		"UNINSTALL|Desinstaller les emulateurs|fn|uninstall_menu"
-		"TOOLS|Boite à touils|fn|tools_menu"
-		"UPDATE TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
-		#"DISPLAY LOG|Display Install Log|fn|display_install_log"
-		#"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
-		"EXIT|Quitter|cmd|killall -9 xterm; exit 0"
+		"INSTALLATION|Installation des emulateurs|fn|install_menu"
+		"MISE A JOUR|Mise à jour des emulateurs|fn|updates_menu"
+		#"SAUVEGARDES|Gestion des sauvegardes|fn|saves_menu"
+		"DESINSTALLATION|Desinstaller les emulateurs|fn|uninstall_menu"
+		#"OUTILS|Boite à outils|fn|tools_menu"
+		"MISE A JOUR TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
+		"QUITTER|Quitter|cmd|killall -9 xterm; exit 0"
 	)
 	while true; do
 		create_dialog_list_menu \
 			"$menu_title" "$menu_height" "$menu_width" "$menu_list_height" \
-			"Ouvrir" "Annuler" "off" \
-			"DO YOU WANT TO SWITCH?" \
+			"Confirmer" "Annuler" "off" \
+			"MENU" \
 			"${menu_items[@]}"
 		exit_status=$?
 		case $exit_status in
 			1|255)
-				# Cancel
+				# Annuler
 				clear			
 				exit
 			;;
@@ -353,19 +323,14 @@ update_bsa_toolbox() {
 }
 
 
-
-
 # ******************************************************************************
 # START HERE
 # ******************************************************************************
 # create log file if it does not exist
 [[ -f "$addon_log" ]] || purge_install_log
 
-
 #run main menu
 main_menu
-
-
 
 # ******************************************************************************
 # -FIN-

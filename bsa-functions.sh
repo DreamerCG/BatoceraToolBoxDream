@@ -810,27 +810,6 @@ function delete_recursive() {
 	fi
 }
 
-# Copy/Move ROMS directory recursively (without overwrite) and merge gamelist.xml
-# Usage: copy_roms <source directory> <destination directory> [move ROMs {**no** | yes}]
-copy_roms() {
-	local src_dir="$1"
-	local dst_dir="$2"
-	local mv_roms="${3:-no}"
-	mv_roms="${mv_roms,,}"
-
-	[ -f "$src_dir/gamelist.xml" ] && xml_file_merge "$dst_dir/gamelist.xml" "$src_dir/gamelist.xml" "path"
-
-	shopt -s dotglob nullglob
-    if [ "$mv_roms" = "yes" ]; then
-        # Move ROMs (does not overwrite)
-        mv -n "$src_dir"/* "$dst_dir" 2>"$stderr_log"
-    else
-        # Copy ROMs (does not overwrite)
-        cp -rna "$src_dir"/* "$dst_dir" 2>"$stderr_log"
-    fi
-    shopt -u dotglob nullglob
-}
-
 
 # ZIPs the contents of the source directory into the zip file
 # Usage: zip_it <source directory> <zip file>

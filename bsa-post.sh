@@ -7,13 +7,6 @@ SOURCED_POST=true
 
 
 
-# INSTALL ROMS
-post_install_roms() {
-	message "log" "$addon_log" "<<< [ INSTALL ROMS ]>>>"
-	copy_roms "$switch_install_roms_switch_dir" "$switch_roms_dir"
-}
-
-
 # POST INSTALL COMMON
 post_install_common() {
 	# SOURCE GUARD TO PREVENT REDUNDANCY
@@ -30,9 +23,6 @@ post_install_common() {
 
 	# INSTALL PORTS
 	post_install_ports
-
-	# INSTALL ROMS
-	post_install_roms
 
 	# SOURCE GUARD TO PREVENT REDUNDANCY
 	RAN_POST_INSTALL_COMMON=true
