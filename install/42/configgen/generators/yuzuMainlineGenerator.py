@@ -269,7 +269,9 @@ class YuzuMainlineGenerator(Generator):
     def writeYuzuConfig(yuzuConfigFile, yuzuConfigTemplateFile, system, playersControllers, sdlversion, emulator):
         # pads
 
-
+        from pprint import pprint
+        pprint(system.config, stream=sys.stderr)
+        
         yuzuButtonsMapping = {
              "button_a":      "a",
              "button_b":      "b",
@@ -581,8 +583,7 @@ class YuzuMainlineGenerator(Generator):
         print("Emulateur : " + emulator, file=sys.stderr)
         print("Debug SDL Version for gamepad mapping : ", sdlversion, file=sys.stderr)
 
-        from pprint import pprint
-        pprint(system.config, stream=sys.stderr)
+
 
         if not system.isOptSet('yuzu_auto_controller_config') or system.config['yuzu_auto_controller_config'] != "0":
             #get the evdev->hidraw mapping
