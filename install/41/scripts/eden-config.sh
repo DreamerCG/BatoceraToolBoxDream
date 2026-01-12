@@ -3,4 +3,4 @@
 source /userdata/system/switch/bsa-pre-common.sh
 
 # Run Eden
-/userdata/system/switch/eden/eden.AppImage
+/userdata/system/switch/emulateur/eden.AppImage

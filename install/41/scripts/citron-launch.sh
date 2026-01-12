@@ -18,14 +18,14 @@ ulimit -H -n 819200; ulimit -S -n 819200; ulimit -S -n 819200 citron.AppImage;
 rom="$(echo "$@" | sed 's,-f -g ,,g')"
 if [[ "$rom" = "" ]]; then
 	# if no rom then launch emulator
-	/userdata/system/switch/citron/citron.AppImage -f -g > >(tee "$log1") 2> >(tee "$log2" >&2)
+	/userdata/system/switch/emulateur/citron.AppImage -f -g > >(tee "$log1") 2> >(tee "$log2" >&2)
 else
 	# Convert ROM as needed
     echo "$rom" > /tmp/switchromname 2>/dev/null
 	/userdata/system/switch/bin/bsa-nsz-converter.sh
 	rom="$(cat /tmp/switchromname)"
 	# Run ROM
-	/userdata/system/switch/citron/citron.AppImage -f -g "$rom" 1>"$log1" 2>"$log2"
+	/userdata/system/switch/emulateur/citron.AppImage -f -g "$rom" 1>"$log1" 2>"$log2"
 fi
 
 batocera-mouse hide

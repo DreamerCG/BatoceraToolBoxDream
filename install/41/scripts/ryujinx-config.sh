@@ -6,4 +6,4 @@ source /userdata/system/switch/bsa-pre-common.sh
 /userdata/system/switch/bin/ryujinx-fixes.sh
 
 # Run Ryujinx
-/userdata/system/switch/ryujinx/Ryujinx.AppImage
+/userdata/system/switch/emulateur/Ryujinx.AppImage
