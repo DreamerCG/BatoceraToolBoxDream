@@ -239,7 +239,10 @@ class YuzuMainlineGenerator(Generator):
 
         YuzuMainlineGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emudir)
 
-        commandArray = ["./emulateur/"+emudir+".AppImage", "-f",  "-g", rom ]
+        #commandArray = ["./emulateur/"+emudir+".AppImage", "-f",  "-g", rom ]
+        commandArray = ["./"+emudir+".-launch.sh", "-f",  "-g", rom ]
+
+
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",

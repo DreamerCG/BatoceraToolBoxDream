@@ -261,6 +261,7 @@ append_file() {
 # Usage: create_slink_directory <source directory> <target directory>
 create_slink_directory() {
 	message "log" "$addon_log" "Linking $2 to $1"
+	
 	local source_dir="$1"
 	local target_dir="$2"
 	# remove target directory so link can be created

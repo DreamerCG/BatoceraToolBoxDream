@@ -17,6 +17,7 @@ from shutil import copyfile
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+
 from configgen import Command as Command
 from configgen.batoceraPaths import CONFIGS, HOME, ROMS, SAVES, mkdir_if_not_exists
 from configgen.controller import generate_sdl_game_controller_config
@@ -24,12 +25,12 @@ from configgen.generators.Generator import Generator
 from configgen.utils.configparser import CaseSensitiveRawConfigParser
 from configgen.input import Input, InputDict, InputMapping
 
+
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/lib/"
 
 import sdl2
 from sdl2 import joystick
 from ctypes import create_string_buffer
-
 
 eslog = logging.getLogger(__name__)
 
@@ -43,7 +44,6 @@ class DictToObject:
             if isinstance(value, dict):
                 value = DictToObject(value)
             setattr(self, key, value)
-
 
 def sdlmapping_to_controller(mapping, guid):
 
@@ -216,6 +216,16 @@ class YuzuMainlineGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
+        if not os.path.exists("/lib/libSDL3.so.0.2.26"):
+            print("File not Exist libSDL3.so.0.2.26", os.path.exists("/lib/libSDL3.so.0.2.26"), file=sys.stderr)
+            copyfile("/userdata/system/switch/lib/libSDL3.so.0.2.26", "/lib/libSDL3.so.0.2.26")
+
+        if not os.path.exists("/lib/libSDL3.so.0"):
+            copyfile("/userdata/system/switch/lib/libSDL3.so.0", "/lib/libSDL3.so.0")
+
+        if not os.path.exists("/lib/libSDL3.so"):
+            copyfile("/userdata/system/switch/lib/libSDL3.so", "/lib/libSDL3.so")
+
         emulator = system.config['emulator']
 
         if emulator == 'citron-emu':
@@ -240,6 +250,7 @@ class YuzuMainlineGenerator(Generator):
         YuzuMainlineGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emudir)
 
         commandArray = ["./emulateur/"+emudir+".AppImage", "-f",  "-g", rom ]
+
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
