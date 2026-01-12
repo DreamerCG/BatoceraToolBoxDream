@@ -240,9 +240,7 @@ class YuzuMainlineGenerator(Generator):
         YuzuMainlineGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emudir)
 
         #commandArray = ["./emulateur/"+emudir+".AppImage", "-f",  "-g", rom ]
-        commandArray = ["./"+emudir+".-launch.sh", "-f",  "-g", rom ]
-
-
+        commandArray = ["./"+emudir+"-launch.sh", "-f",  "-g", rom ]		
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
@@ -254,7 +252,6 @@ class YuzuMainlineGenerator(Generator):
                         "XDG_CONFIG_DIRS":"/etc/xdg",
                         "XDG_CURRENT_DESKTOP":"XFCE",
                         "DESKTOP_SESSION":"XFCE",
-
                         "QT_FONT_DPI":"96",
                         "QT_SCALE_FACTOR":"1",
                         "GDK_SCALE":"1",
@@ -320,7 +317,7 @@ class YuzuMainlineGenerator(Generator):
             yuzuConfig.add_section("UI")
 
         if system.isOptSet(emulator+"_enable_discord_presence"):
-            yuzuConfig.set("UI", "enable_discord_presence", system.config[emulator+"_enable_discord_presence"])
+            yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
         else:
             yuzuConfig.set("UI", "enable_discord_presence", "false")
 
@@ -400,7 +397,7 @@ class YuzuMainlineGenerator(Generator):
 
         # Aspect ratio
         if system.isOptSet(emulator+'_ratio'):
-            yuzuConfig.set("Renderer", "aspect_ratio", system.config[emulator+'_ratio'])
+            yuzuConfig.set("Renderer", "aspect_ratio", system.config['yuzu_ratio'])
             yuzuConfig.set("Renderer", "aspect_ratio\\default", "false")
         else:
             yuzuConfig.set("Renderer", "aspect_ratio", "0")
@@ -408,7 +405,7 @@ class YuzuMainlineGenerator(Generator):
 
         # Graphical backend
         if system.isOptSet(emulator+'_backend'):
-            yuzuConfig.set("Renderer", "backend", system.config[emulator+'_backend'])
+            yuzuConfig.set("Renderer", "backend", system.config['yuzu_backend'])
         else:
             yuzuConfig.set("Renderer", "backend", "1")
         yuzuConfig.set("Renderer", "backend\\default", "false")
@@ -583,10 +580,11 @@ class YuzuMainlineGenerator(Generator):
         print("Players Controllers Detected : ", len(playersControllers), file=sys.stderr)
         print("Emulateur : " + emulator, file=sys.stderr)
         print("Debug SDL Version for gamepad mapping : ", sdlversion, file=sys.stderr)
-        print("Auto Controller_Config Debug : ", system.config.get('citron_auto_controller_config'), file=sys.stderr)
-        print("Auto Controller_Config pour " + emulator + "_auto_controller_config : ", system.config.get(emulator + '_auto_controller_config'), file=sys.stderr)
 
-        if not system.isOptSet(emulator + '_auto_controller_config') or system.config[emulator + '_auto_controller_config'] != "0":
+        from pprint import pprint
+        pprint(system.config, stream=sys.stderr)
+
+        if not system.isOptSet('yuzu_auto_controller_config') or system.config['yuzu_auto_controller_config'] != "0":
             #get the evdev->hidraw mapping
             evdev_hidraw = evdev_to_hidraw()
             #get sdllib  hidapi/hidraw + evdev guid
@@ -596,6 +594,8 @@ class YuzuMainlineGenerator(Generator):
             guid_port = {}
             for nplayer, pad in enumerate(playersControllers, start=0):
                 player_nb_str = "player_" + str(nplayer)
+
+                pprint(player_nb_str, stream=sys.stderr)
 
                 #if hidraw exist, replace the guid and use the provided mapping
                 if pad.device_path in evdev_hidraw:

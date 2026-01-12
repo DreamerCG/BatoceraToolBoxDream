@@ -328,7 +328,7 @@ class YuzuMainlineGenerator(Generator):
             yuzuConfig.add_section("UI")
 
         if system.isOptSet(emulator+"_enable_discord_presence"):
-            yuzuConfig.set("UI", "enable_discord_presence", system.config[emulator+"_enable_discord_presence"])
+            yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
         else:
             yuzuConfig.set("UI", "enable_discord_presence", "false")
 
@@ -408,7 +408,7 @@ class YuzuMainlineGenerator(Generator):
 
         # Aspect ratio
         if system.isOptSet(emulator+'_ratio'):
-            yuzuConfig.set("Renderer", "aspect_ratio", system.config[emulator+'_ratio'])
+            yuzuConfig.set("Renderer", "aspect_ratio", system.config['yuzu_ratio'])
             yuzuConfig.set("Renderer", "aspect_ratio\\default", "false")
         else:
             yuzuConfig.set("Renderer", "aspect_ratio", "0")
@@ -416,7 +416,7 @@ class YuzuMainlineGenerator(Generator):
 
         # Graphical backend
         if system.isOptSet(emulator+'_backend'):
-            yuzuConfig.set("Renderer", "backend", system.config[emulator+'_backend'])
+            yuzuConfig.set("Renderer", "backend", system.config['yuzu_backend'])
         else:
             yuzuConfig.set("Renderer", "backend", "1")
         yuzuConfig.set("Renderer", "backend\\default", "false")
@@ -591,19 +591,24 @@ class YuzuMainlineGenerator(Generator):
         print("Players Controllers Detected : ", len(playersControllers), file=sys.stderr)
         print("Emulateur : " + emulator, file=sys.stderr)
         print("Debug SDL Version for gamepad mapping : ", sdlversion, file=sys.stderr)
-        print("Auto Controller_Config Debug : ", system.config.get('citron_auto_controller_config'), file=sys.stderr)
-        print("Auto Controller_Config pour " + emulator + "_auto_controller_config : ", system.config.get(emulator + '_auto_controller_config'), file=sys.stderr)
 
-        if not system.isOptSet(emulator + '_auto_controller_config') or system.config[emulator + '_auto_controller_config'] != "0":
+        from pprint import pprint
+        pprint(system.config, stream=sys.stderr)
+
+        if not system.isOptSet('yuzu_auto_controller_config') or system.config['yuzu_auto_controller_config'] != "0":
             #get the evdev->hidraw mapping
             evdev_hidraw = evdev_to_hidraw()
             #get sdllib  hidapi/hidraw + evdev guid
             sdl_gamepads = list_sdl_gamepads(sdlversion)
 
+            pprint(evdev_hidraw, stream=sys.stderr)
+            pprint(sdl_gamepads, stream=sys.stderr)
+
             nplayer = 0
             guid_port = {}
             for nplayer, pad in enumerate(playersControllers, start=0):
                 player_nb_str = "player_" + str(nplayer)
+                pprint(pad, stream=sys.stderr)
 
                 #if hidraw exist, replace the guid and use the provided mapping
                 if pad.device_path in evdev_hidraw:
