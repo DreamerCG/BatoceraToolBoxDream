@@ -55,7 +55,7 @@ batocera-mouse show
 #unclutter-remote -h
 
 cd /userdata/system/switch/appimages/
-./ryujinx-emu.AppImage
+./Ryujinx-emu.AppImage
 batocera-mouse hide
 
 

@@ -20,14 +20,14 @@ ulimit -H -n 819200; ulimit -S -n 819200; ulimit -S -n 819200 Ryujinx;
 ulimit -H -n 819200; ulimit -S -n 819200; ulimit -S -n 819200 Ryujinx.AppImage;
 rom="$1"
 if [[ "$rom" = "" ]]; then
-	/userdata/system/switch/emulateur/Ryujinx.AppImage > >(tee "$log1") 2> >(tee "$log2" >&2)
+	/userdata/system/switch/emulateur/Ryujinx-emu.AppImage > >(tee "$log1") 2> >(tee "$log2" >&2)
 else
 	# Convert ROM as needed
     echo "$rom" > /tmp/switchromname 2>/dev/null
 	/userdata/system/switch/bin/bsa-nsz-converter.sh
 	rom="$(cat /tmp/switchromname)"
 	# Run ROM
-	/userdata/system/switch/emulateur/Ryujinx.AppImage "$rom" > >(tee "$log1") 2> >(tee "$log2" >&2) 
+	/userdata/system/switch/emulateur/Ryujinx-emu.AppImage "$rom" > >(tee "$log1") 2> >(tee "$log2" >&2) 
 fi 
 
 batocera-mouse hide

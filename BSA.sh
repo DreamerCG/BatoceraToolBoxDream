@@ -152,7 +152,6 @@ install_menu() {
 		"Eden|Installation : Eden|off|fn|full_install "eden""
 		"Citron|Installation : Citron|off|fn|full_install "citron""
 		"Ryujinx|Installation : Ryujinx|off|fn|full_install "ryujinx""
-		"Yuzu|Installation : Yuzu|off|fn|full_install "yuzu""
 	)
 	unset RAN_POST_INSTALL_COMMON
 	unset RAN_POST_INSTALL_COMMON_YUZU

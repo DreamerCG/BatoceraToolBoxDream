@@ -278,11 +278,11 @@ class EdenGenerator(Generator):
         emulator = system.config['emulator']
 
         if emulator == 'citron-emu':
-            emudir = 'citron'
+            emudir = 'citron-emu'
         elif emulator == 'eden-pgo':
             emudir = 'eden'
         elif emulator == 'eden-emu':
-            emudir = 'eden'
+            emudir = 'eden-emu'
         else:
             emudir = emulator
 

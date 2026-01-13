@@ -256,7 +256,7 @@ class YuzuMainlineGenerator(Generator):
                         "AMD_VULKAN_ICD":"RADV",
                         "DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1":"1",
                         "QT_XKB_CONFIG_ROOT":"/usr/share/X11/xkb",
-#                        "LC_ALL":"C.utf8",
+#                        "LC_ALL":"CC.utf8",
                         "NO_AT_BRIDGE":"1",
                         "XDG_MENU_PREFIX":"batocera-",
                         "XDG_CONFIG_DIRS":"/etc/xdg",

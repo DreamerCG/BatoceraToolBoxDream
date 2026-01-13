@@ -7,7 +7,7 @@ default:
     video_threaded: false
     smooth:         true
     rewind:         false
-    bezel:          none
+    bezel:          default
     forceNoBezel:   true
 
 switch:
@@ -16,3 +16,8 @@ switch:
   options:
     forceNoBezel: true
     hud_support: true
+  emulator: ryujinx-emu
+  core:     ryujinx-emu
+  options:
+    forceNoBezel: true
+    hud_support: false
