@@ -47,7 +47,7 @@ case "$batocera_version" in
 		folder_version=41
 		;;
 	4[2-3])
-		folder_version=42
+		folder_version=42-new
 		;;
 	*)
 		echo "Unsupported Batocera version: $batocera_version" >&2
