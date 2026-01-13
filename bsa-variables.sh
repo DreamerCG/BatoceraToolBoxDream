@@ -211,7 +211,7 @@ switch_bin_dir="$switch_system_dir/bin"
 # SWITCH: LIB
 switch_lib_dir="$switch_system_dir/lib"
 # SWITCH: APPIMAGE
-switch_Appimage_dir="$switch_system_dir/emulateur"
+switch_Appimage_dir="$switch_system_dir/appimages"
 
 
 # ==============================================================================
@@ -236,7 +236,7 @@ ryujinx_system_saves_dir="$ryujinx_saves_dir/system/save" # NAND SYSTEM SAVES (N
 ryujinx_user_saves_dir="$ryujinx_saves_dir/user/save" # NAND USER SAVES (NEW)
 ryujinx_user_saves_meta_dir="$ryujinx_saves_dir/user/saveMeta" # NAND USER SAVES META (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
-ryujinx_install_file="Ryujinx.AppImage"
+ryujinx_install_file="Ryujinx-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 ryujinx_install_url=""
 # EMULATOR DIRECTORY
@@ -263,7 +263,7 @@ yuzu_saves_dir="$switch_saves_dir/yuzu" # SAVES (NEW)
 yuzu_system_saves_dir="$yuzu_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 yuzu_user_saves_dir="$yuzu_saves_dir/user/save" # NAND USER SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
-yuzu_install_file="yuzu.AppImage"
+yuzu_install_file="yuzu-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 yuzu_install_url="https://foclabroc.freeboxos.fr:55973/share/6_FB-NuZriqYuHKt/yuzuea4176.AppImage"
 # EMULATOR DIRECTORY
@@ -287,7 +287,7 @@ eden_config_saves_dir="$eden_config_dir/nand/user/save" # SAVES (OLD)
 eden_config_amiibo_dir="$eden_config_dir/amiibo" # AMIIBO
 eden_saves_dir="$system_saves_dir/yuzu" # SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
-eden_install_file="eden.AppImage"
+eden_install_file="eden-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 eden_install_url=""
 # EMULATOR DIRECTORY
@@ -311,7 +311,7 @@ citron_config_saves_dir="$citron_config_dir/nand/user/save" # SAVES (OLD)
 citron_config_amiibo_dir="$citron_config_dir/amiibo" # AMIIBO
 citron_saves_dir="$system_saves_dir/yuzu" # SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
-citron_install_file="citron.AppImage"
+citron_install_file="citron-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 citron_install_url=""
 # EMULATOR DIRECTORY
