@@ -19,30 +19,31 @@ add_emulator_to_es_systems() {
 
 purge_old_switch_install() {
 
-# Foclabroc ToolBox
-rm /userdata/system/switch/*.AppImage 2>/dev/null
-rm -rf /userdata/system/switch/configgen 2>/dev/null
-rm -rf /userdata/system/switch/extra 2>/dev/null
-rm -rf /userdata/system/switch/logs 2>/dev/null
-rm -rf /userdata/system/switch/sudachi 2>/dev/null
-rm "/userdata/system/switch/CONFIG.txt" 2>/dev/null
-rm /userdata/system/configs/emulationstation/add_feat_switch.cfg 2>/dev/null
-rm /userdata/system/configs/emulationstation/es_systems_switch.cfg 2>/dev/null
-rm /userdata/system/configs/emulationstation/es_features_switch.cfg 2>/dev/null
-rm /userdata/system/configs/emulationstation/es_features.cfg 2>/dev/null
+# ON supprime le dossier switch pour eviter les conflits avec les anciennes installations
+rm -rf /userdata/system/switch/ 2>/dev/null
+
+# Supprimes les anciens dossier bios / Firmare
+rm -rf /userdata/system/configs/switch/firmware_ryujinx 2>/dev/null
+rm -rf /userdata/system/configs/switch/firmware_yuzu 2>/dev/null
+rm -rf /userdata/system/configs/switch/keys_yuzu 2>/dev/null
+rm -rf /userdata/system/configs/switch/keys_ryujinx 2>/dev/null
+
+# ON Supprimes Sudachi QLauncher  / Suyu et Switch Updater40
 rm "/userdata/roms/ports/Sudachi Qlauncher.sh" 2>/dev/null 
 rm "/userdata/roms/ports/Sudachi Qlauncher.sh.keys" 2>/dev/null
 rm "/userdata/roms/ports/Switch Updater40.sh.keys" 2>/dev/null
 rm "/userdata/roms/ports/Switch Updater40.sh" 2>/dev/null
-rm /userdata/system/switch/extra/suyu.png 2>/dev/null
-rm /userdata/system/switch/extra/suyu-config.desktop 2>/dev/null
-rm /userdata/system/switch/extra/batocera-config-suyu 2>/dev/null
-rm /userdata/system/switch/extra/batocera-config-suyuQL 2>/dev/null
-rm /userdata/system/.local/share/applications/suyu-config.desktop 2>/dev/null
-rm /userdata/system/switch/extra/batocera-config-suyuQL 2>/dev/null
 rm "/userdata/roms/ports/Suyu Qlauncher.sh.keys" 2>/dev/null 
 rm "/userdata/roms/ports/Suyu Qlauncher.sh" 2>/dev/null
+
+# ON Supprimes les anciens fichiers de config EmulationStation
+rm /userdata/system/configs/emulationstation/es_systems_switch.cfg 2>/dev/null
+rm /userdata/system/configs/emulationstation/es_features_switch.cfg 2>/dev/null
+
+# ON Supprimes les anciens fichiers de config evmapy
 rm /userdata/system/configs/evmapy/switch.keys 2>/dev/null
+
+# remove old version update scripts from /userdata/roms/ports
 rm /userdata/roms/ports/updateyuzu.sh 2>/dev/null 
 rm /userdata/roms/ports/updateyuzuea.sh 2>/dev/null
 rm /userdata/roms/ports/updateyuzuEA.sh 2>/dev/null 
@@ -50,28 +51,46 @@ rm /userdata/roms/ports/updateryujinx.sh 2>/dev/null
 rm /userdata/roms/ports/updateryujinxavalonia.sh 2>/dev/null
 
 # remove old version dekstop shortcuts from ~/.local/share/applications 
+rm /userdata/system/.local/share/applications/suyu-config.desktop 2>/dev/null
 rm /userdata/system/.local/share/applications/eden-config.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/eden.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/eden.png 2>/dev/null
 rm /userdata/system/.local/share/applications/yuzu-config.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/yuzu.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/yuzu.png 2>/dev/null
 rm /userdata/system/.local/share/applications/yuzuEA-config.desktop 2>/dev/null
 rm /userdata/system/.local/share/applications/citron-config.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/citron.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/citron.png 2>/dev/null
 rm /userdata/system/.local/share/applications/sudachi-config.desktop 2>/dev/null
 rm /userdata/system/.local/share/applications/ryujinx-config.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/ryujinx.desktop 2>/dev/null
+rm /userdata/system/.local/share/applications/ryujinx.png 2>/dev/null
 rm /userdata/system/.local/share/applications/ryujinxavalonia-config.desktop 2>/dev/null
 rm /userdata/system/.local/share/applications/ryujinxldn-config.desktop 2>/dev/null
+
 # remove old version dekstop shortcuts from /usr/share/applications:
 rm /usr/share/applications/eden-config.desktop 2>/dev/null
+rm /usr/share/applications/eden.desktop 2>/dev/null
 rm /usr/share/applications/citron-config.desktop 2>/dev/null
+rm /usr/share/applications/citron.desktop 2>/dev/null
 rm /usr/share/applications/sudachi-config.desktop 2>/dev/null
 rm /usr/share/applications/yuzu-config.desktop 2>/dev/null
+rm /usr/share/applications/yuzu.desktop 2>/dev/null
 rm /usr/share/applications/yuzuEA-config.desktop 2>/dev/null
+rm /usr/share/applications/Ryujinx.desktop 2>/dev/null
 rm /usr/share/applications/ryujinx-config.desktop 2>/dev/null
 rm /usr/share/applications/Ryujinx-Avalonia.desktop 2>/dev/null
 rm /usr/share/applications/ryujinxldn-config.desktop 2>/dev/null
 rm /usr/share/applications/yuzu-config.desktop 2>/dev/null
 rm /usr/share/applications/yuzuEA.desktop 2>/dev/null
-rm /usr/share/applications/ryujinx-config.desktop 2>/dev/null
 rm /usr/share/applications/ryujinxavalonia-config.desktop 2>/dev/null
 rm /usr/share/applications/ryujinxldn-config.desktop 2>/dev/null
+
+# Remove Symllinks if they exist (centralise to Yuzu)
+rm /userdata/system/configs/eden 2>/dev/null
+rm /userdata/system/configs/citron 2>/dev/null
+rm /userdata/system/configs/sudachi 2>/dev/null
 }
 
 
@@ -82,7 +101,6 @@ initialize_common() {
 	[ -n "$RAN_INITIALIZE_COMMON" ] && return
 
 	purge_old_switch_install
-
 
 	message "log" "$addon_log" "<<< [ INITIALLIZE COMMON STRUCTURES ]>>>"
 

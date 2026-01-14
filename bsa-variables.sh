@@ -279,8 +279,8 @@ yuzu_emu_dir="$switch_Appimage_dir"
 # ******************************************************************************
 # ==============================================================================
 # ORIGINAL (What the AppImage Uses) CONFIG DIRECTORIES (WILL BE SYMBOLIC LINKS TO NEW CONFIG DIRECTORIES)
-eden_og_config_dir="$system_hidden_config_dir/eden"
-eden_og_local_config_dir="$local_share_dir/eden"
+eden_og_config_dir="$system_hidden_config_dir/yuzu"
+eden_og_local_config_dir="$local_share_dir/yuzu"
 # NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
 eden_config_dir="$system_configs_dir/eden" # ROOT
 eden_config_nand_dir="$eden_config_dir/nand" # NAND
@@ -303,8 +303,8 @@ eden_emu_dir="$switch_Appimage_dir"
 # ******************************************************************************
 # ==============================================================================
 # ORIGINAL (What the AppImage Uses) CONFIG DIRECTORIES (WILL BE SYMBOLIC LINKS TO NEW CONFIG DIRECTORIES)
-citron_og_config_dir="$system_hidden_config_dir/citron"
-citron_og_local_config_dir="$local_share_dir/citron"
+citron_og_config_dir="$system_hidden_config_dir/yuzu"
+citron_og_local_config_dir="$local_share_dir/yuzu"
 # NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
 citron_config_dir="$system_configs_dir/citron" # ROOT
 citron_config_nand_dir="$citron_config_dir/nand" # NAND
