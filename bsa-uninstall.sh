@@ -23,7 +23,6 @@ uninstall_BSA() {
 	message "log" "$addon_log" "DELETE SWITCH SYSTEM DIRECTORY"
 	delete_recursive "$switch_system_dir" "SWITCH SYSTEM DIRECTORY" "log"
 
-
 	# DELETE DESKTOP LAUNCHERS & ICONS
 	message "log" "$addon_log" "DELETE DESKTOP LAUNCHERS & ICONS"
 	delete_recursive "$local_applications_dir/ryujinx.desktop" "Ryujinx Deskop Launcher" "log"
@@ -56,7 +55,6 @@ uninstall_BSA() {
 	message "log" "$addon_log" "DELETE EMULATIONSTATION CONFIGS"
 	delete_recursive "$system_configs_emulationstation_dir/es_features_switch.cfg" "EmulationStation Switch Features Config" "log"
 	delete_recursive "$system_configs_emulationstation_dir/es_systems_switch.cfg" "EmulationStation Switch Systems Config" "log"
-
 
 	# REMOVE EVMAPY CONFIG
 	message "log" "$addon_log" "DELETE EVENT MAPPER CONFIGS"

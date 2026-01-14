@@ -38,6 +38,10 @@ purge_old_switch_install() {
         "/userdata/roms/ports/Sudachi Qlauncher.sh.keys" \
         "/userdata/roms/ports/Switch Updater40.sh" \
         "/userdata/roms/ports/Switch Updater40.sh.keys" \
+        "/userdata/roms/ports/ryujinx_config.sh" \
+        "/userdata/roms/ports/ryujinx_config.sh.keys" \
+        "/userdata/roms/ports/yuzu_config.sh" \
+        "/userdata/roms/ports/yuzu_config.sh.keys" \
         "/userdata/roms/ports/Suyu Qlauncher.sh" \
         "/userdata/roms/ports/Suyu Qlauncher.sh.keys"
 
