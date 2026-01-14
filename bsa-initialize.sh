@@ -89,8 +89,11 @@ rm /usr/share/applications/ryujinxldn-config.desktop 2>/dev/null
 
 # Remove Symllinks if they exist (centralise to Yuzu)
 rm /userdata/system/configs/eden 2>/dev/null
+rm /userdata/system/.configs/eden 2>/dev/null
 rm /userdata/system/configs/citron 2>/dev/null
+rm /userdata/system/.configs/citron 2>/dev/null
 rm /userdata/system/configs/sudachi 2>/dev/null
+rm /userdata/system/.configs/sudachi 2>/dev/null
 }
 
 
