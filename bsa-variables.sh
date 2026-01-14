@@ -47,7 +47,7 @@ case "$batocera_version" in
 		folder_version=41
 		;;
 	4[2-3])
-		folder_version=42-new
+		folder_version=42
 		;;
 	*)
 		echo "Unsupported Batocera version: $batocera_version" >&2
@@ -99,7 +99,6 @@ OPT_FIX_DIR_LINKS_RYUJINX="FALSE"
 OPT_FIX_DIR_LINKS_YUZU="FALSE"
 OPT_FIX_DIR_LINKS_EDEN="FALSE"
 OPT_FIX_DIR_LINKS_CITRON="FALSE"
-
 
 
 # ******************************************************************************

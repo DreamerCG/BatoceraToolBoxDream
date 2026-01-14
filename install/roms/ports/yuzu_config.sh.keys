@@ -1,0 +1,29 @@
+{
+    "actions_player1": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "key",
+            "target": [
+                "KEY_LEFTALT",
+                "KEY_F4"
+            ]
+        },
+        {
+            "trigger": "joystick2",
+            "type": "mouse"
+        },
+        {
+            "trigger": "pageup",
+            "type": "key",
+            "target": "BTN_LEFT"
+        },
+        {
+            "trigger": "pagedown",
+            "type": "key",
+            "target": "BTN_RIGHT"
+        }
+    ]
+}

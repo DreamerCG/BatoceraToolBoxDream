@@ -58,10 +58,10 @@ set -e
 echo "Installation de BSA_TOOLBOX dans Ports..."
 sleep 3
 # Add bsa-switch-tools.sh to "ports"
-curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh -o /userdata/roms/ports/DreamerCGToolBox.sh
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/roms/ports/bsa-switch-tools.sh -o /userdata/roms/ports/DreamerCGToolBox.sh
 
 # Add bsa-switch-tools.keys to "ports"
-curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/ports_install/bsa-switch-tools.sh.keys -o /userdata/roms/ports/DreamerCGToolBox.sh.keys
+curl -L  https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/roms/ports/bsa-switch-tools.sh.keys -o /userdata/roms/ports/DreamerCGToolBox.sh.keys
 
 # Set execute permissions for the downloaded scripts
 chmod +x /userdata/roms/ports/DreamerCGToolBox.sh
@@ -75,11 +75,11 @@ ports_dir="/userdata/roms/ports"
 mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
-screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolbox-image.png"
+screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/roms/port/images/toolbox-image.png"
 screenshot_path="$ports_dir/images/toolbox-image.jpg"
-logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolbox-logo.png"
+logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/roms/port/images/toolbox-logo.png"
 logo_path="$ports_dir/images/toolbox-logo.png"
-box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/screenshots/toolbox-box.png"
+box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/roms/port/images/toolbox-box.png"
 box_path="$ports_dir/images/toolbox-box.png"
 
 
