@@ -76,7 +76,7 @@ mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 gamelist_file="$ports_dir/gamelist.xml"
 screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-image.png"
-screenshot_path="$ports_dir/images/toolbox-image.jpg"
+screenshot_path="$ports_dir/images/toolbox-image.png"
 logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-logo.png"
 logo_path="$ports_dir/images/toolbox-logo.png"
 box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-box.png"
@@ -141,7 +141,7 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.jpg" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
     -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
     -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolbox-box.png" \
     "$gamelist_file"
