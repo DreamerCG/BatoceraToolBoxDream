@@ -275,11 +275,14 @@ def list_sdl_gamepads(sdlversion):
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"
+    os.environ["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
+
     switch_log("Set --> SDL_JOYSTICK_HIDAPI=1")
     switch_log("Set --> JOYSTICK_HIDAPI_XBOX=0")
     switch_log("Set --> JOYSTICK_HIDAPI_XBOX_ONE=0")
     switch_log("Set --> JOYSTICK_HIDAPI_SWITCH=0")
     switch_log("Set --> JOYSTICK_HIDAPI_STEAMDECK=0")
+    switch_log("Set --> JOYSTICK_HIDAPI_PS5=0")
 
     sdl2.SDL_ClearError()
     try:
@@ -333,6 +336,18 @@ class EdenGenerator(Generator):
             "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"]}
         }
 
+    def force_symlink(self,src, dst):
+        if os.path.lexists(dst):  # existe OU lien cassé
+            if os.path.islink(dst):
+                # Symlink → unlink uniquement
+                if os.readlink(dst) == src:
+                    return  # déjà bon
+                os.unlink(dst)
+            else:
+                # Dossier réel → rmtree
+                shutil.rmtree(dst)
+        os.symlink(src, dst)
+
     def executionDirectory(self, config, rom):
         return "/userdata/system/switch/appimages"
 
@@ -365,29 +380,10 @@ class EdenGenerator(Generator):
 
         #Link Yuzu firmware/key folder
         #KEY-------
-        if os.path.exists("/userdata/system/configs/yuzu/keys"):
-            if not os.path.islink("/userdata/system/configs/yuzu/keys"):
-                shutil.rmtree("/userdata/system/configs/yuzu/keys")
-                os.symlink("/userdata/bios/switch/keys_yuzu", "/userdata/system/configs/yuzu/keys")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/keys")
-                if current_target != "/userdata/bios/switch/keys_yuzu":
-                    os.unlink("/userdata/system/configs/yuzu/keys")
-                    os.symlink("/userdata/bios/switch/keys_yuzu", "/userdata/system/configs/yuzu/keys")
-        else:
-            os.symlink("/userdata/bios/switch/keys_yuzu", "/userdata/system/configs/yuzu/keys")
+        self.force_symlink("/userdata/bios/switch/keys","/userdata/system/configs/yuzu/keys")
+            
         #FIRMWARE-------
-        if os.path.exists("/userdata/system/configs/yuzu/nand/system/Contents/registered"):
-            if not os.path.islink("/userdata/system/configs/yuzu/nand/system/Contents/registered"):
-                shutil.rmtree("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                os.symlink("/userdata/bios/switch/firmware_yuzu", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                if current_target != "/userdata/bios/switch/firmware_yuzu":
-                    os.unlink("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                    os.symlink("/userdata/bios/switch/firmware_yuzu", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
-        else:
-            os.symlink("/userdata/bios/switch/firmware_yuzu", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
+        self.force_symlink("/userdata/bios/switch/firmware","/userdata/system/configs/yuzu/nand/system/Contents/registered")
 
         #Create OS Saves folder
         mkdir_if_not_exists(Path("/userdata/save/yuzu"))
@@ -604,7 +600,7 @@ class EdenGenerator(Generator):
             yuzuConfig.set("Renderer", "backend", system.config["yuzu_backend"])
             yuzuConfig.set("Renderer", "backend\\default", "false")
         else:
-            yuzuConfig.set("Renderer", "backend", "0")
+            yuzuConfig.set("Renderer", "backend", "1")
             yuzuConfig.set("Renderer", "backend\\default", "true")
 
         # Async Shader compilation
@@ -805,8 +801,6 @@ class EdenGenerator(Generator):
                 elif pad.device_path in sdl_gamepads:
                     pad.inputs = sdl_gamepads[pad.device_path]['inputs']
                 #fallback to inputs from ES
-
-
 
                 #port index is by guid
                 if pad.guid not in guid_port:

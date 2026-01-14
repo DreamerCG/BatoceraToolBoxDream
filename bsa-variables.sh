@@ -113,23 +113,23 @@ DIALOG_PIPE_FILE=""
 # INSTALLATION: ROOT :: Current directory that the Install Script is running from.
 switch_install_script_dir="$( cd -- $( dirname -- ${BASH_SOURCE[0]} ) &> /dev/null && pwd )"
 # INSTALLATION: PACKAGES :: Post Installation Packages [Firmware, Keys, Saves, Etc.]
-switch_install_packages_dir="$switch_install_script_dir/install/$folder_version/packages"
+switch_install_packages_dir="$switch_install_script_dir/install/$folder_version/system/switch/extra/packages"
 # INSTALLATION: ICONS :: Icons use for desktop files [F1-Applications Menu]
 switch_install_icons_dir="$switch_install_script_dir/icons"
 # INSTALLATION: EMULATORS :: AppImages and Archives of Emulators to install
 switch_install_emus_dir="$switch_install_script_dir/emus"
 # INSTALLATION: SCRIPTS :: Scripts to install
-switch_install_scripts_dir="$switch_install_script_dir/install/$folder_version/scripts"
+switch_install_scripts_dir="$switch_install_script_dir/install/$folder_version/system/switch/extra/scripts"
 # INSTALLATION: SYSTEM CONFIGS :: System Config Files (EmulationStation, evmapy, etc.)
-switch_install_configs_dir="$switch_install_script_dir/install/$folder_version/configs"
+switch_install_configs_dir="$switch_install_script_dir/install/$folder_version/system/configs"
 # INSTALLATION: CONFIG GENERATORS :: Configuration Generation Scripts
-switch_install_configgen_dir="$switch_install_script_dir/install/$folder_version/configgen"
+switch_install_configgen_dir="$switch_install_script_dir/install/$folder_version/system/switch/configgen"
 # INSTALLATION: ROMS :: Roms to Install in Post
 switch_install_roms_dir="$switch_install_script_dir/roms"
 # INSTALLATION: SWITCH ROMS :: Switch Roms to Install in Post
 switch_install_roms_switch_dir="$switch_install_roms_dir/switch"
 # INSTALLATION: PORTS ROMS :: Ports Roms to Install in Post
-switch_install_roms_ports_dir="$switch_install_roms_dir/ports"
+switch_install_roms_ports_dir="$switch_install_roms_dir/install/roms/ports"
 
 
 # ******************************************************************************
@@ -183,13 +183,13 @@ local_icons_dir="$local_share_dir/applications"
 # SWITCH: BIOS
 switch_bios_dir="/userdata/bios/switch"
 # SWITCH: FIRMWARE :: YUZU
-switch_yuzu_firmware_dir="$switch_bios_dir/firmware_yuzu"
+switch_yuzu_firmware_dir="$switch_bios_dir/firmware"
 # SWITCH: FIRMWARE :: RYUJINX
-switch_ryujinx_firmware_dir="$switch_bios_dir/firmware_ryujinx"
+switch_ryujinx_firmware_dir="$switch_bios_dir/firmware"
 # SWITCH: KEYS :: YUZU
-switch_yuzu_keys_dir="$switch_bios_dir/keys_yuzu"
+switch_yuzu_keys_dir="$switch_bios_dir/keys"
 # SWITCH: KEYS :: RYUJINX
-switch_ryujinx_keys_dir="$switch_bios_dir/keys_ryujinx"
+switch_ryujinx_keys_dir="$switch_bios_dir/keys"
 # SWITCH: AMIIBO
 switch_amiibo_dir="$switch_bios_dir/amiibo"
 # SWITCH: ROMS
@@ -221,6 +221,7 @@ switch_Appimage_dir="$switch_system_dir/appimages"
 # ORIGINAL (What the AppImage Uses) CONFIG DIRECTORIES (WILL BE SYMBOLIC LINKS TO NEW CONFIG DIRECTORIES)
 ryujinx_og_config_dir="$system_hidden_config_dir/Ryujinx"
 ryujinx_og_local_config_dir="$local_share_dir/Ryujinx"
+
 # NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
 ryujinx_config_dir="$system_configs_dir/Ryujinx" # ROOT
 ryujinx_config_nand_dir="$ryujinx_config_dir/bis" # NAND
@@ -234,6 +235,7 @@ ryujinx_saves_dir="$switch_saves_dir/Ryujinx" # SAVES (NEW)
 ryujinx_system_saves_dir="$ryujinx_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 ryujinx_user_saves_dir="$ryujinx_saves_dir/user/save" # NAND USER SAVES (NEW)
 ryujinx_user_saves_meta_dir="$ryujinx_saves_dir/user/saveMeta" # NAND USER SAVES META (NEW)
+
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 ryujinx_install_file="Ryujinx-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
@@ -250,6 +252,7 @@ ryujinx_emu_dir="$switch_Appimage_dir"
 # ORIGINAL (What the AppImage Uses) CONFIG DIRECTORIES (WILL BE SYMBOLIC LINKS TO NEW CONFIG DIRECTORIES)
 yuzu_og_config_dir="$system_hidden_config_dir/yuzu"
 yuzu_og_local_config_dir="$local_share_dir/yuzu"
+
 # NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
 yuzu_config_dir="$system_configs_dir/yuzu" # ROOT
 yuzu_config_nand_dir="$yuzu_config_dir/nand" # NAND
@@ -261,6 +264,7 @@ yuzu_config_amiibo_dir="$yuzu_config_dir/amiibo" # AMIIBO
 yuzu_saves_dir="$switch_saves_dir/yuzu" # SAVES (NEW)
 yuzu_system_saves_dir="$yuzu_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 yuzu_user_saves_dir="$yuzu_saves_dir/user/save" # NAND USER SAVES (NEW)
+
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 yuzu_install_file="yuzu-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
@@ -315,4 +319,3 @@ citron_install_file="citron-emu.AppImage"
 citron_install_url=""
 # EMULATOR DIRECTORY
 citron_emu_dir="$switch_Appimage_dir"
-
