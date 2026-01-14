@@ -202,12 +202,12 @@ initialize_ryujinx() {
 
 	# .DESKTOP FOR F1-APPLICATIONS MENU 
 	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	generate_desktop_file "$local_applications_dir" "$local_icons_dir" "ryujinx" "Ryujinx-Config"
+	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "ryujinx" "Ryujinx-Config"
 
 	# COPY LAUNCHER SCRIPTS
 	message "log" "$addon_log" "Installing EmulationStation & Desktop Launcher Scripts"
-	copy_make_executable "ryujinx-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "ryujinx-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "ryujinx-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "ryujinx-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
 
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Ryujinx Emulator Directory Created."
@@ -268,12 +268,12 @@ initialize_yuzu() {
 
 	# .DESKTOP FOR F1-APPLICATIONS MENU 
 	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	generate_desktop_file "$local_applications_dir" "$local_icons_dir" "yuzu" "Yuzu-Config"
+	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "yuzu" "Yuzu-Config"
 
 	# COPY LAUNCHER SCRIPTS
 	message "log" "$addon_log" "Installing EmulationStation & Desktop Launcher Scripts"
-	copy_make_executable "yuzu-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "yuzu-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "yuzu-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "yuzu-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
 
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Yuzu Emulator Directory Created."
@@ -337,11 +337,11 @@ initialize_eden() {
 
 	# .DESKTOP FOR F1-APPLICATIONS MENU 
 	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	generate_desktop_file "$local_applications_dir" "$local_icons_dir" "eden" "Eden-Config"
+	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "eden" "Eden-Config"
 
 	# COPY LAUNCHER SCRIPTS
-	copy_make_executable "eden-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "eden-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "eden-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "eden-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
 
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Eden Emulator Directory Created."
@@ -405,11 +405,11 @@ initialize_citron() {
 
 	# .DESKTOP FOR F1-APPLICATIONS MENU 
 	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	generate_desktop_file "$local_applications_dir" "$local_icons_dir" "citron" "Citron-Config"
+	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "citron" "Citron-Config"
 
 	# COPY LAUNCHER SCRIPTS
-	copy_make_executable "citron-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "citron-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "citron-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	#copy_make_executable "citron-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
 
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Citron Emulator Directory Created."
