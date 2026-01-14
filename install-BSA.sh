@@ -141,7 +141,7 @@ xmlstarlet ed -L \
     -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
     -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
     -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
+    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.jpg" \
     -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
     -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolbox-box.png" \
     "$gamelist_file"
