@@ -237,7 +237,7 @@ ryujinx_user_saves_dir="$ryujinx_saves_dir/user/save" # NAND USER SAVES (NEW)
 ryujinx_user_saves_meta_dir="$ryujinx_saves_dir/user/saveMeta" # NAND USER SAVES META (NEW)
 
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
-ryujinx_install_file="Ryujinx-emu.AppImage"
+ryujinx_install_file="ryujinx-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
 ryujinx_install_url=""
 # EMULATOR DIRECTORY
