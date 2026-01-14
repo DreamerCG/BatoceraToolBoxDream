@@ -67,6 +67,7 @@ source bsa-uninstall.sh
 # FULL INSTALL EMULATOR
 full_install() {
 	local emu="${1,,}";
+	"purge_old_switch_install"
 	"initialize_${emu}"			# Setup directory structures
 	"install_emulator_${emu}"	# Install Emulator (AppImage)
 	"unpack_packages_${emu}"	# Install Required Libraries 

@@ -103,8 +103,6 @@ initialize_common() {
 	# SOURCE GUARD TO PREVENT REDUNDANCY
 	[ -n "$RAN_INITIALIZE_COMMON" ] && return
 
-	purge_old_switch_install
-
 	message "log" "$addon_log" "<<< [ INITIALLIZE COMMON STRUCTURES ]>>>"
 
 	# CREATE SWITCH SYSTEM DIRECTORY
