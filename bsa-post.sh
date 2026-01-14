@@ -39,8 +39,8 @@ post_install_ryujinx() {
 	# INSTALL BSA SCRIPTS
 	copy_make_executable "ryujinx-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "ryujinx_config.sh" "$switch_install_scripts_dir" "$switch_ports_dir"
-	copy_make_executable "ryujinx_config.sh.key" "$switch_install_scripts_dir" "$switch_ports_dir"
+	copy_make_executable "ryujinx_config.sh" "$switch_install_roms_dir" "$switch_ports_dir"
+	copy_make_executable "ryujinx_config.sh.key" "$switch_install_roms_dir" "$switch_ports_dir"
 
 }
 
@@ -57,8 +57,8 @@ post_install_yuzu_common() {
 
 	# INSTALL BSA SCRIPTS
 	copy_make_executable "yuzu-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "yuzu_config.sh" "$switch_install_scripts_dir" "$switch_ports_dir"
-	copy_make_executable "yuzu_config.sh.key" "$switch_install_scripts_dir" "$switch_ports_dir"
+	copy_make_executable "yuzu_config.sh" "$switch_install_roms_dir" "$switch_ports_dir"
+	copy_make_executable "yuzu_config.sh.key" "$switch_install_roms_dir" "$switch_ports_dir"
 
 	# SOURCE GUARD TO PREVENT REDUNDANCY
 	RAN_POST_INSTALL_COMMON_YUZU=true
