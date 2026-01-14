@@ -84,14 +84,15 @@ class RyujinxGenerator(Generator):
         if os.path.exists("/userdata/system/configs/Ryujinx/system"):
             if not os.path.islink("/userdata/system/configs/Ryujinx/system"):
                 shutil.rmtree("/userdata/system/configs/Ryujinx/system")
-                os.symlink("/userdata/bios/switch/keys_ryujinx", "/userdata/system/configs/Ryujinx/system")
+                os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
             else:
                 current_target = os.readlink("/userdata/system/configs/Ryujinx/system")
-                if current_target != "/userdata/bios/switch/keys_ryujinx":
-                    os.unlink("/userdata/bios/switch/keys_ryujinx")
-                    os.symlink("/userdata/bios/switch/keys_ryujinx", "/userdata/system/configs/Ryujinx/system")
+                if current_target != "/userdata/bios/switch/keys":
+                    os.unlink("/userdata/bios/switch/keys")
+                    os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
         else:
             os.symlink("/userdata/bios/switch/keys_ryujinx", "/userdata/system/configs/Ryujinx/system")
+            
         # #FIRMWARE-------
         # if os.path.exists("/userdata/system/configs/Ryujinx/bis/system/Contents/registered"):
             # if not os.path.islink("/userdata/system/configs/Ryujinx/bis/system/Contents/registered"):
