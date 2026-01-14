@@ -39,7 +39,6 @@ post_install_ryujinx() {
 	# INSTALL BSA SCRIPTS
 	copy_make_executable "ryujinx-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-
 	copy_make_executable "ryujinx_config.sh" "$switch_install_scripts_dir" "$switch_ports_dir"
 	copy_make_executable "ryujinx_config.key" "$switch_install_scripts_dir" "$switch_ports_dir"
 

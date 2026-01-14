@@ -16,7 +16,8 @@ remove_emulator_to_es_systems() {
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
 
-
+	purge_old_switch_install
+	
 	message "log" "$addon_log" "<<< [ UNINSTALL BATOCERA SWITCH ADD-ON ]>>>"
 	# DELETE SWITCH SYSTEM DIRECTORY
 	message "log" "$addon_log" "DELETE SWITCH SYSTEM DIRECTORY"

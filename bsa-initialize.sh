@@ -17,84 +17,57 @@ add_emulator_to_es_systems() {
 		"$xml_node"
 }
 
+
 purge_old_switch_install() {
 
-# ON supprime le dossier switch pour eviter les conflits avec les anciennes installations
-rm -rf /userdata/system/switch/ 2>/dev/null
+    LOG="/userdata/system/logs/bsa.log"
 
-# Supprimes les anciens dossier bios / Firmare
-rm -rf /userdata/system/configs/switch/firmware_ryujinx 2>/dev/null
-rm -rf /userdata/system/configs/switch/firmware_yuzu 2>/dev/null
-rm -rf /userdata/system/configs/switch/keys_yuzu 2>/dev/null
-rm -rf /userdata/system/configs/switch/keys_ryujinx 2>/dev/null
+    echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
 
-# ON Supprimes Sudachi QLauncher  / Suyu et Switch Updater40
-rm "/userdata/roms/ports/Sudachi Qlauncher.sh" 2>/dev/null 
-rm "/userdata/roms/ports/Sudachi Qlauncher.sh.keys" 2>/dev/null
-rm "/userdata/roms/ports/Switch Updater40.sh.keys" 2>/dev/null
-rm "/userdata/roms/ports/Switch Updater40.sh" 2>/dev/null
-rm "/userdata/roms/ports/Suyu Qlauncher.sh.keys" 2>/dev/null 
-rm "/userdata/roms/ports/Suyu Qlauncher.sh" 2>/dev/null
+    rm -rf /userdata/system/switch >>"$LOG" 2>&1
 
-# ON Supprimes les anciens fichiers de config EmulationStation
-rm /userdata/system/configs/emulationstation/es_systems_switch.cfg 2>/dev/null
-rm /userdata/system/configs/emulationstation/es_features_switch.cfg 2>/dev/null
+    rm -rf \
+        /userdata/bios/switch/firmware_ryujinx \
+        /userdata/bios/switch/firmware_yuzu \
+        /userdata/bios/switch/keys_yuzu \
+        /userdata/bios/switch/keys_ryujinx \
+        >>"$LOG" 2>&1
 
-# ON Supprimes les anciens fichiers de config evmapy
-rm /userdata/system/configs/evmapy/switch.keys 2>/dev/null
+    rm -f \
+        "/userdata/roms/ports/Sudachi Qlauncher.sh" \
+        "/userdata/roms/ports/Sudachi Qlauncher.sh.keys" \
+        "/userdata/roms/ports/Switch Updater40.sh" \
+        "/userdata/roms/ports/Switch Updater40.sh.keys" \
+        "/userdata/roms/ports/Suyu Qlauncher.sh" \
+        "/userdata/roms/ports/Suyu Qlauncher.sh.keys"
 
-# remove old version update scripts from /userdata/roms/ports
-rm /userdata/roms/ports/updateyuzu.sh 2>/dev/null 
-rm /userdata/roms/ports/updateyuzuea.sh 2>/dev/null
-rm /userdata/roms/ports/updateyuzuEA.sh 2>/dev/null 
-rm /userdata/roms/ports/updateryujinx.sh 2>/dev/null
-rm /userdata/roms/ports/updateryujinxavalonia.sh 2>/dev/null
+    rm -f \
+        /userdata/system/configs/emulationstation/es_systems_switch.cfg \
+        /userdata/system/configs/emulationstation/es_features_switch.cfg \
+        /userdata/system/configs/evmapy/switch.keys
 
-# remove old version dekstop shortcuts from ~/.local/share/applications 
-rm /userdata/system/.local/share/applications/suyu-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/eden-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/eden.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/eden.png 2>/dev/null
-rm /userdata/system/.local/share/applications/yuzu-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/yuzu.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/yuzu.png 2>/dev/null
-rm /userdata/system/.local/share/applications/yuzuEA-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/citron-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/citron.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/citron.png 2>/dev/null
-rm /userdata/system/.local/share/applications/sudachi-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/ryujinx-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/ryujinx.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/ryujinx.png 2>/dev/null
-rm /userdata/system/.local/share/applications/ryujinxavalonia-config.desktop 2>/dev/null
-rm /userdata/system/.local/share/applications/ryujinxldn-config.desktop 2>/dev/null
+    rm -f /userdata/roms/ports/update*yuzu*.sh
+    rm -f /userdata/roms/ports/updateryujinx*.sh
 
-# remove old version dekstop shortcuts from /usr/share/applications:
-rm /usr/share/applications/eden-config.desktop 2>/dev/null
-rm /usr/share/applications/eden.desktop 2>/dev/null
-rm /usr/share/applications/citron-config.desktop 2>/dev/null
-rm /usr/share/applications/citron.desktop 2>/dev/null
-rm /usr/share/applications/sudachi-config.desktop 2>/dev/null
-rm /usr/share/applications/yuzu-config.desktop 2>/dev/null
-rm /usr/share/applications/yuzu.desktop 2>/dev/null
-rm /usr/share/applications/yuzuEA-config.desktop 2>/dev/null
-rm /usr/share/applications/Ryujinx.desktop 2>/dev/null
-rm /usr/share/applications/ryujinx-config.desktop 2>/dev/null
-rm /usr/share/applications/Ryujinx-Avalonia.desktop 2>/dev/null
-rm /usr/share/applications/ryujinxldn-config.desktop 2>/dev/null
-rm /usr/share/applications/yuzu-config.desktop 2>/dev/null
-rm /usr/share/applications/yuzuEA.desktop 2>/dev/null
-rm /usr/share/applications/ryujinxavalonia-config.desktop 2>/dev/null
-rm /usr/share/applications/ryujinxldn-config.desktop 2>/dev/null
+    rm -f /userdata/system/.local/share/applications/*yuzu*
+    rm -f /userdata/system/.local/share/applications/*ryujinx*
+    rm -f /userdata/system/.local/share/applications/*eden*
+    rm -f /userdata/system/.local/share/applications/*citron*
+    rm -f /userdata/system/.local/share/applications/*sudachi*
 
-# Remove Symllinks if they exist (centralise to Yuzu)
-rm /userdata/system/configs/eden 2>/dev/null
-rm /userdata/system/.configs/eden 2>/dev/null
-rm /userdata/system/configs/citron 2>/dev/null
-rm /userdata/system/.configs/citron 2>/dev/null
-rm /userdata/system/configs/sudachi 2>/dev/null
-rm /userdata/system/.configs/sudachi 2>/dev/null
+    rm -f /usr/share/applications/*yuzu*
+    rm -f /usr/share/applications/*ryujinx*
+    rm -f /usr/share/applications/*eden*
+    rm -f /usr/share/applications/*citron*
+    rm -f /usr/share/applications/*sudachi*
+
+    rm -f \
+        /userdata/system/configs/{eden,citron,sudachi} \
+        /userdata/system/.configs/{eden,citron,sudachi}
+
+    echo "[PURGE] Done" >>"$LOG"
 }
+
 
 
 
