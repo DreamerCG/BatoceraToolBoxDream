@@ -282,13 +282,13 @@ yuzu_emu_dir="$switch_Appimage_dir"
 eden_og_config_dir="$system_hidden_config_dir/yuzu"
 eden_og_local_config_dir="$local_share_dir/yuzu"
 # NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
-eden_config_dir="$system_configs_dir/eden" # ROOT
-eden_config_nand_dir="$eden_config_dir/nand" # NAND
-eden_config_firmware_dir="$eden_config_nand_dir/system/Contents/registered" # FIRMWARE
-eden_config_keys_dir="$eden_config_dir/keys" # KEYS
-eden_config_saves_dir="$eden_config_dir/nand/user/save" # SAVES (OLD)
-eden_config_amiibo_dir="$eden_config_dir/amiibo" # AMIIBO
-eden_saves_dir="$system_saves_dir/eden" # SAVES (NEW)
+# eden_config_dir="$system_configs_dir/eden" # ROOT
+# eden_config_nand_dir="$eden_config_dir/nand" # NAND
+# eden_config_firmware_dir="$eden_config_nand_dir/system/Contents/registered" # FIRMWARE
+# eden_config_keys_dir="$eden_config_dir/keys" # KEYS
+# eden_config_saves_dir="$eden_config_dir/nand/user/save" # SAVES (OLD)
+# eden_config_amiibo_dir="$eden_config_dir/amiibo" # AMIIBO
+# eden_saves_dir="$system_saves_dir/eden" # SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 eden_install_file="eden-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
@@ -306,13 +306,13 @@ eden_emu_dir="$switch_Appimage_dir"
 citron_og_config_dir="$system_hidden_config_dir/yuzu"
 citron_og_local_config_dir="$local_share_dir/yuzu"
 # NEW CONFIG DIRECTORIES (ACTUAL LOCATION OF CONFIG DIRECTORIES)
-citron_config_dir="$system_configs_dir/citron" # ROOT
-citron_config_nand_dir="$citron_config_dir/nand" # NAND
-citron_config_firmware_dir="$citron_config_nand_dir/system/Contents/registered" # FIRMWARE
-citron_config_keys_dir="$citron_config_dir/keys" # KEYS
-citron_config_saves_dir="$citron_config_dir/nand/user/save" # SAVES (OLD)
-citron_config_amiibo_dir="$citron_config_dir/amiibo" # AMIIBO
-citron_saves_dir="$system_saves_dir/eden" # SAVES (NEW)
+# citron_config_dir="$system_configs_dir/citron" # ROOT
+# citron_config_nand_dir="$citron_config_dir/nand" # NAND
+# citron_config_firmware_dir="$citron_config_nand_dir/system/Contents/registered" # FIRMWARE
+# citron_config_keys_dir="$citron_config_dir/keys" # KEYS
+# citron_config_saves_dir="$citron_config_dir/nand/user/save" # SAVES (OLD)
+# citron_config_amiibo_dir="$citron_config_dir/amiibo" # AMIIBO
+# citron_saves_dir="$system_saves_dir/eden" # SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 citron_install_file="citron-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
