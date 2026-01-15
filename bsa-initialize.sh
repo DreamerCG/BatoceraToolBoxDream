@@ -313,8 +313,8 @@ initialize_eden() {
 
 	# CREATE & LINK ORIGINAL CONFIG DIRECTORIES TO NEW CONFIG DIRECTORIES (MORE CENTRALIZED)
 	message "log" "$addon_log" "Linking Original Configuration Directories to New (Centralized) Configuration Directories."
-	create_slink_directory "$eden_config_dir" "$eden_og_config_dir"
-	create_slink_directory "$eden_config_dir" "$eden_og_local_config_dir"
+	#create_slink_directory "$eden_config_dir" "$eden_og_config_dir"
+	#create_slink_directory "$eden_config_dir" "$eden_og_local_config_dir"
 
 	# ******************************************************************************
 	# START USING NEW CONFIG DIRECTORIES FROM HERE ON OUT AS LINKS CREATE
@@ -322,22 +322,22 @@ initialize_eden() {
 
 	# LINK FIRMWARE/NAND DIRECTORY
 	message "log" "$addon_log" "Linking Firmware Directory. (Fork: Link Eden NAND -> Yuzu NAND)"
-	create_slink_directory "$yuzu_config_dir/nand" "$eden_config_dir/nand"
+	#create_slink_directory "$yuzu_config_dir/nand" "$eden_config_dir/nand"
 
 	# LINK KEYS DIRECTORY
 	message "log" "$addon_log" "Linking Keys Directory."
-	create_slink_directory "$switch_yuzu_keys_dir" "$eden_config_keys_dir"
+	#create_slink_directory "$switch_yuzu_keys_dir" "$eden_config_keys_dir"
 
 	# LINK SAVES DIRECTORY
 	#	If Yuzu installed then taken care of by linking NAND to Yuzu NAND
 	# 		But redo in case Yuzu was not installed
 	message "log" "$addon_log" "Linking Saves Directories."
-	create_slink_directory "$yuzu_system_saves_dir" "$yuzu_config_system_saves_dir"
-	create_slink_directory "$yuzu_user_saves_dir" "$yuzu_config_user_saves_dir"
+	#create_slink_directory "$yuzu_system_saves_dir" "$yuzu_config_system_saves_dir"
+	#create_slink_directory "$yuzu_user_saves_dir" "$yuzu_config_user_saves_dir"
 
 	# LINK AMIIBO DIRECTORY
 	message "log" "$addon_log" "Linking Amiibo Directory."
-	create_slink_directory "$switch_amiibo_dir" "$eden_config_amiibo_dir"
+	#create_slink_directory "$switch_amiibo_dir" "$eden_config_amiibo_dir"
 
 	# .DESKTOP FOR F1-APPLICATIONS MENU 
 	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
