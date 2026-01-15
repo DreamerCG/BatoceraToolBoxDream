@@ -1,0 +1,18 @@
+{
+    "actions_player1": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "exec",
+            "target": ["batocera-mouse hide && killall -9 Ryujinx.AppImage Ryujinx ryujinx-emu.AppImage eden eden-emu.Appimage citron citron-emu.Appimage 2>/dev/null"]
+        },
+        {
+            "trigger": ["start"],
+            "type": "key",
+            "target": ["KEY_ENTER"],
+            "description": "Press enter"
+        }
+	]
+}
