@@ -52,7 +52,7 @@ def switch_log(msg):
 
 def log_stderr(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stdout)	
+    print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stderr)	
 
 ###START PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#######################################################################
 #######################################################################################################################
@@ -234,38 +234,37 @@ def detect_bus_from_hidraw(hidraw_path: str):
 
     return bus_prefix[2:]
 
-# def detect_device():
-    # # 1) DMI product name
-    # try:
-        # with open("/sys/class/dmi/id/product_name", "r") as f:
-            # name = f.read().strip()
-            # lname = name.lower()
+def detect_device():
+    # 1) DMI product name
+     try:
+         with open("/sys/class/dmi/id/product_name", "r") as f:
+             name = f.read().strip()
+             lname = name.lower()
 
-            # if lname in ["jupiter", "galileo"] or "steam deck" in lname:
-                # return True, name
+             if lname in ["jupiter", "galileo"] or "steam deck" in lname:
+                 return True, name
 
-            # # Machine connue mais pas Steam Deck
-            # return False, name
-    # except:
-        # pass
+             # Machine connue mais pas Steam Deck
+             return False, name
+     except:
+         pass
 
-    # # 2) USB Vendor ID fallback (Valve = 28de)
-    # try:
-        # for dev in os.listdir("/sys/bus/usb/devices"):
-            # vid_path = f"/sys/bus/usb/devices/{dev}/idVendor"
-            # if os.path.exists(vid_path):
-                # with open(vid_path, "r") as f:
-                    # if f.read().strip().lower() == "28de":
-                        # return True, "Valve USB device"
-    # except:
-        # pass
+    #  2) USB Vendor ID fallback (Valve = 28de)
+     try:
+         for dev in os.listdir("/sys/bus/usb/devices"):
+             vid_path = f"/sys/bus/usb/devices/{dev}/idVendor"
+             if os.path.exists(vid_path):
+                 with open(vid_path, "r") as f:
+                     if f.read().strip().lower() == "28de":
+                         return True, "Valve USB device"
+     except:
+         pass
 
-    # return False, "Unknown device"
+     return False, "Unknown device"
 
 def list_sdl_gamepads(sdlversion):
 
-    # is_sd, devname = detect_device()
-
+    is_sd, devname = detect_device()
     # if is_sd:
         # # Steam Deck = evdev + hidraw ONLY
         # os.environ["SDL_JOYSTICK_HIDAPI"] = "0"
@@ -278,16 +277,11 @@ def list_sdl_gamepads(sdlversion):
         # if "SDL_JOYSTICK_RAWINPUT" in os.environ:
             # del os.environ["SDL_JOYSTICK_RAWINPUT"]
 
-        # switch_log(f"Device detected: {devname}")
-        # switch_log("Set SDL_JOYSTICK_HIDAPI=1")
-
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
-    os.environ["SDL_JOYSTICK_HIDAPI_XPAD"] = "0"
-    os.environ["SDL_JOYSTICK_RAWINPUT"] = "1"
 
     sdl2.SDL_ClearError()
     try:
@@ -298,8 +292,10 @@ def list_sdl_gamepads(sdlversion):
     count = joystick.SDL_NumJoysticks()
 
     sdl_devices = {}
+    import pprint
 
     for i in range(count):
+        #pprint.pprint(f"isGameController : {sdl2.SDL_IsGameController(i)}", stream=sys.stderr)
         if sdl2.SDL_IsGameController(i) == 1:
             pad = sdl2.SDL_GameControllerOpen(i)
             path = sdl2.SDL_GameControllerPath(pad)
@@ -315,15 +311,17 @@ def list_sdl_gamepads(sdlversion):
             buff[7] = b'0'
             guidstring = ((bytes(buff)).decode()).split('\x00',1)[0]
             joy_path = joystick.SDL_JoystickPathForIndex(i).decode()
-            
+
+            #pprint.pprint(f"joy_path : {joy_path}", stream=sys.stderr)
+
             #sdl3 have implemented bus type in hidraw guid, we still use old sdl2 for this script
             if 'hidraw' in joy_path and sdlversion == 3:
                 bustype = detect_bus_from_hidraw(joy_path)
                 guidstring = bustype + guidstring[2:]
 
             mapping = sdl2.SDL_GameControllerMapping(pad);
-            import pprint
-            pprint.pprint(mapping)
+
+            #pprint.pprint(mapping)
             eslog.debug(str(mapping))
             controller = sdlmapping_to_controller(str(mapping), guidstring)
 
@@ -791,19 +789,11 @@ class EdenGenerator(Generator):
             sdl_gamepads = list_sdl_gamepads(sdlversion)
 
             import pprint
-            pprint.pprint(evdev_hidraw, stream=sys.stderr)
-            pprint.pprint(sdl_gamepads, stream=sys.stderr)
-            pprint.pprint(playersControllers, stream=sys.stderr)
-
-
 
             nplayer = 0
             guid_port = {}
             for nplayer, pad in enumerate(playersControllers, start=0):
                 player_nb_str = "player_" + str(nplayer)
-
-                pprint.pprint(pad, stream=sys.stderr)
-                pprint.pprint(pad.device_path, stream=sys.stderr)
 
                 #if hidraw exist, replace the guid and use the provided mapping
                 if pad.device_path in evdev_hidraw:
@@ -811,6 +801,10 @@ class EdenGenerator(Generator):
                     if hidraw_path in sdl_gamepads:
                         pad.guid = sdl_gamepads[hidraw_path]['guid']
                         pad.inputs = sdl_gamepads[hidraw_path]['inputs']
+                    else:
+                        pad.guid = sdl_gamepads[pad.device_path]['guid']
+                        pad.inputs = sdl_gamepads[pad.device_path]['inputs']
+
                 #try to get to mapping from the yuzu libsdl (mapping is different than libsdl from ES for some gamepad like xbox one)
                 elif pad.device_path in sdl_gamepads:
                     pad.inputs = sdl_gamepads[pad.device_path]['inputs']
@@ -828,14 +822,15 @@ class EdenGenerator(Generator):
                 else:
                     yuzuConfig.set("Controls", player_nb_str + "_type", 0)
 
-
-                pprint.pprint(yuzuButtonsMapping, stream=sys.stderr)
+                #log_stderr(f"[GUID] {pad.name}")
+                #log_stderr(f"[GUID] {pad.guid}")
+                #pprint.pprint(pad, stream=sys.stderr)
 
                 for x in yuzuButtonsMapping:
-                    pprint.pprint(yuzuButtonsMapping[x], stream=sys.stderr)
                     yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setButton(emulator, yuzuButtonsMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
                 for x in yuzuAxisMapping:
                     yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setAxis(yuzuAxisMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
+
 
                 yuzuConfig.set("Controls", player_nb_str + "_button_screenshot\\default", "false")
                 yuzuConfig.set("Controls", player_nb_str + "_button_screenshot", "[empty]")
@@ -853,6 +848,8 @@ class EdenGenerator(Generator):
                 old_controls = yuzuoldConfig.items("Controls")
                 for option, value in old_controls:
                     yuzuConfig.set("Controls", option, value)
+
+
 
     # telemetry section
         if not yuzuConfig.has_section("WebService"):
@@ -903,38 +900,40 @@ class EdenGenerator(Generator):
         }
 
 
-        log_stderr(
-            f"[SETBUTTON] key={key} type={input.type} "
-            f"id={input.id} value={input.value} code={input.code} guid={padGuid}"
-        )
+        #log_stderr(
+        #    f"[SETBUTTON] key={key} type={input.type} "
+        #    f"id={input.id} value={input.value} code={input.code} guid={padGuid}"
+        #)
 
         is_xbox = (
             padGuid.startswith("060000005e04") or
             (padName and "xbox" in padName.lower())
         )
 
-        if is_xbox:
-            log_stderr("[SETBUTTON] Xbox controller detected")
+        #log_stderr("[SETBUTTON] Pad Guid is "+padGuid)
+
+        #if is_xbox:
+            #log_stderr("[SETBUTTON] Xbox controller detected")
 
         if input.type == "button":
 
             if is_xbox and key in XBOX_BUTTON_REMAP:
                 button_id = XBOX_BUTTON_REMAP[key]
-                log_stderr(
-                    f"[SETBUTTON][XBOX] remap key={key} "
-                    f"hid_id={input.id} -> sdl_id={button_id}"
-                )
+        #        log_stderr(
+         #           f"[SETBUTTON][XBOX] remap key={key} "
+          #          f"hid_id={input.id} -> sdl_id={button_id}"
+           #     )
             else:
                 button_id = input.id
-                log_stderr(
-                    f"[SETBUTTON] using native button id={button_id}"
-                )
+                #log_stderr(
+            #        f"[SETBUTTON] using native button id={button_id}"
+                #)
 
             mapping = (
                 f"button:{button_id},guid:{padGuid},port:{port},engine:sdl"
             )
 
-            log_stderr(f"[SETBUTTON][FINAL] {mapping}")
+            #log_stderr(f"[SETBUTTON][FINAL] {mapping}")
             return mapping
 
         elif input.type == "hat":
@@ -943,7 +942,7 @@ class EdenGenerator(Generator):
                 f"hat:0,pad:0,direction:{key},guid:{padGuid},port:{port},engine:sdl"
             )
 
-            log_stderr(f"[SETBUTTON][FINAL] {mapping}")
+            #log_stderr(f"[SETBUTTON][FINAL] {mapping}")
             return mapping
 
         elif input.type == "axis":
@@ -952,10 +951,10 @@ class EdenGenerator(Generator):
                 f"threshold:0.5,axis:{input.id},guid:{padGuid},port:{port},engine:sdl"
             )
 
-            log_stderr(f"[SETBUTTON][FINAL] {mapping}")
+            #log_stderr(f"[SETBUTTON][FINAL] {mapping}")
             return mapping
 
-        log_stderr(f"[SETBUTTON] unsupported input type={input.type}")
+        #log_stderr(f"[SETBUTTON] unsupported input type={input.type}")
         return ""
 
 
