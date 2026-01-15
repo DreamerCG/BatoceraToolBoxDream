@@ -33,6 +33,7 @@ import sdl2
 from sdl2 import joystick
 from ctypes import create_string_buffer
 
+
 eslog = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
@@ -51,7 +52,8 @@ def switch_log(msg):
 
 def log_stderr(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stdout)	
+    print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stderr)	
+
 ###START PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#######################################################################
 #######################################################################################################################
 def hidraw_get_guid(devpath):
@@ -71,6 +73,7 @@ def hidraw_get_guid(devpath):
         return f"{vid}{pid}000000000000000000000000"
     except:
         return "00000000000000000000000000000000"
+
 def list_hidraw_devices():
     devices = []
     for h in glob.glob("/sys/class/hidraw/hidraw*"):
@@ -95,6 +98,7 @@ def list_hidraw_devices():
             "guid": guid
         })
     return devices
+
 def map_hidraw_to_evdev():
     mapping = {}
     for h in glob.glob("/sys/class/hidraw/hidraw*"):
@@ -105,17 +109,19 @@ def map_hidraw_to_evdev():
                 if d.startswith("event"):
                     mapping[f"/dev/{hid}"] = f"/dev/input/{d}"
     return mapping
+
 hidraws = list_hidraw_devices()
 hidmap = map_hidraw_to_evdev()
 for d in hidraws:
     hid = d["hidraw"]
     ev = hidmap.get(hid, "no evdev")
 
-    switch_log(f"[HID] {d['name']}")
-    switch_log(f"  hidraw = {hid}")
-    switch_log(f"  evdev  = {ev}")
+    #switch_log(f"[HID] {d['name']}")
+    #switch_log(f"  hidraw = {hid}")
+    #switch_log(f"  evdev  = {ev}")
     #switch_log(f"  bus    = {d['bus']}")
-    switch_log(f"  guid   = {d['guid']}")
+    #switch_log(f"  guid   = {d['guid']}")
+
 ###END PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#########################################################################
 #######################################################################################################################
 
@@ -187,6 +193,7 @@ def sdlmapping_to_controller(mapping, guid):
 
     return current_controller
 
+
 def evdev_to_hidraw():
 
     evdev_hidraw = {}
@@ -227,15 +234,53 @@ def detect_bus_from_hidraw(hidraw_path: str):
 
     return bus_prefix[2:]
 
+def detect_device():
+    # 1) DMI product name
+     try:
+         with open("/sys/class/dmi/id/product_name", "r") as f:
+             name = f.read().strip()
+             lname = name.lower()
+
+             if lname in ["jupiter", "galileo"] or "steam deck" in lname:
+                 return True, name
+
+             # Machine connue mais pas Steam Deck
+             return False, name
+     except:
+         pass
+
+    #  2) USB Vendor ID fallback (Valve = 28de)
+     try:
+         for dev in os.listdir("/sys/bus/usb/devices"):
+             vid_path = f"/sys/bus/usb/devices/{dev}/idVendor"
+             if os.path.exists(vid_path):
+                 with open(vid_path, "r") as f:
+                     if f.read().strip().lower() == "28de":
+                         return True, "Valve USB device"
+     except:
+         pass
+
+     return False, "Unknown device"
+
 def list_sdl_gamepads(sdlversion):
-    
-    
+
+    is_sd, devname = detect_device()
+    # if is_sd:
+        # # Steam Deck = evdev + hidraw ONLY
+        # os.environ["SDL_JOYSTICK_HIDAPI"] = "0"
+        # os.environ["SDL_JOYSTICK_RAWINPUT"] = "0"
+        # switch_log(f"Steam Deck detected: {devname}")
+        # switch_log("Set --> SDL_JOYSTICK_HIDAPI=0 and SDL_JOYSTICK_RAWINPUT=0")
+    # else:
+        # # Tous les autres PC → HIDAPI natif
+        # os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
+        # if "SDL_JOYSTICK_RAWINPUT" in os.environ:
+            # del os.environ["SDL_JOYSTICK_RAWINPUT"]
+
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
-    os.environ["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"
-    os.environ["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
 
     sdl2.SDL_ClearError()
@@ -247,8 +292,10 @@ def list_sdl_gamepads(sdlversion):
     count = joystick.SDL_NumJoysticks()
 
     sdl_devices = {}
+    import pprint
 
     for i in range(count):
+        #pprint.pprint(f"isGameController : {sdl2.SDL_IsGameController(i)}", stream=sys.stderr)
         if sdl2.SDL_IsGameController(i) == 1:
             pad = sdl2.SDL_GameControllerOpen(i)
             path = sdl2.SDL_GameControllerPath(pad)
@@ -264,15 +311,17 @@ def list_sdl_gamepads(sdlversion):
             buff[7] = b'0'
             guidstring = ((bytes(buff)).decode()).split('\x00',1)[0]
             joy_path = joystick.SDL_JoystickPathForIndex(i).decode()
-            
+
+            #pprint.pprint(f"joy_path : {joy_path}", stream=sys.stderr)
+
             #sdl3 have implemented bus type in hidraw guid, we still use old sdl2 for this script
             if 'hidraw' in joy_path and sdlversion == 3:
                 bustype = detect_bus_from_hidraw(joy_path)
                 guidstring = bustype + guidstring[2:]
 
             mapping = sdl2.SDL_GameControllerMapping(pad);
-            import pprint
-            pprint.pprint(mapping)
+
+            #pprint.pprint(mapping)
             eslog.debug(str(mapping))
             controller = sdlmapping_to_controller(str(mapping), guidstring)
 
@@ -289,6 +338,18 @@ class EdenGenerator(Generator):
             "name": "switch-emu",
             "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"]}
         }
+
+    def force_symlink(self,src, dst):
+        if os.path.lexists(dst):  # existe OU lien cassé
+            if os.path.islink(dst):
+                # Symlink → unlink uniquement
+                if os.readlink(dst) == src:
+                    return  # déjà bon
+                os.unlink(dst)
+            else:
+                # Dossier réel → rmtree
+                shutil.rmtree(dst)
+        os.symlink(src, dst)
 
     def executionDirectory(self, config, rom):
         return "/userdata/system/switch/appimages"
@@ -315,8 +376,6 @@ class EdenGenerator(Generator):
         os.chmod("/userdata/system/switch/appimages/"+emulator+".AppImage", st.st_mode | stat.S_IEXEC)
 
         #Create Keys Folder
-        mkdir_if_not_exists(Path("/userdata/bios/switch"))
-        mkdir_if_not_exists(Path("/userdata/bios/switch/keys"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system"))
@@ -324,29 +383,13 @@ class EdenGenerator(Generator):
 
         #Link Yuzu firmware/key folder
         #KEY-------
-        if os.path.exists("/userdata/system/configs/yuzu/keys"):
-            if not os.path.islink("/userdata/system/configs/yuzu/keys"):
-                shutil.rmtree("/userdata/system/configs/yuzu/keys")
-                os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/yuzu/keys")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/keys")
-                if current_target != "/userdata/bios/switch/keys":
-                    os.unlink("/userdata/system/configs/yuzu/keys")
-                    os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/yuzu/keys")
-        else:
-            os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/yuzu/keys")
+        self.force_symlink("/userdata/bios/switch/keys","/userdata/system/configs/yuzu/keys")
+            
         #FIRMWARE-------
-        if os.path.exists("/userdata/system/configs/yuzu/nand/system/Contents/registered"):
-            if not os.path.islink("/userdata/system/configs/yuzu/nand/system/Contents/registered"):
-                shutil.rmtree("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                os.symlink("/userdata/bios/switch/firmware", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                if current_target != "/userdata/bios/switch/firmware":
-                    os.unlink("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                    os.symlink("/userdata/bios/switch/firmware", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
-        else:
-            os.symlink("/userdata/bios/switch/firmware", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
+        self.force_symlink("/userdata/bios/switch/firmware","/userdata/system/configs/yuzu/nand/system/Contents/registered")
+
+        #Create OS Saves folder
+        mkdir_if_not_exists(Path("/userdata/saves/yuzu"))
 
         #Link Yuzu App Directory to /system/configs/yuzu
         mkdir_if_not_exists(Path("/userdata/system/.local"))
@@ -361,7 +404,7 @@ class EdenGenerator(Generator):
             st = os.symlink("/userdata/system/configs/yuzu","/userdata/system/.local/share/"+emudir)
 
         #Link Yuzu Config Directory to /system/configs/yuzu
-        mkdir_if_not_exists(Path("/userdata/system/.config"))
+        mkdir_if_not_exists(Path("/userdata/.config"))
         
         #Remove .config/yuzu if it exists and isnt' a link
         if os.path.exists("/userdata/system/.config/"+emudir):
@@ -379,10 +422,26 @@ class EdenGenerator(Generator):
         if not os.path.exists("/userdata/system/configs/"+emudir):
             st = os.symlink("/userdata/system/configs/yuzu","/userdata/system/configs/"+emudir)
 
-        cachedir = ".cache/" + emudir
-        #Link .cache Directory to /userdata/saves/yuzu
+        #Link YUZU save Directory to /userdata/saves/"emudir"
+        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user"))
+        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user/save"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/eden"))
+        if os.path.exists("/userdata/system/configs/yuzu/nand/user/save"):
+            if not os.path.islink("/userdata/system/configs/yuzu/nand/user/save"):
+                shutil.rmtree("/userdata/system/configs/yuzu/nand/user/save")
+                os.symlink("/userdata/saves/switch/eden", "/userdata/system/configs/yuzu/nand/user/save")
+            else:
+                current_target = os.readlink("/userdata/system/configs/yuzu/nand/user/save")
+                if current_target != "/userdata/saves/switch/eden":
+                    os.unlink("/userdata/system/configs/yuzu/nand/user/save")
+                    os.symlink("/userdata/saves/switch/eden", "/userdata/system/configs/yuzu/nand/user/save")
+        else:
+            os.symlink("/userdata/saves/switch/eden", "/userdata/system/configs/yuzu/nand/user/save")
+
+        #Link Yuzu Cache directoy / Game List
         mkdir_if_not_exists(Path("/userdata/system/.cache"))
-        mkdir_if_not_exists(Path("/userdata/system/" + cachedir))
+        mkdir_if_not_exists(Path("/userdata/system/.cache/"+emudir))
 
         #remove game_list if it exists and isn't a link
         if os.path.exists("/userdata/system/.cache/"+emudir+"/game_list"):
@@ -393,23 +452,6 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/yuzu/game_list"))
         if not os.path.exists("/userdata/system/.cache/"+emudir+"/game_list"):
             st = os.symlink("/userdata/saves/yuzu/game_list","/userdata/system/.cache/"+emudir+"/game_list")
-
-        #Link YUZU save Directory to /userdata/saves/"emudir"
-        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user"))
-        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user/save"))
-        mkdir_if_not_exists(Path("/userdata/saves/switch"))
-        mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron"))
-        if os.path.exists("/userdata/system/configs/yuzu/nand/user/save"):
-            if not os.path.islink("/userdata/system/configs/yuzu/nand/user/save"):
-                shutil.rmtree("/userdata/system/configs/yuzu/nand/user/save")
-                os.symlink("/userdata/saves/switch/eden_citron", "/userdata/system/configs/yuzu/nand/user/save")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/nand/user/save")
-                if current_target != "/userdata/saves/switch/eden_citron":
-                    os.unlink("/userdata/system/configs/yuzu/nand/user/save")
-                    os.symlink("/userdata/saves/switch/eden_citron", "/userdata/system/configs/yuzu/nand/user/save")
-        else:
-            os.symlink("/userdata/saves/switch/eden_citron", "/userdata/system/configs/yuzu/nand/user/save")
 
         yuzuConfig = str(CONFIGS) + '/yuzu/qt-config.ini'
         yuzuConfigTemplate = '/userdata/system/switch/configgen/qt-config.ini.template'
@@ -764,22 +806,22 @@ class EdenGenerator(Generator):
             sdl_gamepads = list_sdl_gamepads(sdlversion)
 
             import pprint
-            # pprint.pprint(evdev_hidraw, stream=sys.stderr)
-            # pprint.pprint(sdl_gamepads, stream=sys.stderr)
-            # pprint.pprint(playersControllers, stream=sys.stderr)
+
             nplayer = 0
             guid_port = {}
             for nplayer, pad in enumerate(playersControllers, start=0):
                 player_nb_str = "player_" + str(nplayer)
 
-                # pprint.pprint(pad, stream=sys.stderr)
-                # pprint.pprint(pad.device_path, stream=sys.stderr)
                 #if hidraw exist, replace the guid and use the provided mapping
                 if pad.device_path in evdev_hidraw:
                     hidraw_path = evdev_hidraw[pad.device_path]
                     if hidraw_path in sdl_gamepads:
                         pad.guid = sdl_gamepads[hidraw_path]['guid']
                         pad.inputs = sdl_gamepads[hidraw_path]['inputs']
+                    else:
+                        pad.guid = sdl_gamepads[pad.device_path]['guid']
+                        pad.inputs = sdl_gamepads[pad.device_path]['inputs']
+
                 #try to get to mapping from the yuzu libsdl (mapping is different than libsdl from ES for some gamepad like xbox one)
                 elif pad.device_path in sdl_gamepads:
                     pad.inputs = sdl_gamepads[pad.device_path]['inputs']
@@ -797,13 +839,15 @@ class EdenGenerator(Generator):
                 else:
                     yuzuConfig.set("Controls", player_nb_str + "_type", 0)
 
-                # pprint.pprint(yuzuButtonsMapping, stream=sys.stderr)
+                #log_stderr(f"[GUID] {pad.name}")
+                #log_stderr(f"[GUID] {pad.guid}")
+                #pprint.pprint(pad, stream=sys.stderr)
 
                 for x in yuzuButtonsMapping:
-                    # pprint.pprint(yuzuButtonsMapping[x], stream=sys.stderr)
                     yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setButton(emulator, yuzuButtonsMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
                 for x in yuzuAxisMapping:
                     yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setAxis(yuzuAxisMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
+
 
                 yuzuConfig.set("Controls", player_nb_str + "_button_screenshot\\default", "false")
                 yuzuConfig.set("Controls", player_nb_str + "_button_screenshot", "[empty]")
@@ -821,6 +865,8 @@ class EdenGenerator(Generator):
                 old_controls = yuzuoldConfig.items("Controls")
                 for option, value in old_controls:
                     yuzuConfig.set("Controls", option, value)
+
+
 
     # telemetry section
         if not yuzuConfig.has_section("WebService"):
@@ -851,7 +897,7 @@ class EdenGenerator(Generator):
     def setButton(emulator, key, padGuid, padInputs, port, padName=None):
 
         if key not in padInputs:
-            # log_stderr(f"[SETBUTTON] key={key} not in padInputs")
+            log_stderr(f"[SETBUTTON] key={key} not in padInputs")
             return ""
 
         input = padInputs[key]
@@ -870,53 +916,63 @@ class EdenGenerator(Generator):
             "r3": 10,
         }
 
-        # log_stderr(
-            # f"[SETBUTTON] key={key} type={input.type} "
-            # f"id={input.id} value={input.value} code={input.code} guid={padGuid}"
-        # )
+        #log_stderr(
+        #    f"[SETBUTTON] key={key} type={input.type} "
+        #    f"id={input.id} value={input.value} code={input.code} guid={padGuid}"
+        #)
 
         is_xbox = (
             padGuid.startswith("060000005e04") or
             (padName and "xbox" in padName.lower())
         )
 
-        if is_xbox:
-            log_stderr("[SETBUTTON] Xbox controller detected")
+        #log_stderr("[SETBUTTON] Pad Guid is "+padGuid)
+
+        #if is_xbox:
+            #log_stderr("[SETBUTTON] Xbox controller detected")
 
         if input.type == "button":
+
             if is_xbox and key in XBOX_BUTTON_REMAP:
                 button_id = XBOX_BUTTON_REMAP[key]
-                log_stderr(
-                    f"[SETBUTTON][XBOX] remap key={key} "
-                    f"hid_id={input.id} -> sdl_id={button_id}"
-                )
+        #        log_stderr(
+         #           f"[SETBUTTON][XBOX] remap key={key} "
+          #          f"hid_id={input.id} -> sdl_id={button_id}"
+           #     )
             else:
                 button_id = input.id
-                # log_stderr(
-                    # f"[SETBUTTON] using native button id={button_id}"
-                # )
+                #log_stderr(
+            #        f"[SETBUTTON] using native button id={button_id}"
+                #)
+
             mapping = (
                 f"button:{button_id},guid:{padGuid},port:{port},engine:sdl"
             )
-            # log_stderr(f"[SETBUTTON][FINAL] {mapping}")
-            return mapping
 
-        elif input.type == "hat":
-            mapping = (
-                f"hat:0,pad:0,direction:{key},guid:{padGuid},port:{port},engine:sdl"
-            )
-            # log_stderr(f"[SETBUTTON][FINAL] {mapping}")
-            return mapping
-
-        elif input.type == "axis":
-            mapping = (
-                f"threshold:0.5,axis:{input.id},guid:{padGuid},port:{port},engine:sdl"
-            )
             #log_stderr(f"[SETBUTTON][FINAL] {mapping}")
             return mapping
 
-        # log_stderr(f"[SETBUTTON] unsupported input type={input.type}")
+        elif input.type == "hat":
+
+            mapping = (
+                f"hat:0,pad:0,direction:{key},guid:{padGuid},port:{port},engine:sdl"
+            )
+
+            #log_stderr(f"[SETBUTTON][FINAL] {mapping}")
+            return mapping
+
+        elif input.type == "axis":
+
+            mapping = (
+                f"threshold:0.5,axis:{input.id},guid:{padGuid},port:{port},engine:sdl"
+            )
+
+            #log_stderr(f"[SETBUTTON][FINAL] {mapping}")
+            return mapping
+
+        #log_stderr(f"[SETBUTTON] unsupported input type={input.type}")
         return ""
+
 
     @staticmethod
     def hatdirectionvalue(value):
