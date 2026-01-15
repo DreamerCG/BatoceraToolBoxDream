@@ -288,7 +288,7 @@ eden_config_firmware_dir="$eden_config_nand_dir/system/Contents/registered" # FI
 eden_config_keys_dir="$eden_config_dir/keys" # KEYS
 eden_config_saves_dir="$eden_config_dir/nand/user/save" # SAVES (OLD)
 eden_config_amiibo_dir="$eden_config_dir/amiibo" # AMIIBO
-eden_saves_dir="$system_saves_dir/yuzu" # SAVES (NEW)
+eden_saves_dir="$system_saves_dir/eden" # SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 eden_install_file="eden-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
@@ -312,7 +312,7 @@ citron_config_firmware_dir="$citron_config_nand_dir/system/Contents/registered" 
 citron_config_keys_dir="$citron_config_dir/keys" # KEYS
 citron_config_saves_dir="$citron_config_dir/nand/user/save" # SAVES (OLD)
 citron_config_amiibo_dir="$citron_config_dir/amiibo" # AMIIBO
-citron_saves_dir="$system_saves_dir/yuzu" # SAVES (NEW)
+citron_saves_dir="$system_saves_dir/eden" # SAVES (NEW)
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 citron_install_file="citron-emu.AppImage"
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME URL (FOR DOWNLOAD IF NOT PRESENT)
