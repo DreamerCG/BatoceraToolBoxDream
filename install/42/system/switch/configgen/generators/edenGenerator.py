@@ -916,7 +916,6 @@ class EdenGenerator(Generator):
             "r3": 10,
         }
 
-
         #log_stderr(
         #    f"[SETBUTTON] key={key} type={input.type} "
         #    f"id={input.id} value={input.value} code={input.code} guid={padGuid}"
