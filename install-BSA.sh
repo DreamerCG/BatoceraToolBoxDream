@@ -81,7 +81,10 @@ logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/rom
 logo_path="$ports_dir/images/toolbox-logo.png"
 box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-box.png"
 box_path="$ports_dir/images/toolbox-box.png"
-
+box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/yuzu_config.png"
+box_path="$ports_dir/images/yuzu_config.png"
+box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/ryujinx_config.png"
+box_path="$ports_dir/images/ryujinx_config.png"
 
 # Ensure the logo directory exists and download the logo
 mkdir -p "$(dirname "$logo_path")"
