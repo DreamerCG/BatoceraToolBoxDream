@@ -15,11 +15,11 @@ post_install_common() {
 	message "log" "$addon_log" "<<< [ POST INSTALL COMMON ]>>>"
 
 	# INSTALL BSA SCRIPTS
-	copy_make_executable "bsa-variables.sh" "./" "$switch_system_dir"
-	copy_make_executable "bsa-functions.sh" "./" "$switch_system_dir"
-	copy_make_executable "bsa-pre-common.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	copy_make_executable "bsa-mousemove.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "bsa-nsz-converter.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
+	# copy_make_executable "bsa-variables.sh" "./" "$switch_system_dir"
+	# copy_make_executable "bsa-functions.sh" "./" "$switch_system_dir"
+	# copy_make_executable "bsa-pre-common.sh" "$switch_install_scripts_dir" "$switch_system_dir"
+	# copy_make_executable "bsa-mousemove.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
+	# copy_make_executable "bsa-nsz-converter.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 
 	# INSTALL PORTS
 	post_install_ports
@@ -37,8 +37,8 @@ post_install_ryujinx() {
 	message "log" "$addon_log" "<<< [ POST INSTALL FOR RYUJINX ]>>>"
 
 	# INSTALL BSA SCRIPTS
-	copy_make_executable "ryujinx-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
+	# copy_make_executable "ryujinx-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
+	# copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "ryujinx_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
@@ -78,7 +78,7 @@ post_install_yuzu_common() {
 	message "log" "$addon_log" "<<< [ POST INSTALL COMMON FOR YUZU & FORKS ]>>>"
 
 	# INSTALL BSA SCRIPTS
-	copy_make_executable "yuzu-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
+	# copy_make_executable "yuzu-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "yuzu_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	copy_make_executable "yuzu_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 

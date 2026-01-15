@@ -69,11 +69,9 @@ install_emulator_citron() {
 	message "log" "$addon_log" "Installing Citron Emulator App"
 	# Get lastest version from database & set the version for download
 	citron_release_html=""
-	#citron_release_version="$(curl -Ls https://git.citron-emu.org/api/v4/projects/1/releases/permalink/latest | grep -o '"tag_name": *"[^"]*"' | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
-	citron_release_version="$(curl -Ls https://git.citron-emu.org/Citron/Emulator/releases | grep -Eo '/Citron/Emulator/releases/download/[0-9]+\.[0-9]+\.[0-9]+' | sed -E 's#.*/download/##' | sort -V | tail -n1)"
+		citron_release_version="$(curl -Ls https://git.citron-emu.org/Citron/Emulator/releases | grep -Eo '/Citron/Emulator/releases/download/[0-9]+\.[0-9]+\.[0-9]+' | sed -E 's#.*/download/##' | sort -V | tail -n1)"
 	citron_commit_version="$(curl -Ls https://git.citron-emu.org/Citron/Emulator/releases | grep -Eo '/Citron/Emulator/src/commit/[a-f0-9]+' | head -n1 | sed -E 's#.*/commit/([a-f0-9]{9}).*#\1#')"
 	citron_install_url="https://git.citron-emu.org/Citron/Emulator/releases/download/${citron_release_version}/citron_stable-${citron_commit_version}-linux-x86_64.AppImage"
-	#citron_install_url="https://git.citron-emu.org/Citron/Emulator/releases/download/${citron_release_version}/Citron_stable_${citron_release_version}_v3_linux.AppImage"
 
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$citron_install_url" "$switch_install_emus_dir/$citron_install_file" "Citron"

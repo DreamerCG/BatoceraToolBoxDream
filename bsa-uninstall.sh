@@ -13,6 +13,63 @@ remove_emulator_to_es_systems() {
 }
 
 
+
+purge_old_switch_install() {
+
+    LOG="/userdata/system/logs/bsa.log"
+
+    echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
+
+    rm -rf /userdata/system/switch >>"$LOG" 2>&1
+
+    rm -rf \
+        /userdata/bios/switch/firmware_ryujinx \
+        /userdata/bios/switch/firmware_yuzu \
+        /userdata/bios/switch/keys_yuzu \
+        /userdata/bios/switch/keys_ryujinx \
+        >>"$LOG" 2>&1
+
+    rm -f \
+        "/userdata/roms/ports/Sudachi Qlauncher.sh" \
+        "/userdata/roms/ports/Sudachi Qlauncher.sh.keys" \
+        "/userdata/roms/ports/Switch Updater40.sh" \
+        "/userdata/roms/ports/Switch Updater40.sh.keys" \
+        "/userdata/roms/ports/ryujinx_config.sh" \
+        "/userdata/roms/ports/ryujinx_config.sh.keys" \
+        "/userdata/roms/ports/yuzu_config.sh" \
+        "/userdata/roms/ports/yuzu_config.sh.keys" \
+        "/userdata/roms/ports/Suyu Qlauncher.sh" \
+        "/userdata/roms/ports/Suyu Qlauncher.sh.keys"
+
+    rm -f \
+        /userdata/system/configs/emulationstation/es_systems_switch.cfg \
+        /userdata/system/configs/emulationstation/es_features_switch.cfg \
+        /userdata/system/configs/evmapy/switch.keys
+
+    rm -f /userdata/roms/ports/update*yuzu*.sh
+    rm -f /userdata/roms/ports/updateryujinx*.sh
+
+    rm -f /userdata/system/.local/share/applications/*yuzu*
+    rm -f /userdata/system/.local/share/applications/*ryujinx*
+    rm -f /userdata/system/.local/share/applications/*eden*
+    rm -f /userdata/system/.local/share/applications/*citron*
+    rm -f /userdata/system/.local/share/applications/*sudachi*
+
+    rm -f /usr/share/applications/*yuzu*
+    rm -f /usr/share/applications/*ryujinx*
+    rm -f /usr/share/applications/*eden*
+    rm -f /usr/share/applications/*citron*
+    rm -f /usr/share/applications/*sudachi*
+
+    rm -f \
+        /userdata/system/configs/{eden,citron,sudachi} \
+        /userdata/system/.configs/{eden,citron,sudachi}
+
+    echo "[PURGE] Done" >>"$LOG"
+}
+
+
+
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
 

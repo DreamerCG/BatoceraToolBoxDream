@@ -168,8 +168,6 @@ install_menu() {
 # Updates Menu
 updates_menu() {
 	local menu_items=(
-		#"Yuzu Local|Update Yuzu Local|off|fn|update_emulator "yuzu" "local""
-		#"Yuzu Remote|Update Yuzu Remote|off|fn|update_emulator "yuzu" "remote""
 		"Eden Local|Mise à jour Eden Local|off|fn|update_emulator "eden" "local""
 		"Eden Remote|Mise à jour Eden Remote|off|fn|update_emulator "eden" "remote""
 		"Citron Local|Mise à jour Citron Local|off|fn|update_emulator "citron" "local""
@@ -187,29 +185,6 @@ updates_menu() {
 		"${menu_items[@]}"
 }
 
-# Packages Menu
-packages_menu() {
-	local menu_items=(
-		"Ryujinx Firmware|Unpack Ryujinx Firmware|off|fn|unpack_packages_ryujinx_firmware"
-		"Eden/Citron/YUZU Firmware|Unpack Yuzu Firmware|off|fn|unpack_packages_yuzu_firmware"
-		"Ryujinx Keys|Unpack Ryujinx Keys|off|fn|unpack_packages_ryujinx_keys"
-		"Eden/Citron/YUZU Keys|Unpack Yuzu Keys|off|fn|unpack_packages_yuzu_keys"
-		"Ryujinx Saves|Unpack Ryujinx Saves|off|fn|unpack_packages_ryujinx_saves"
-		"Eden/Citron/YUZU Saves|Unpack Yuzu Saves|off|fn|unpack_packages_yuzu_saves"
-		"Amiibo|Unpack Amiibo|off|fn|unpack_packages_amiibo"
-		#"NSZ|Unpack NSZ|off|fn|unpack_packages_nsz"
-	)
-	unset RAN_UNPACK_PACKAGES_COMMON
-	unset RAN_UNPACK_PACKAGES_COMMON_YUZU
-	create_dialog_checkbox_menu \
-		"$menu_title :: Packages" "$menu_height" "$menu_width" "$menu_list_height" \
-		"UNPACK" "Annuler" "on" \
-		"Select Packagess to Unpack" \
-		"Confirm Unpack" "Unpack?" \
-		"BSA :: UNPACKING" "" \
-		"UNPACKING" "UNPACKED" \
-		"${menu_items[@]}"
-}
 
 # Saves Menu
 saves_menu() {
@@ -229,32 +204,14 @@ saves_menu() {
 		"${menu_items[@]}"
 }
 
-# Fixes Menu
-fixes_menu() {
-	local menu_items=(
-		"Ryujinx|Fix Ryujinx Structure|off|fn|initialize_ryujinx"
-		"Eden|Fix Eden Structure|off|fn|initialize_eden"
-		"Citron|Fix Citron Structure|off|fn|initialize_citron"
-	)
-	unset RAN_INITIALIZE_COMMON
-	create_dialog_checkbox_menu \
-		"$menu_title :: Fixes" "$menu_height" "$menu_width" "$menu_list_height" \
-		"FIX" "Annuler" "on" \
-		"Select Fixes to Apply" \
-		"Confirm Fixes" "Apply?" \
-		"BSA :: FIXING" "" \
-		"FIXING" "FIXED" \
-		"${menu_items[@]}"
-}
-
 # Uninstall Menu
 uninstall_menu() {
 	local menu_items=(
-		"BSA|Supprimer BSA not Firmware/Keys/Saves/Amiibo|off|fn|uninstall_BSA"
-		"Firmware|Supprimer Firmware|off|fn|uninstall_firmware"
-		"Keys|Supprimer Keys|off|fn|uninstall_keys"
-		"Amiibo|Supprimer Amiibo|off|fn|uninstall_amiibo"
-		"Saves|Supprimer Saves|off|fn|uninstall_saves"
+		"Emulateur|Supprimer les emulateurs|off|fn|uninstall_BSA"
+		"Firmware|Supprimer les Firmware|off|fn|uninstall_firmware"
+		"Keys|Supprimer les Keys|off|fn|uninstall_keys"
+		"Amiibo|Supprimer les Amiibo|off|fn|uninstall_amiibo"
+		# "Saves|Supprimer Saves|off|fn|uninstall_saves"
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Uninstall" "$menu_height" "$menu_width" "$menu_list_height" \
@@ -273,19 +230,6 @@ confirm_purge_install_log() {
 	fi
 }
 
-tools_menu() {
-	local menu_items=(
-		"FIXES|Fix directory structure & others|fn|fixes_menu"
-		"DISPLAY LOG|Display Install Log|fn|display_install_log"
-		"PURGE LOG|Purge Install Log|fn|confirm_purge_install_log"
-	)
-	create_dialog_list_menu \
-		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
-		"Confirmer" "Annuler" "on" \
-		"DO YOU WANT TO SWITCH?" \
-		"${menu_items[@]}"
-}
-
 # Main Menu
 main_menu() {
 	local exit_status
@@ -294,7 +238,6 @@ main_menu() {
 		"MISE A JOUR|Mise à jour des emulateurs|fn|updates_menu"
 		#"SAUVEGARDES|Gestion des sauvegardes|fn|saves_menu"
 		"DESINSTALLATION|Desinstaller les emulateurs|fn|uninstall_menu"
-		#"OUTILS|Boite à outils|fn|tools_menu"
 		"MISE A JOUR TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
 		"QUITTER|Quitter|cmd|killall -9 xterm; exit 0"
 	)
