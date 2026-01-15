@@ -61,7 +61,6 @@ class RyujinxGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
-
         st = os.stat("/userdata/system/switch/appimages/ryujinx-emu.AppImage")
         os.chmod("/userdata/system/switch/appimages/ryujinx-emu.AppImage", st.st_mode | stat.S_IEXEC)
         st = os.stat("/userdata/system/switch/configgen/generators/detectvideo.sh")
@@ -140,14 +139,24 @@ class RyujinxGenerator(Generator):
             "XDG_CACHE_HOME": "/userdata/system/.cache",
         }
 
-        # --- SDL joystick backend selection ---
-        if is_steamdeck:
-            # Steam Deck requires evdev (no HIDAPI)
-            environment["SDL_JOYSTICK_HIDAPI"] = "0"
-            environment["SDL_JOYSTICK_RAWINPUT"] = "0"
-        else:
-            # PCs, Ally, Legion Go, USB controllers
-            environment["SDL_JOYSTICK_HIDAPI"] = "1"
+        # # --- SDL joystick backend selection ---
+        # if is_steamdeck:
+            # # Steam Deck requires evdev (no HIDAPI)
+            # environment["SDL_JOYSTICK_HIDAPI"] = "0"
+            # environment["SDL_JOYSTICK_RAWINPUT"] = "0"
+        # else:
+            # # PCs, Ally, Legion Go, USB controllers
+            # environment["SDL_JOYSTICK_HIDAPI"] = "1"
+
+        environment["SDL_JOYSTICK_HIDAPI"] = "1"
+        environment["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
+    
+            
 
         if rom == 'config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]

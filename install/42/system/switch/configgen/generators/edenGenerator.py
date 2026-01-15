@@ -422,7 +422,24 @@ class EdenGenerator(Generator):
         if not os.path.exists("/userdata/system/configs/"+emudir):
             st = os.symlink("/userdata/system/configs/yuzu","/userdata/system/configs/"+emudir)
 
-         #Link Yuzu Saves Directory to /userdata/saves/yuzu
+        #Link YUZU save Directory to /userdata/saves/"emudir"
+        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user"))
+        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user/save"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/save"))
+        if os.path.exists("/userdata/system/configs/yuzu/nand/user/save"):
+            if not os.path.islink("/userdata/system/configs/yuzu/nand/user/save"):
+                shutil.rmtree("/userdata/system/configs/yuzu/nand/user/save")
+                os.symlink("/userdata/saves/switch/save", "/userdata/system/configs/yuzu/nand/user/save")
+            else:
+                current_target = os.readlink("/userdata/system/configs/yuzu/nand/user/save")
+                if current_target != "/userdata/saves/switch/save":
+                    os.unlink("/userdata/system/configs/yuzu/nand/user/save")
+                    os.symlink("/userdata/saves/switch/save", "/userdata/system/configs/yuzu/nand/user/save")
+        else:
+            os.symlink("/userdata/saves/switch/save", "/userdata/system/configs/yuzu/nand/user/save")
+
+        #Link Yuzu Cache directoy / Game List
         mkdir_if_not_exists(Path("/userdata/system/.cache"))
         mkdir_if_not_exists(Path("/userdata/system/.cache/"+emudir))
 
