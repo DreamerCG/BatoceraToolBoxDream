@@ -261,7 +261,7 @@ yuzu_config_keys_dir="$yuzu_config_dir/keys" # KEYS
 yuzu_config_system_saves_dir="$yuzu_config_dir/nand/system/save" # NAND SYSTEM SAVES (OLD)
 yuzu_config_user_saves_dir="$yuzu_config_dir/nand/user/save" # NAND USER SAVES (OLD)
 yuzu_config_amiibo_dir="$yuzu_config_dir/amiibo" # AMIIBO
-yuzu_saves_dir="$switch_saves_dir/yuzu" # SAVES (NEW)
+yuzu_saves_dir="$switch_saves_dir/eden" # SAVES (NEW)
 yuzu_system_saves_dir="$yuzu_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 yuzu_user_saves_dir="$yuzu_saves_dir/user/save" # NAND USER SAVES (NEW)
 
