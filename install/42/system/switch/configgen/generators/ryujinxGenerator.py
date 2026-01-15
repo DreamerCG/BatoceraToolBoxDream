@@ -148,7 +148,7 @@ class RyujinxGenerator(Generator):
             # # PCs, Ally, Legion Go, USB controllers
             # environment["SDL_JOYSTICK_HIDAPI"] = "1"
 
-        environment["SDL_JOYSTICK_HIDAPI"] = "1"
+        environment["SDL_JOYSTICK_HIDAPI"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"

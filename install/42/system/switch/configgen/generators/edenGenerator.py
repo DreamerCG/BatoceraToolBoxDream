@@ -389,7 +389,7 @@ class EdenGenerator(Generator):
         self.force_symlink("/userdata/bios/switch/firmware","/userdata/system/configs/yuzu/nand/system/Contents/registered")
 
         #Create OS Saves folder
-        mkdir_if_not_exists(Path("/userdata/save/yuzu"))
+        mkdir_if_not_exists(Path("/userdata/saves/yuzu"))
 
         #Link Yuzu App Directory to /system/configs/yuzu
         mkdir_if_not_exists(Path("/userdata/system/.local"))
@@ -426,18 +426,18 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user/save"))
         mkdir_if_not_exists(Path("/userdata/saves/switch"))
-        mkdir_if_not_exists(Path("/userdata/saves/switch/save"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/eden"))
         if os.path.exists("/userdata/system/configs/yuzu/nand/user/save"):
             if not os.path.islink("/userdata/system/configs/yuzu/nand/user/save"):
                 shutil.rmtree("/userdata/system/configs/yuzu/nand/user/save")
-                os.symlink("/userdata/saves/switch/save", "/userdata/system/configs/yuzu/nand/user/save")
+                os.symlink("/userdata/saves/switch/eden", "/userdata/system/configs/yuzu/nand/user/save")
             else:
                 current_target = os.readlink("/userdata/system/configs/yuzu/nand/user/save")
-                if current_target != "/userdata/saves/switch/save":
+                if current_target != "/userdata/saves/switch/eden":
                     os.unlink("/userdata/system/configs/yuzu/nand/user/save")
-                    os.symlink("/userdata/saves/switch/save", "/userdata/system/configs/yuzu/nand/user/save")
+                    os.symlink("/userdata/saves/switch/eden", "/userdata/system/configs/yuzu/nand/user/save")
         else:
-            os.symlink("/userdata/saves/switch/save", "/userdata/system/configs/yuzu/nand/user/save")
+            os.symlink("/userdata/saves/switch/eden", "/userdata/system/configs/yuzu/nand/user/save")
 
         #Link Yuzu Cache directoy / Game List
         mkdir_if_not_exists(Path("/userdata/system/.cache"))
