@@ -157,7 +157,6 @@ class RyujinxGenerator(Generator):
         environment["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
     
             
-
         if rom == 'config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
         else:
@@ -166,6 +165,7 @@ class RyujinxGenerator(Generator):
         writelog("Controller Config before Playing: {}".format(generate_sdl_game_controller_config(playersControllers)))
 
         return Command.Command(array=commandArray, env=environment)
+
 
     def writeRyujinxConfig(RyujinxConfigFile, RyujinxConfigFileBefore, RyujinxConfigTemplateFile, system, playersControllers):
 
@@ -253,6 +253,10 @@ class RyujinxGenerator(Generator):
                     invert_buttons = None
 
                     myid = uuid.UUID(controller.guid)
+                    
+                    log_stderr(f"[GUID] {myid}")
+                    sys.exit(1)
+                    
                     myid.bytes_le
                     convuuid = uuid.UUID(bytes=myid.bytes_le)
                     if myid in index_of_convuuid:
@@ -328,6 +332,7 @@ class RyujinxGenerator(Generator):
                             cvalue['controller_type'] = system.config["p1_pad"]
                         else: 
                             cvalue['controller_type'] = "ProController"
+
                     elif (system.isOptSet(which_pad) and (system.config[which_pad] == "JoyconLeft")):
                         left_joycon_stick = {}
                         left_joycon_stick['joystick'] = "Left"
