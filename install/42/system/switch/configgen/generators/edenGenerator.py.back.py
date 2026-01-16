@@ -51,7 +51,8 @@ def switch_log(msg):
 def log_stderr(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stdout)	
-
+###START PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#######################################################################
+#######################################################################################################################
 def hidraw_get_guid(devpath):
     try:
         vid = pid = None
@@ -109,6 +110,13 @@ for d in hidraws:
     hid = d["hidraw"]
     ev = hidmap.get(hid, "no evdev")
 
+    switch_log(f"[HID] {d['name']}")
+    switch_log(f"  hidraw = {hid}")
+    switch_log(f"  evdev  = {ev}")
+    #switch_log(f"  bus    = {d['bus']}")
+    switch_log(f"  guid   = {d['guid']}")
+###END PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#########################################################################
+#######################################################################################################################
 
 def sdlmapping_to_controller(mapping, guid):
 
@@ -218,6 +226,7 @@ def detect_bus_from_hidraw(hidraw_path: str):
 
 def list_sdl_gamepads(sdlversion):
     
+    
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
@@ -280,19 +289,6 @@ class EdenGenerator(Generator):
     def executionDirectory(self, config, rom):
         return "/userdata/system/switch/appimages"
 
-    def ensure_symlink(target, link_path):
-        if os.path.exists(link_path):
-            if not os.path.islink(link_path):
-                shutil.rmtree(link_path)
-                os.symlink(target, link_path)
-            else:
-                if os.readlink(link_path) != target:
-                    os.unlink(link_path)
-                    os.symlink(target, link_path)
-        else:
-            os.symlink(target, link_path)
-
-
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
         emulator = system.config['emulator']
@@ -323,7 +319,6 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/Contents"))
 
-        #Link Yuzu firmware/key folder
         # YUZU KEYS
         ensure_symlink(
             "/userdata/bios/switch/keys",
@@ -394,23 +389,45 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/mods"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/save"))
 
-        # YUZU USER SAVE
-        ensure_symlink(
-            "/userdata/saves/switch/eden_citron/save/save_user",
-            "/userdata/system/configs/yuzu/nand/user/save"
-        )
+        #Link YUZU SAVE Directory to /userdata/saves/eden_citron/save_user
+        if os.path.exists("/userdata/system/configs/yuzu/nand/user/save"):
+            if not os.path.islink("/userdata/system/configs/yuzu/nand/user/save"):
+                shutil.rmtree("/userdata/system/configs/yuzu/nand/user/save")
+                os.symlink("/userdata/saves/switch/eden_citron/save/save_user", "/userdata/system/configs/yuzu/nand/user/save")
+            else:
+                current_target = os.readlink("/userdata/system/configs/yuzu/nand/user/save")
+                if current_target != "/userdata/saves/switch/eden_citron/save/save_user":
+                    os.unlink("/userdata/system/configs/yuzu/nand/user/save")
+                    os.symlink("/userdata/saves/switch/eden_citron/save/save_user", "/userdata/system/configs/yuzu/nand/user/save")
+        else:
+            os.symlink("/userdata/saves/switch/eden_citron/save/save_user", "/userdata/system/configs/yuzu/nand/user/save")
 
-        # YUZU SYSTEM SAVE
-        ensure_symlink(
-            "/userdata/saves/switch/eden_citron/save/save_system",
-            "/userdata/system/configs/yuzu/nand/system/save"
-        )
+        #Link YUZU SYSTEM SAVE Directory to /userdata/saves/eden_citron/save_system
+        if os.path.exists("/userdata/system/configs/yuzu/nand/system/save"):
+            if not os.path.islink("/userdata/system/configs/yuzu/nand/system/save"):
+                shutil.rmtree("/userdata/system/configs/yuzu/nand/system/save")
+                os.symlink("/userdata/saves/switch/eden_citron/save/save_system", "/userdata/system/configs/yuzu/nand/system/save")
+            else:
+                current_target = os.readlink("/userdata/system/configs/yuzu/nand/system/save")
+                if current_target != "/userdata/saves/switch/eden_citron/save/save_system":
+                    os.unlink("/userdata/system/configs/yuzu/nand/system/save")
+                    os.symlink("/userdata/saves/switch/eden_citron/save/save_system", "/userdata/system/configs/yuzu/nand/system/save")
+        else:
+            os.symlink("/userdata/saves/switch/eden_citron/save/save_system", "/userdata/system/configs/yuzu/nand/system/save")
 
-        # YUZU MODS
-        ensure_symlink(
-            "/userdata/saves/switch/eden_citron/mods",
-            "/userdata/system/configs/yuzu/load"
-        )
+        #Link YUZU MODS Directory to /userdata/saves/eden_citron/mods
+        if os.path.exists("/userdata/system/configs/yuzu/load"):
+            if not os.path.islink("/userdata/system/configs/yuzu/load"):
+                shutil.rmtree("/userdata/system/configs/yuzu/load")
+                os.symlink("/userdata/saves/switch/eden_citron/mods", "/userdata/system/configs/yuzu/load")
+            else:
+                current_target = os.readlink("/userdata/system/configs/yuzu/load")
+                if current_target != "/userdata/saves/switch/eden_citron/mods":
+                    os.unlink("/userdata/system/configs/yuzu/load")
+                    os.symlink("/userdata/saves/switch/eden_citron/mods", "/userdata/system/configs/yuzu/load")
+        else:
+            os.symlink("/userdata/saves/switch/eden_citron/mods", "/userdata/system/configs/yuzu/load")
+
         yuzuConfig = str(CONFIGS) + '/yuzu/qt-config.ini'
         yuzuConfigTemplate = '/userdata/system/switch/configgen/qt-config.ini.template'
 
