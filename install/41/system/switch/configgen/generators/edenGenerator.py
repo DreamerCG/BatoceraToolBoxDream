@@ -16,7 +16,7 @@ import pathlib
 from shutil import copyfile
 from pathlib import Path
 from typing import TYPE_CHECKING
-from configgen.utils import vulkan
+# from configgen.utils import vulkan
 from configgen import Command as Command
 from configgen.batoceraPaths import CONFIGS, HOME, ROMS, SAVES, mkdir_if_not_exists
 from configgen.controller import generate_sdl_game_controller_config

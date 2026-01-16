@@ -6,7 +6,8 @@ import yaml
 
 from importlib import import_module
 import configgen
-from configgen.Emulator import Emulator, _dict_merge, _load_defaults, _load_system_config
+from configgen.Emulator import Emulator
+# from configgen.Emulator import Emulator, _dict_merge, _load_defaults, _load_system_config
 from configgen.emulatorlauncher import launch
 from configgen.generators import get_generator
 
@@ -21,7 +22,6 @@ def _new_get_generator(emulator: str):
     yuzuemu['eden-emu'] = 1
     yuzuemu['citron-emu'] = 1
     yuzuemu['eden-pgo'] = 1
-
 
     if emulator in yuzuemu:
         from generators.edenGenerator import EdenGenerator
