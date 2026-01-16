@@ -52,6 +52,19 @@ def log_stderr(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stdout)	
 
+def ensure_symlink(target, link_path):
+    if os.path.exists(link_path):
+        if not os.path.islink(link_path):
+            shutil.rmtree(link_path)
+            os.symlink(target, link_path)
+        else:
+            if os.readlink(link_path) != target:
+                os.unlink(link_path)
+                os.symlink(target, link_path)
+    else:
+        os.symlink(target, link_path)
+
+
 def hidraw_get_guid(devpath):
     try:
         vid = pid = None
@@ -269,6 +282,8 @@ def list_sdl_gamepads(sdlversion):
 
     return sdl_devices
 
+
+
 class EdenGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
@@ -279,19 +294,6 @@ class EdenGenerator(Generator):
 
     def executionDirectory(self, config, rom):
         return "/userdata/system/switch/appimages"
-
-    def ensure_symlink(target, link_path):
-        if os.path.exists(link_path):
-            if not os.path.islink(link_path):
-                shutil.rmtree(link_path)
-                os.symlink(target, link_path)
-            else:
-                if os.readlink(link_path) != target:
-                    os.unlink(link_path)
-                    os.symlink(target, link_path)
-        else:
-            os.symlink(target, link_path)
-
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
