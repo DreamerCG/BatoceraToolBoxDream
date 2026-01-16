@@ -34,22 +34,6 @@ def getCurrentCard() -> str | None:
     for val in out.decode().splitlines():
         return val # return the first line
 
-def detect_device():
-    # 1) DMI product name (primary, most reliable)
-    try:
-        with open("/sys/class/dmi/id/product_name", "r") as f:
-            name = f.read().strip()
-            lname = name.lower()
-
-            if lname in ("jupiter", "galileo") or "steam deck" in lname:
-                return True, name
-
-            # Known device but not Steam Deck
-            return False, name
-    except:
-        pass
-    return False, "Unknown"
-
 class RyujinxGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
@@ -61,13 +45,14 @@ class RyujinxGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
+
         st = os.stat("/userdata/system/switch/appimages/ryujinx-emu.AppImage")
         os.chmod("/userdata/system/switch/appimages/ryujinx-emu.AppImage", st.st_mode | stat.S_IEXEC)
         st = os.stat("/userdata/system/switch/configgen/generators/detectvideo.sh")
         os.chmod("/userdata/system/switch/configgen/generators/detectvideo.sh", st.st_mode | stat.S_IEXEC)
 
         mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx"))
-        mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/system"))
+        # mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/system"))
 
         template = Path("/userdata/system/switch/configgen/Config.json.template")
         target = CONFIGS / "Ryujinx" / "Config.json.template"
@@ -76,9 +61,16 @@ class RyujinxGenerator(Generator):
         #Create Keys Folder
         mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/bis"))
         mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/bis/system"))
+        mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/bis/system/save"))
         mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/bis/system/Contents"))
+        mkdir_if_not_exists(Path("/userdata/system/configs/Ryujinx/bis/user"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/save"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/save/save_user"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/save/save_system"))
 
-        #Link Ryujinx firmware/key folder
+        #Link Ryujinx key folder
         #KEY-------
         if os.path.exists("/userdata/system/configs/Ryujinx/system"):
             if not os.path.islink("/userdata/system/configs/Ryujinx/system"):
@@ -90,20 +82,34 @@ class RyujinxGenerator(Generator):
                     os.unlink("/userdata/bios/switch/keys")
                     os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
         else:
-            os.symlink("/userdata/bios/switch/keys_ryujinx", "/userdata/system/configs/Ryujinx/system")
-            
-        # #FIRMWARE-------
-        # if os.path.exists("/userdata/system/configs/Ryujinx/bis/system/Contents/registered"):
-            # if not os.path.islink("/userdata/system/configs/Ryujinx/bis/system/Contents/registered"):
-                # shutil.rmtree("/userdata/system/configs/Ryujinx/bis/system/Contents/registered")
-                # os.symlink("/userdata/bios/switch/firmware_ryujinx", "/userdata/system/configs/Ryujinx/bis/system/Contents/registered")
-            # else:
-                # current_target = os.readlink("/userdata/system/configs/Ryujinx/bis/system/Contents/registered")
-                # if current_target != "/userdata/bios/switch/firmware_ryujinx":
-                    # os.unlink("/userdata/system/configs/Ryujinx/bis/system/Contents/registered")
-                    # os.symlink("/userdata/bios/switch/firmware_ryujinx", "/userdata/system/configs/Ryujinx/bis/system/Contents/registered")
-        # else:
-            # os.symlink("/userdata/bios/switch/firmware_ryujinx", "/userdata/system/configs/Ryujinx/bis/system/Contents/registered")
+            os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+
+        #Link Ryujinx User save folder (bis/user)/(bis/system/save)
+        # #USER SAVE (bis/user)-------
+        if os.path.exists("/userdata/system/configs/Ryujinx/bis/user"):
+            if not os.path.islink("/userdata/system/configs/Ryujinx/bis/user"):
+                shutil.rmtree("/userdata/system/configs/Ryujinx/bis/user")
+                os.symlink("/userdata/saves/switch/ryujinx/save/save_user", "/userdata/system/configs/Ryujinx/bis/user")
+            else:
+                current_target = os.readlink("/userdata/system/configs/Ryujinx/bis/user")
+                if current_target != "/userdata/saves/switch/ryujinx/save/save_user":
+                    os.unlink("/userdata/saves/switch/ryujinx/save/save_user")
+                    os.symlink("/userdata/saves/switch/ryujinx/save/save_user", "/userdata/system/configs/Ryujinx/bis/user")
+        else:
+            os.symlink("/userdata/saves/switch/ryujinx/save/save_user", "/userdata/system/configs/Ryujinx/bis/user")
+
+        # #USER SAVE (bis/system/save)-------
+        if os.path.exists("/userdata/system/configs/Ryujinx/bis/system/save"):
+            if not os.path.islink("/userdata/system/configs/Ryujinx/bis/system/save"):
+                shutil.rmtree("/userdata/system/configs/Ryujinx/bis/system/save")
+                os.symlink("/userdata/saves/switch/ryujinx/save/save_system", "/userdata/system/configs/Ryujinx/bis/system/save")
+            else:
+                current_target = os.readlink("/userdata/system/configs/Ryujinx/bis/system/save")
+                if current_target != "/userdata/saves/switch/ryujinx/save/save_system":
+                    os.unlink("/userdata/saves/switch/ryujinx/save/save_system")
+                    os.symlink("/userdata/saves/switch/ryujinx/save/save_system", "/userdata/system/configs/Ryujinx/bis/system/save")
+        else:
+            os.symlink("/userdata/saves/switch/ryujinx/save/save_system", "/userdata/system/configs/Ryujinx/bis/system/save")
 
 
         RyujinxConfig = Path('/userdata/system/configs/Ryujinx/Config.json')
@@ -116,8 +122,6 @@ class RyujinxGenerator(Generator):
 
         #Configuration update
         RyujinxGenerator.writeRyujinxConfig(str(CONFIGS) + '/Ryujinx/Config.json', RyujinxConfigFileBefore, RyujinxConfigTemplate, system, playersControllers)
-
-        is_steamdeck, device_name = detect_device()
 
         environment = {
             "SDL_GAMECONTROLLERCONFIG": generate_sdl_game_controller_config(playersControllers),
@@ -139,24 +143,14 @@ class RyujinxGenerator(Generator):
             "XDG_CACHE_HOME": "/userdata/system/.cache",
         }
 
-        # # --- SDL joystick backend selection ---
-        # if is_steamdeck:
-            # # Steam Deck requires evdev (no HIDAPI)
-            # environment["SDL_JOYSTICK_HIDAPI"] = "0"
-            # environment["SDL_JOYSTICK_RAWINPUT"] = "0"
-        # else:
-            # # PCs, Ally, Legion Go, USB controllers
-            # environment["SDL_JOYSTICK_HIDAPI"] = "1"
-
-        environment["SDL_JOYSTICK_HIDAPI"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI"] = "1"
         environment["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
-        environment["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"
-        environment["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
-    
-            
+        environment["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
+        environment["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
+
         if rom == 'config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
         else:
@@ -165,7 +159,6 @@ class RyujinxGenerator(Generator):
         writelog("Controller Config before Playing: {}".format(generate_sdl_game_controller_config(playersControllers)))
 
         return Command.Command(array=commandArray, env=environment)
-
 
     def writeRyujinxConfig(RyujinxConfigFile, RyujinxConfigFileBefore, RyujinxConfigTemplateFile, system, playersControllers):
 
@@ -248,15 +241,15 @@ class RyujinxGenerator(Generator):
             input_config = []
             index_of_convuuid = {}
             for index, controller in enumerate(playersControllers, start=0):
-                if(controller.guid != "050000007e0500000620000001800000" and controller.guid != "050000007e0500000720000001800000"):
+                    NINTENDO_GUIDS = {
+                        "050000007e0500000620000001800000",
+                        "050000007e0500000720000001800000",
+                        "050000007e0500000920000001800000",
+                    }
 
-                    invert_buttons = None
+                    invert_buttons = controller.guid in NINTENDO_GUIDS
 
                     myid = uuid.UUID(controller.guid)
-                    
-                    log_stderr(f"[GUID] {myid}")
-                    sys.exit(1)
-                    
                     myid.bytes_le
                     convuuid = uuid.UUID(bytes=myid.bytes_le)
                     if myid in index_of_convuuid:
@@ -332,7 +325,6 @@ class RyujinxGenerator(Generator):
                             cvalue['controller_type'] = system.config["p1_pad"]
                         else: 
                             cvalue['controller_type'] = "ProController"
-
                     elif (system.isOptSet(which_pad) and (system.config[which_pad] == "JoyconLeft")):
                         left_joycon_stick = {}
                         left_joycon_stick['joystick'] = "Left"
