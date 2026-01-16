@@ -61,9 +61,12 @@ purge_old_switch_install() {
     rm -f /usr/share/applications/*citron*
     rm -f /usr/share/applications/*sudachi*
 
+	rm -rf /userdata/system/cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
+	rm -rf /userdata/system/.cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
+
     rm -f \
-        /userdata/system/configs/{eden,citron,sudachi} \
-        /userdata/system/.configs/{eden,citron,sudachi}
+        /userdata/system/configs/{eden,citron,sudachi,yuzu} \
+        /userdata/system/.configs/{eden,citron,sudachi,yuzu}
 
     echo "[PURGE] Done" >>"$LOG"
 }
