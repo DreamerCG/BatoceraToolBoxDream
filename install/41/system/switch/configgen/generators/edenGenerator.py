@@ -29,6 +29,7 @@ from evdev import InputDevice, ecodes
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/configgen/sdl2/"
 
 import sdl2
+import sdl3		   
 from sdl2 import joystick
 from ctypes import create_string_buffer
 
