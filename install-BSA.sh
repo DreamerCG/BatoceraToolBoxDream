@@ -81,6 +81,7 @@ logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/rom
 logo_path="$ports_dir/images/toolbox-logo.png"
 box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-box.png"
 box_path="$ports_dir/images/toolbox-box.png"
+
 yuzu_config_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/yuzu_config.png"
 yuzu_config_path="$ports_dir/images/yuzu_config.png"
 ryujinx_config_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/ryujinx_config.png"

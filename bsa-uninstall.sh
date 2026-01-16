@@ -16,6 +16,8 @@ remove_emulator_to_es_systems() {
 
 purge_old_switch_install() {
 
+# find /   -type d   \( -iname "*citron*"   -o -iname "*eden*"   -o -iname "*ryujinx*"   -o -iname "*yuzu*"   -o -iname "*sudachi*"   -o -iname "switch" \)   2>/dev/null
+
     LOG="/userdata/system/logs/bsa.log"
 
     echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
