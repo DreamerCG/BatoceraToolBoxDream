@@ -411,6 +411,27 @@ class EdenGenerator(Generator):
         else:
             os.symlink("/userdata/saves/switch/eden_citron", "/userdata/system/configs/yuzu/nand/user/save")
 
+															  
+																			  
+																				   
+															 
+																		 
+																			
+																					
+																			   
+																												  
+				   
+																							  
+																			
+																			   
+																													  
+			   
+																											  
+
+
+
+
+
         yuzuConfig = str(CONFIGS) + '/yuzu/qt-config.ini'
         yuzuConfigTemplate = '/userdata/system/switch/configgen/qt-config.ini.template'
 
