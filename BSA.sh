@@ -4,15 +4,36 @@ export DISPLAY=:0.0
 reset
 clear
 
+VERSION_FILE="/userdata/DreamerCGToolBox/version-toolbox.txt"
+VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/version-toolbox.txt"
+INSTALL_CMD="curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
 
-toolbox_current_version=$(cat /userdata/DreamerCGToolBox/version-toolbox.txt)
-# Téléchargement du fichier de version au démarrage de l'installation
-curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o /userdata/DreamerCGToolBox/version-toolbox.txt
-toolbox_download_version=$(cat /userdata/DreamerCGToolBox/version-toolbox.txt)
+# Cas 1 : fichier de version absent → installation
+if [ ! -f "$VERSION_FILE" ]; then
+    echo "Aucune version détectée, installation de la Toolbox…"
+    DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
+    # exit 0
+fi
 
+# Lecture version locale
+read -r toolbox_current_version < "$VERSION_FILE"
 
-message "both" "$addon_log" "toolbox_current_version: $toolbox_current_version""
-message "both" "$addon_log" "toolbox_download_version: $toolbox_download_version""
+# Lecture version distante (sans écrire sur disque)
+toolbox_download_version=$(curl -sL "$VERSION_URL")
+
+# Sécurité : si curl échoue
+if [ -z "$toolbox_download_version" ]; then
+    echo "Impossible de récupérer la version distante"
+    # exit 1
+fi
+
+# Comparaison
+if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
+    echo "Mise à jour détectée ($toolbox_current_version → $toolbox_download_version)"
+    DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
+else
+    echo "Toolbox déjà à jour (version $toolbox_current_version)"
+fi
 
 # THIS SCRIPT
 this_script_file="${0##*/}"
