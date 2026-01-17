@@ -3,10 +3,16 @@
 import re
 import sys
 import os
-
+from pathlib import Path
 from importlib import import_module
 
-# Fichiers à vérifier
+import xml.etree.ElementTree as ET
+import yaml
+import configgen
+from configgen.emulatorlauncher import launch
+
+
+# Chargemnet des LIB SDL3 pour switch
 paths_to_check = ["/usr/lib/libSDL3.so", "/usr/lib/libSDL3.so.0"]
 target_lib = "/userdata/system/switch/lib/libSDL3.so.0.2.26"
 
@@ -22,8 +28,44 @@ for path in paths_to_check:
         print(f"{path} existe déjà.")
 
 
-import configgen
-from configgen.emulatorlauncher import launch
+_old_get_system_config = configgen.emulatorlauncher.Emulator.get_system_config
+
+def _new_get_system_config(system, defaultyml, defaultarchyml):
+    # --- charge le YAML par défaut ---
+    cfg_defaults = {}
+    if os.path.exists(defaultyml):
+        with open(defaultyml, "r") as f:
+            cfg_defaults_all = yaml.safe_load(f)
+            if cfg_defaults_all and "default" in cfg_defaults_all:
+                cfg_defaults = cfg_defaults_all["default"].copy()
+            if cfg_defaults_all and system in cfg_defaults_all:
+                configgen.emulatorlauncher.Emulator.dict_merge(cfg_defaults, cfg_defaults_all[system])
+
+    # --- charge ton YAML personnalisé ---
+    custom_file = "/userdata/system/switch/configgen/configgen-defaults.yml"
+    cfg_custom = {}
+    if os.path.exists(custom_file):
+        with open(custom_file, "r") as f:
+            cfg_custom_all = yaml.safe_load(f)
+            if cfg_custom_all and system in cfg_custom_all:
+                cfg_custom = cfg_custom_all[system]
+
+    # --- fusionne custom > defaults ---
+    configgen.emulatorlauncher.Emulator.dict_merge(cfg_defaults, cfg_custom)
+
+    # --- construit dict_result ---
+    dict_result = {
+        "emulator": cfg_defaults.get("emulator", ""),
+        "core": cfg_defaults.get("core", "")
+    }
+    if "options" in cfg_defaults:
+        configgen.emulatorlauncher.Emulator.dict_merge(dict_result, cfg_defaults["options"])
+
+    return dict_result
+
+# --- patch ---
+configgen.emulatorlauncher.Emulator.get_system_config = _new_get_system_config
+
 
 def _new_get_generator(emulator: str):
     
@@ -32,6 +74,8 @@ def _new_get_generator(emulator: str):
     yuzuemu['citron-emu'] = 1
     yuzuemu['eden-pgo'] = 1
 
+    print(f"Selected emulator: {emulator}", file=sys.stderr)
+    
     if emulator in yuzuemu:
         from generators.edenGenerator import EdenGenerator
         return EdenGenerator()
@@ -43,7 +87,6 @@ def _new_get_generator(emulator: str):
     #fallback to batocera generators
     return get_generator(emulator)
 
-#configgen.Emulator._load_system_config = _new_load_system_config
 configgen.emulatorlauncher.get_generator = _new_get_generator
 
 if __name__ == "__main__":

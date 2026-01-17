@@ -14,10 +14,6 @@ switch:
   emulator: eden-emu
   core:     eden-emu
   options:
+    bezel: none
     forceNoBezel: true
     hud_support: true
-  emulator: ryujinx-emu
-  core:     ryujinx-emu
-  options:
-    forceNoBezel: true
-    hud_support: false
