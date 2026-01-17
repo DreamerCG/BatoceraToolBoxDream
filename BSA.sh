@@ -135,14 +135,14 @@ update_emulator() {
 	# Backup des mods dans yuzu_mods_backup_dir 
 	move_mods_yuzu() {
 		mkdir -p "$yuzu_mods_temp_dir"
-		cp -r "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
+		mv "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Yuzu moved to: $yuzu_mods_temp_dir"
 	}
 
 	# Backup des mods dans yuzu_mods_backup_dir 
 	move_mods_ryujinx() {
 		mkdir -p "$ryujinx_mods_temp_dir"
-		cp -r "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
+		mv "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Ryujinx moved to: $ryujinx_mods_temp_dir"
 	}
 

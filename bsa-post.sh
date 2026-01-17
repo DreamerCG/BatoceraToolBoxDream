@@ -74,6 +74,7 @@ post_install_ryujinx() {
 		rm -rf "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Ryujinx restaurés"
 	else
+	    rm -rf "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
 		message "both" "$addon_log" "Aucun mod Ryujinx trouvé  pour restauration."
 	fi
 
@@ -127,6 +128,7 @@ post_install_yuzu_common() {
 		rm -rf "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Yuzu restaurés "
 	else
+		rm -rf "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 		message "both" "$addon_log" "Aucun mod Yuzu/Citron/Eden/Sudachi trouvé pour restauration."
 	fi
 
