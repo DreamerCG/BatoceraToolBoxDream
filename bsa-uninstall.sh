@@ -21,6 +21,7 @@ purge_old_switch_install() {
     echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
 
     rm -rf /userdata/system/switch >>"$LOG" 2>&1
+	message "both" "$addon_log" "- Supression du dossier switch system"
 
     rm -rf \
         /userdata/bios/switch/firmware_ryujinx \
@@ -28,6 +29,8 @@ purge_old_switch_install() {
         /userdata/bios/switch/keys_yuzu \
         /userdata/bios/switch/keys_ryujinx \
         >>"$LOG" 2>&1
+
+	message "both" "$addon_log" "- Supression des anciens  dossier firmware et keys"
 
     rm -f \
         "/userdata/roms/ports/Sudachi Qlauncher.sh" \
@@ -39,15 +42,18 @@ purge_old_switch_install() {
         "/userdata/roms/ports/yuzu_config.sh" \
         "/userdata/roms/ports/yuzu_config.sh.keys" \
         "/userdata/roms/ports/Suyu Qlauncher.sh" \
-        "/userdata/roms/ports/Suyu Qlauncher.sh.keys"
+        "/userdata/roms/ports/Suyu Qlauncher.sh.keys" \
+        "/userdata/roms/ports/update*yuzu*.sh" \
+        "/userdata/roms/ports/updateryujinx*.sh"
+
+	message "both" "$addon_log" "- Supression des differents scripts de lancement"
 
     rm -f \
         /userdata/system/configs/emulationstation/es_systems_switch.cfg \
         /userdata/system/configs/emulationstation/es_features_switch.cfg \
         /userdata/system/configs/evmapy/switch.keys
 
-    rm -f /userdata/roms/ports/update*yuzu*.sh
-    rm -f /userdata/roms/ports/updateryujinx*.sh
+	message "both" "$addon_log" "- Supression et nettoyage des fichiers de configuration"
 
     rm -f /userdata/system/.local/share/applications/*yuzu*
     rm -f /userdata/system/.local/share/applications/*ryujinx*
@@ -61,6 +67,8 @@ purge_old_switch_install() {
     rm -f /usr/share/applications/*citron*
     rm -f /usr/share/applications/*sudachi*
 
+	message "both" "$addon_log" "- Supression des icones et lanceurs du bureau"
+
 	rm -rf /userdata/system/cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
 	rm -rf /userdata/system/.cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
 	rm -rf /userdata/cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
@@ -70,71 +78,25 @@ purge_old_switch_install() {
         /userdata/system/configs/{eden,citron,sudachi,yuzu} \
         /userdata/system/.configs/{eden,citron,sudachi,yuzu}
 
-    echo "[PURGE] Done" >>"$LOG"
-}
+	message "both" "$addon_log" "- Supression des caches et configurations"
 
+}
 
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
 
+	message "both" "$addon_log" "##### Desinstallation SWITCH ADD-ON #####"
+
 	purge_old_switch_install
-	
 
-	### REMOVE TOOLBOX ENTRY FROM gamelist.xml
 	gamelist_file="$ports_dir/gamelist.xml"
+	xmlstarlet ed -L -d "/gameList/game[path='./ryujinx_config.sh']" "$gamelist_file"
+	xmlstarlet ed -L -d "/gameList/game[path='./yuzu_config.sh']" "$gamelist_file"
+	xmlstarlet ed -L -d "/gameList/game[path='./Sudachi Qlauncher.sh']" "$gamelist_file"
+	message "both" "$addon_log" "Nettoyage de la Gamelist PORTS terminé $gamelist_file"
 
-	# Ensure the gamelist.xml exists
-	if [ ! -f "$gamelist_file" ]; then
-		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
-	fi
-
-	xmlstarlet ed -L \
-	-d "/gameList/game[path='./yuzu_config.sh']" \
-	-d "/gameList/game[path='./ryujinx_config.sh']" \
-	-d "/gameList/game[path='./Sudachi Qlauncher.sh']" \
-	"$gamelist_file"
-	### REMOVE TOOLBOX ENTRY FROM gamelist.xml
-
-	message "log" "$addon_log" "<<< [ UNINSTALL BATOCERA SWITCH ADD-ON ]>>>"
-	# DELETE SWITCH SYSTEM DIRECTORY
-	message "log" "$addon_log" "DELETE SWITCH SYSTEM DIRECTORY"
-	delete_recursive "$switch_system_dir" "SWITCH SYSTEM DIRECTORY" "log"
-
-	# DELETE DESKTOP LAUNCHERS & ICONS
-	message "log" "$addon_log" "DELETE DESKTOP LAUNCHERS & ICONS"
-	delete_recursive "$local_applications_dir/ryujinx.desktop" "Ryujinx Deskop Launcher" "log"
-	delete_recursive "$local_icons_dir/ryujinx.png" "Ryujinx Desktop Icon" "log"
-	delete_recursive "$local_applications_dir/yuzu.desktop" "Yuzu Deskop Launcher" "log"
-	delete_recursive "$local_icons_dir/yuzu.png" "Yuzu Desktop Icon" "log"
-	delete_recursive "$local_applications_dir/eden.desktop" "Eden Deskop Launcher" "log"
-	delete_recursive "$local_icons_dir/eden.png" "Eden Desktop Icon" "log"
-	delete_recursive "$local_applications_dir/citron.desktop" "Citron Deskop Launcher" "log"
-	delete_recursive "$local_icons_dir/citron.png" "Citron Desktop Icon" "log"
-
-	# DELETE CONFIGS
-	message "log" "$addon_log" "DELETE CONFIGS"
-	delete_recursive "$system_hidden_config_dir/Ryujinx" "Ryujinx Config (Symbolic Link)" "log"
-	delete_recursive "$local_share_dir/Ryujinx" "Ryujinx Config (Symbolic Link)" "log"
-	delete_recursive "$system_configs_dir/Ryujinx" "Ryujinx Config" "log"
-	delete_recursive "$system_hidden_config_dir/yuzu" "Yuzu Config (Symbolic Link)" "log"
-	delete_recursive "$local_share_dir/yuzu" "Yuzu Config (Symbolic Link)" "log"
-	delete_recursive "$system_configs_dir/yuzu" "Yuzu Config" "log"
-	delete_recursive "$system_hidden_config_dir/eden" "Eden Config (Symbolic Link)" "log"
-	delete_recursive "$local_share_dir/eden" "Eden Config (Symbolic Link)" "log"
-	delete_recursive "$system_configs_dir/eden" "Eden Config" "log"
-	delete_recursive "$system_hidden_config_dir/citron" "Citron Config (Symbolic Link)" "log"
-	delete_recursive "$local_share_dir/citron" "Citron Config (Symbolic Link)" "log"
-	delete_recursive "$system_configs_dir/citron" "Citron Config" "log"
-
-
-	# REMOVE EMULATIONSTATION CONFIG FILES
-	message "log" "$addon_log" "DELETE EMULATIONSTATION CONFIGS"
-	delete_recursive "$system_configs_emulationstation_dir/es_features_switch.cfg" "EmulationStation Switch Features Config" "log"
-	delete_recursive "$system_configs_emulationstation_dir/es_systems_switch.cfg" "EmulationStation Switch Systems Config" "log"
-
-	# REMOVE EVMAPY CONFIG
-	message "log" "$addon_log" "DELETE EVENT MAPPER CONFIGS"
-	delete_recursive "$system_configs_evmapy_dir/switch.keys" "Event Mapper Config" "log"
+	message "both" "$addon_log" "##### Desinstallation SWITCH ADD-ON terminée #####"
+	
 }
 
 
