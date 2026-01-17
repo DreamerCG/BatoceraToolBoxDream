@@ -79,6 +79,22 @@ uninstall_BSA() {
 
 	purge_old_switch_install
 	
+
+	### REMOVE TOOLBOX ENTRY FROM gamelist.xml
+	gamelist_file="$ports_dir/gamelist.xml"
+
+	# Ensure the gamelist.xml exists
+	if [ ! -f "$gamelist_file" ]; then
+		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
+	fi
+
+	xmlstarlet ed -L \
+	-d "/gameList/game[path='./yuzu_config.sh']" \
+	-d "/gameList/game[path='./ryujinx_config.sh']" \
+	-d "/gameList/game[path='./Sudachi Qlauncher.sh']" \
+	"$gamelist_file"
+	### REMOVE TOOLBOX ENTRY FROM gamelist.xml
+
 	message "log" "$addon_log" "<<< [ UNINSTALL BATOCERA SWITCH ADD-ON ]>>>"
 	# DELETE SWITCH SYSTEM DIRECTORY
 	message "log" "$addon_log" "DELETE SWITCH SYSTEM DIRECTORY"
@@ -94,7 +110,6 @@ uninstall_BSA() {
 	delete_recursive "$local_icons_dir/eden.png" "Eden Desktop Icon" "log"
 	delete_recursive "$local_applications_dir/citron.desktop" "Citron Deskop Launcher" "log"
 	delete_recursive "$local_icons_dir/citron.png" "Citron Desktop Icon" "log"
-
 
 	# DELETE CONFIGS
 	message "log" "$addon_log" "DELETE CONFIGS"

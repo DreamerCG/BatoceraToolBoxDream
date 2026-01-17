@@ -142,6 +142,7 @@ if [ ! -f "$gamelist_file" ]; then
     echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
 fi
 
+
 xmlstarlet ed -L \
   -d "/gameList/game[path='./DreamerCGToolBox.sh']" \
   -s "/gameList" -t elem -n "game" -v "" \
