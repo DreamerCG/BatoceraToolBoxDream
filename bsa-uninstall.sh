@@ -87,10 +87,10 @@ uninstall_BSA() {
 
 	# Backup Yuzu Saves
 	backup_saves_ryujinx
-	message "both" "$addon_log" "Preventif : Sauvegardes des saves Ryujinx effectuée dans /userdata/saves/switch/backup_ryujinx"
+	message "both" "$addon_log" "Preventif : Sauvegardes des saves Ryujinx effectuée dans /userdata/saves/switch/"
 	# Backup Yuzu Saves
 	backup_saves_yuzu
-	message "both" "$addon_log" "Preventif : Sauvegardes des saves Yuzu effectuée dans /userdata/saves/switch/backup_yuzu"
+	message "both" "$addon_log" "Preventif : Sauvegardes des saves Yuzu effectuée dans /userdata/saves/switch/"
 
 	# Deplacement des mods Citron/Eden/Sudachi
 	# move_mods_switch

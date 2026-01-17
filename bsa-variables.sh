@@ -237,8 +237,9 @@ ryujinx_saves_dir="$switch_saves_dir/Ryujinx" # SAVES (NEW)
 ryujinx_system_saves_dir="$ryujinx_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 ryujinx_user_saves_dir="$ryujinx_saves_dir/user/save" # NAND USER SAVES (NEW)
 ryujinx_user_saves_meta_dir="$ryujinx_saves_dir/user/saveMeta" # NAND USER SAVES META (NEW)
-ryujinx_mods_temp_dir="$switch_saves_dir/mods_ryujinx_tmp" # MODS TEMP DIRECTORY
 
+ryujinx_mods_temp_dir="$switch_saves_dir/mods_ryujinx_tmp" # MODS TEMP DIRECTORY
+ryujinx_mods_dir="$ryujinx_config_dir/mods" # MODS DIRECTORY
 
 
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
@@ -270,7 +271,7 @@ yuzu_saves_dir="$switch_saves_dir/yuzu" # SAVES (NEW)
 yuzu_system_saves_dir="$yuzu_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 yuzu_user_saves_dir="$yuzu_saves_dir/user/save" # NAND USER SAVES (NEW)
 yuzu_mods_temp_dir="$switch_saves_dir/mods_yuzu_tmp" # MODS TEMP DIRECTORY
-
+yuzu_mods_dir="$yuzu_config_dir/load" # MODS DIRECTORY
 
 
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
