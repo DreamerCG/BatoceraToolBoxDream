@@ -27,7 +27,7 @@ for path in paths_to_check:
     else:
         print(f"{path} existe déjà.")
 
-
+# Chargement personnalisé de la config switch
 _old_get_system_config = configgen.emulatorlauncher.Emulator.get_system_config
 
 def _new_get_system_config(system, defaultyml, defaultarchyml):
