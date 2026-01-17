@@ -224,7 +224,7 @@ update_emulator() {
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
-menu_title="DreamerCG Toolbox $toolbox_current_version-  Batocera : V$batocera_version"
+menu_title="DreamerCG Toolbox $toolbox_current_version -  Batocera : V$batocera_version"
 menu_width=65
 menu_height=20
 menu_list_height=12
