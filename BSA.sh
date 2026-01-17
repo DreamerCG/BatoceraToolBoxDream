@@ -5,9 +5,14 @@ reset
 clear
 
 
-curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o /userdata/roms/ports/DreamerCGToolBox.sh
+toolbox_current_version=$(cat /userdata/DreamerCGToolBox/version-toolbox.txt)
+# Téléchargement du fichier de version au démarrage de l'installation
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o /userdata/DreamerCGToolBox/version-toolbox.txt
+toolbox_download_version=$(cat /userdata/DreamerCGToolBox/version-toolbox.txt)
 
 
+message "both" "$addon_log" "toolbox_current_version: $toolbox_current_version""
+message "both" "$addon_log" "toolbox_download_version: $toolbox_download_version""
 
 # THIS SCRIPT
 this_script_file="${0##*/}"
