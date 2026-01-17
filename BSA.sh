@@ -103,7 +103,7 @@ update_emulator() {
 backup_saves_ryujinx() {
 	local save_file="$switch_saves_dir/saves-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
 	message "log" "$addon_log" "<<< [ BACKUP RYUJINX SAVES ]>>>"
-	zip_it "$ryujinx_saves_dir" "$save_file"
+	zip_it "$ryujinx_config_nand_dir" "$save_file"
 	message "log" "$addon_log" "CURRENT RYUJINX SAVES BACKED-UP: $save_file"
 }
 
@@ -111,7 +111,7 @@ backup_saves_ryujinx() {
 backup_saves_yuzu() {
 	local save_file="$switch_saves_dir/saves-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
 	message "log" "$addon_log" "<<< [ BACKUP YUZU SAVES ]>>>"
-	zip_it "$yuzu_saves_dir" "$save_file"
+	zip_it "$ryujinx_config_nand_dir" "$save_file"
 	message "log" "$addon_log" "CURRENT YUZU SAVES BACKED-UP: $save_file"
 }
 
@@ -223,7 +223,7 @@ main_menu() {
 	local menu_items=(
 		"INSTALLATION|Installation des emulateurs|fn|install_menu"
 		"MISE A JOUR|Mise à jour des emulateurs|fn|updates_menu"
-		#"SAUVEGARDES|Gestion des sauvegardes|fn|saves_menu"
+		"SAUVEGARDES|Gestion des sauvegardes|fn|saves_menu"
 		"DESINSTALLATION|Desinstaller les emulateurs|fn|uninstall_menu"
 		"MISE A JOUR TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
 		"QUITTER|Quitter|cmd|killall -9 xterm; exit 0"

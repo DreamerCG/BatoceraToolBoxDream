@@ -179,6 +179,7 @@ local_icons_dir="$local_share_dir/applications"
 # ******************************************************************************
 # SWITCH DIRECTORIES [WHERE FILES ARE INSTALLED TO]
 # ******************************************************************************
+
 # ---------- BIOS AREA ----------
 # SWITCH: BIOS
 switch_bios_dir="/userdata/bios/switch"
@@ -196,6 +197,7 @@ switch_amiibo_dir="$switch_bios_dir/amiibo"
 switch_roms_dir="/userdata/roms/switch"
 # PORTS: ROMS
 switch_ports_dir="/userdata/roms/ports"
+
 # ---------- SYSTEM AREA ----------
 # SWITCH: SAVES
 switch_saves_dir="$system_saves_dir/switch"
@@ -235,6 +237,9 @@ ryujinx_saves_dir="$switch_saves_dir/Ryujinx" # SAVES (NEW)
 ryujinx_system_saves_dir="$ryujinx_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 ryujinx_user_saves_dir="$ryujinx_saves_dir/user/save" # NAND USER SAVES (NEW)
 ryujinx_user_saves_meta_dir="$ryujinx_saves_dir/user/saveMeta" # NAND USER SAVES META (NEW)
+ryujinx_mods_temp_dir="$switch_saves_dir/mods_ryujinx_tmp" # MODS TEMP DIRECTORY
+
+
 
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 ryujinx_install_file="ryujinx-emu.AppImage"
@@ -264,6 +269,9 @@ yuzu_config_amiibo_dir="$yuzu_config_dir/amiibo" # AMIIBO
 yuzu_saves_dir="$switch_saves_dir/yuzu" # SAVES (NEW)
 yuzu_system_saves_dir="$yuzu_saves_dir/system/save" # NAND SYSTEM SAVES (NEW)
 yuzu_user_saves_dir="$yuzu_saves_dir/user/save" # NAND USER SAVES (NEW)
+yuzu_mods_temp_dir="$switch_saves_dir/mods_yuzu_tmp" # MODS TEMP DIRECTORY
+
+
 
 # EMULATOR INSTALL FROM ARCHIVE/APP FILENAME
 yuzu_install_file="yuzu-emu.AppImage"

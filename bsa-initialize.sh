@@ -35,6 +35,7 @@ initialize_common() {
 	# SETUP BIOS DIRECTORY (STORES FIRMWARE, KEYS, AMIIBO)
 	message "log" "$addon_log" "Creating Switch BIOS Directory > => /userdata/bios/switch"
 	mkdir -p "$switch_bios_dir" 2>>"$stderr_log"
+
 	# GENERATE _INFO.TXT IN BIOS DIRECTORY
 	message "log" "$addon_log" "Generating _info.txt for Switch BIOS Directory."
 	generate_file "$switch_bios_dir/_info.txt" \
@@ -63,6 +64,7 @@ initialize_common() {
 	# CREATE ROMS DIRECTORY
 	message "log" "$addon_log" "Creating Switch ROMs Directory. > => /userdata/roms/switch"
 	mkdir -p "$switch_roms_dir" 2>>"$stderr_log"
+
 	# GENERATE _INFO.TXT IN ROMS DIRECTORY
 	message "log" "$addon_log" "Generating _info.txt for Switch ROMs Directory."
 	generate_file "$switch_roms_dir/_info.txt" \
@@ -81,11 +83,6 @@ initialize_common() {
 	# SETUP SYSTEM CONFIG GENERATORS
 	message "log" "$addon_log" "Setup Switch Config Generators. => /userdata/system/switch/configgen"
 	cp -rfT "$switch_install_configgen_dir" "$switch_configgen_dir" 2>>"$stderr_log"
-
-	# SETUP LOCAL DIRECTORIES
-	# message "log" "$addon_log" "Setup Local Applications & Icons Directories > "
-	# mkdir -p "$local_applications_dir" 2>>"$stderr_log"
-	# mkdir -p "$local_icons_dir" 2>>"$stderr_log"
 
 	# CREATE SWITCH BIN DIRECTORY
 	message "log" "$addon_log" "Creating Switch BIN Directory. => /userdata/system/switch/bin"
@@ -119,45 +116,13 @@ initialize_ryujinx() {
 	message "log" "$addon_log" "Creating Ryujinx Keys Directories. => /userdata/bios/switch/keys"
 	mkdir -p "$switch_ryujinx_keys_dir" 2>>"$stderr_log"
 
-	# CREATE & LINK ORIGINAL CONFIG DIRECTORIES TO NEW CONFIG DIRECTORIES (MORE CENTRALIZED)
-	# message "log" "$addon_log" "Linking Original Configuration Directories to New (Centralized) Configuration Directories."
-	#create_slink_directory "$ryujinx_config_dir" "$ryujinx_og_config_dir"
-	#create_slink_directory "$ryujinx_config_dir" "$ryujinx_og_local_config_dir"
-
-	# ******************************************************************************
-	# START USING NEW CONFIG DIRECTORIES FROM HERE ON OUT AS LINKS CREATE
-	# ******************************************************************************
-
-	# LINK FIRMWARE/NAND DIRECTORY
-	message "log" "$addon_log" "Linking Ryujinx Firmware Directory." "Firmware may need to be manually installed from the GUI for Ryujinx."
-	#create_slink_directory "$switch_ryujinx_firmware_dir" "$ryujinx_config_firmware_dir"
-
-	# LINK KEYS DIRECTORY
-	message "log" "$addon_log" "Linking Keys Directory."
-	#create_slink_directory "$switch_ryujinx_keys_dir" "$ryujinx_config_keys_dir"
-
-	# LINK SAVES DIRECTORIES
-	message "log" "$addon_log" "Linking Saves Directories."
-	#create_slink_directory "$ryujinx_system_saves_dir" "$ryujinx_config_system_saves_dir"
-	#create_slink_directory "$ryujinx_user_saves_dir" "$ryujinx_config_user_saves_dir"
-	#create_slink_directory "$ryujinx_user_saves_meta_dir" "$ryujinx_config_user_saves_meta_dir"
-
-	# LINK AMIIBO DIRECTORY
-	message "log" "$addon_log" "Ryujinx Does Not Have an Amiibo Directory to Link."
-	#create_slink_directory "$switch_amiibo_dir" "$ryujinx_config_amiibo_dir"
-
-	# .DESKTOP FOR F1-APPLICATIONS MENU 
-	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "ryujinx" "Ryujinx-Config"
-
-	# COPY LAUNCHER SCRIPTS
-	message "log" "$addon_log" "Installing EmulationStation & Desktop Launcher Scripts"
-	#copy_make_executable "ryujinx-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	#copy_make_executable "ryujinx-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Ryujinx Emulator Directory Created."
 	mkdir -p "$ryujinx_emu_dir" 2>>"$stderr_log"
+
+	# CREATE MODS_RYUJINX_TMP DIRECTORY
+	message "log" "$addon_log" "Creating Mods Ryujinx Temps Directory. > => /userdata/saves/switch/mods_ryujinx_tmp"
+	mkdir -p "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "ryujinx-emu"
@@ -186,44 +151,15 @@ initialize_yuzu() {
 		mkdir -p "$switch_yuzu_keys_dir" 2>>"$stderr_log"
 	fi
 
-	# CREATE & LINK ORIGINAL CONFIG DIRECTORIES TO NEW CONFIG DIRECTORIES (MORE CENTRALIZED)
-	message "log" "$addon_log" "Linking Original Configuration Directories to New (Centralized) Configuration Directories."
-	#create_slink_directory "$yuzu_config_dir" "$yuzu_og_config_dir"
-	#create_slink_directory "$yuzu_config_dir" "$yuzu_og_local_config_dir"
-
-	# ******************************************************************************
-	# START USING NEW CONFIG DIRECTORIES FROM HERE ON OUT AS LINKS CREATE
-	# ******************************************************************************
-
-	# LINK FIRMWARE/NAND DIRECTORY
-	message "log" "$addon_log" "Linking Firmware Directory."
-	#create_slink_directory "$switch_yuzu_firmware_dir" "$yuzu_config_firmware_dir"
-
-	# LINK KEYS DIRECTORY
-	message "log" "$addon_log" "Linking Keys Directory."
-	#create_slink_directory "$switch_yuzu_keys_dir" "$yuzu_config_keys_dir"
-
-	# LINK SAVES DIRECTORIES
-	message "log" "$addon_log" "Linking Saves Directories."
-	#create_slink_directory "$yuzu_system_saves_dir" "$yuzu_config_system_saves_dir"
-	#create_slink_directory "$yuzu_user_saves_dir" "$yuzu_config_user_saves_dir"
-
-	# LINK AMIIBO DIRECTORY
-	message "log" "$addon_log" "Linking Amiibo Directory."
-	#create_slink_directory "$switch_amiibo_dir" "$yuzu_config_amiibo_dir"
-
-	# .DESKTOP FOR F1-APPLICATIONS MENU 
-	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "yuzu" "Yuzu-Config"
-
-	# COPY LAUNCHER SCRIPTS
-	message "log" "$addon_log" "Installing EmulationStation & Desktop Launcher Scripts"
-	#copy_make_executable "yuzu-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	#copy_make_executable "yuzu-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Yuzu Emulator Directory Created."
 	mkdir -p "$yuzu_emu_dir" 2>>"$stderr_log"
+
+
+	# CREATE MODS_YUZU_TMP DIRECTORY
+	message "log" "$addon_log" "Creating Mods Yuzu Temps Directory. > => /userdata/saves/switch/mods_yuzu_tmp"
+	mkdir -p "$yuzu_mods_temp_dir" 2>>"$stderr_log"
+
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "yuzu-emu"
@@ -253,45 +189,13 @@ initialize_eden() {
 		mkdir -p "$switch_yuzu_keys_dir" 2>>"$stderr_log"
 	fi
 
-	# CREATE & LINK ORIGINAL CONFIG DIRECTORIES TO NEW CONFIG DIRECTORIES (MORE CENTRALIZED)
-	message "log" "$addon_log" "Linking Original Configuration Directories to New (Centralized) Configuration Directories."
-	#create_slink_directory "$eden_config_dir" "$eden_og_config_dir"
-	#create_slink_directory "$eden_config_dir" "$eden_og_local_config_dir"
-
-	# ******************************************************************************
-	# START USING NEW CONFIG DIRECTORIES FROM HERE ON OUT AS LINKS CREATE
-	# ******************************************************************************
-
-	# LINK FIRMWARE/NAND DIRECTORY
-	message "log" "$addon_log" "Linking Firmware Directory. (Fork: Link Eden NAND -> Yuzu NAND)"
-	#create_slink_directory "$yuzu_config_dir/nand" "$eden_config_dir/nand"
-
-	# LINK KEYS DIRECTORY
-	message "log" "$addon_log" "Linking Keys Directory."
-	#create_slink_directory "$switch_yuzu_keys_dir" "$eden_config_keys_dir"
-
-	# LINK SAVES DIRECTORY
-	#	If Yuzu installed then taken care of by linking NAND to Yuzu NAND
-	# 		But redo in case Yuzu was not installed
-	message "log" "$addon_log" "Linking Saves Directories."
-	#create_slink_directory "$yuzu_system_saves_dir" "$yuzu_config_system_saves_dir"
-	#create_slink_directory "$yuzu_user_saves_dir" "$yuzu_config_user_saves_dir"
-
-	# LINK AMIIBO DIRECTORY
-	message "log" "$addon_log" "Linking Amiibo Directory."
-	#create_slink_directory "$switch_amiibo_dir" "$eden_config_amiibo_dir"
-
-	# .DESKTOP FOR F1-APPLICATIONS MENU 
-	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "eden" "Eden-Config"
-
-	# COPY LAUNCHER SCRIPTS
-	#copy_make_executable "eden-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	#copy_make_executable "eden-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Eden Emulator Directory Created."
 	mkdir -p "$eden_emu_dir" 2>>"$stderr_log"
+
+	# CREATE MODS_YUZU_TMP DIRECTORY
+	message "log" "$addon_log" "Creating Mods Yuzu Temps Directory. > => /userdata/saves/switch/mods_yuzu_tmp"
+	mkdir -p "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "eden-emu"
@@ -321,52 +225,13 @@ initialize_citron() {
 		mkdir -p "$switch_yuzu_keys_dir" 2>>"$stderr_log"
 	fi
 
-	# SETUP KEYS DIRECTORY
-	if [ ! -d "$switch_yuzu_keys_dir" ]; then
-		message "log" "$addon_log" "Creating Saves Directory."
-		mkdir -p "$switch_yuzu_keys_dir" 2>>"$stderr_log"
-	fi
-
-
-	# CREATE & LINK ORIGINAL CONFIG DIRECTORIES TO NEW CONFIG DIRECTORIES (MORE CENTRALIZED)
-	message "log" "$addon_log" "Linking Original Configuration Directories to New (Centralized) Configuration Directories."
-	#create_slink_directory "$citron_config_dir" "$citron_og_config_dir"
-	#create_slink_directory "$citron_config_dir" "$citron_og_local_config_dir"
-
-	# ******************************************************************************
-	# START USING NEW CONFIG DIRECTORIES FROM HERE ON OUT AS LINKS CREATE
-	# ******************************************************************************
-
-	# LINK FIRMWARE/NAND DIRECTORY
-	message "log" "$addon_log" "Linking Firmware Directory. (Fork: Link Citron NAND -> Yuzu NAND)"
-	#create_slink_directory "$yuzu_config_dir/nand" "$citron_config_dir/nand"
-
-	# LINK KEYS DIRECTORY
-	message "log" "$addon_log" "Linking Keys Directory."
-	#create_slink_directory "$switch_yuzu_keys_dir" "$citron_config_keys_dir"
-
-	# LINK SAVES DIRECTORY
-	#	If Yuzu installed then taken care of by linking NAND to Yuzu NAND
-	# 		But redo in case Yuzu was not installed
-	message "log" "$addon_log" "Linking Saves Directories."
-	#create_slink_directory "$yuzu_system_saves_dir" "$yuzu_config_system_saves_dir"
-	#create_slink_directory "$yuzu_user_saves_dir" "$yuzu_config_user_saves_dir"
-
-	# LINK AMIIBO DIRECTORY
-	message "log" "$addon_log" "Linking Amiibo Directory."
-	#create_slink_directory "$switch_amiibo_dir" "$citron_config_amiibo_dir"
-
-	# .DESKTOP FOR F1-APPLICATIONS MENU 
-	message "log" "$addon_log" "Generating .desktop for F1-Applications Menu."
-	#generate_desktop_file "$local_applications_dir" "$local_icons_dir" "citron" "Citron-Config"
-
-	# COPY LAUNCHER SCRIPTS
-	#copy_make_executable "citron-config.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	#copy_make_executable "citron-launch.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Citron Emulator Directory Created."
 	mkdir -p "$citron_emu_dir" 2>>"$stderr_log"
+
+	# CREATE MODS_YUZU_TMP DIRECTORY
+	message "log" "$addon_log" "Creating Mods Yuzu Temps Directory. > => /userdata/saves/switch/mods_yuzu_tmp"
+	mkdir -p "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "citron-emu"
