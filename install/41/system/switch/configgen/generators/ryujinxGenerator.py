@@ -236,7 +236,8 @@ class RyujinxGenerator(Generator):
 
             if debugcontrollers:
                 writelog("=====================================================Start Bato Controller Debug Info=========================================================")
-                for index, controller in enumerate(playersControllers, start=0):
+                for index in playersControllers :
+                    controller = playersControllers[index]
                     writelog("Controller configName: {}".format(controller.name))
                     writelog("Controller index: {}".format(controller.index))
                     writelog("Controller real_name: {}".format(controller.real_name))
@@ -249,7 +250,10 @@ class RyujinxGenerator(Generator):
 
             input_config = []
             index_of_convuuid = {}
-            for index, controller in enumerate(playersControllers, start=0):
+            for index in playersControllers :
+                controller = playersControllers[index]
+                if(controller.guid != "050000007e0500000620000001800000" and controller.guid != "050000007e0500000720000001800000"):
+                    
                     NINTENDO_GUIDS = {
                         "050000007e0500000620000001800000",
                         "050000007e0500000720000001800000",
