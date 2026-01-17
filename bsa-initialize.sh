@@ -117,9 +117,6 @@ initialize_ryujinx() {
 	message "log" "$addon_log" "Ryujinx Emulator Directory Created."
 	mkdir -p "$ryujinx_emu_dir" 2>>"$stderr_log"
 
-	# CREATE MODS_RYUJINX_TMP DIRECTORY
-	message "log" "$addon_log" "Creating Mods Ryujinx Temps Directory. > => /userdata/saves/switch/mods_ryujinx_tmp"
-	mkdir -p "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "ryujinx-emu"
@@ -150,11 +147,7 @@ initialize_yuzu() {
 	message "log" "$addon_log" "Yuzu Emulator Directory Created."
 	mkdir -p "$yuzu_emu_dir" 2>>"$stderr_log"
 
-
 	# CREATE MODS_YUZU_TMP DIRECTORY
-	message "log" "$addon_log" "Creating Mods Yuzu Temps Directory. > => /userdata/saves/switch/mods_yuzu_tmp"
-	mkdir -p "$yuzu_mods_temp_dir" 2>>"$stderr_log"
-
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "yuzu-emu"
@@ -185,9 +178,6 @@ initialize_eden() {
 	message "log" "$addon_log" "Eden Emulator Directory Created."
 	mkdir -p "$eden_emu_dir" 2>>"$stderr_log"
 
-	# CREATE MODS_YUZU_TMP DIRECTORY
-	message "log" "$addon_log" "Creating Mods Yuzu Temps Directory. > => /userdata/saves/switch/mods_yuzu_tmp"
-	mkdir -p "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "eden-emu"
@@ -218,9 +208,6 @@ initialize_citron() {
 	message "log" "$addon_log" "Citron Emulator Directory Created."
 	mkdir -p "$citron_emu_dir" 2>>"$stderr_log"
 
-	# CREATE MODS_YUZU_TMP DIRECTORY
-	message "log" "$addon_log" "Creating Mods Yuzu Temps Directory. > => /userdata/saves/switch/mods_yuzu_tmp"
-	mkdir -p "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "citron-emu"
