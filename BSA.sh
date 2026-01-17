@@ -111,8 +111,10 @@ update_emulator() {
 
 	# Deplacement des mods dans yuzu_mods_backup_dir 
 	backup_mods_ryujinx() {
+		local save_file="$switch_saves_dir/mods-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
 		message "log" "$addon_log" "<<< [ BACKUP RYUJINX MODS ]>>>"
 		mkdir -p "$ryujinx_mods_temp_dir"
+		zip_it "$ryujinx_mods_dir" "$save_file"		
 		cp -r "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Ryujinx moved to: $ryujinx_mods_temp_dir"
 	}
@@ -129,8 +131,10 @@ update_emulator() {
 	
 	# Deplacement des mods dans yuzu_mods_backup_dir 
 	backup_mods_yuzu() {
+		local save_file="$switch_saves_dir/mods-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
 		message "log" "$addon_log" "<<< [ BACKUP YUZU MODS/CITRON/EDEN/SUDACHI ]>>>"
 		mkdir -p "$yuzu_mods_temp_dir"
+		zip_it "$yuzu_mods_dir" "$save_file"
 		cp -r "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Citron/Eden/Sudachi/Yuzu moved to: $yuzu_mods_temp_dir"
 	}
