@@ -12,7 +12,6 @@ remove_emulator_to_es_systems() {
 	xml_file_delete_node "$system_configs_dir/emulationstation/es_systems_switch.cfg" "//system[name='switch']/emulators/emulator[@name='$emu']"
 }
 
-
 purge_old_switch_install() {
 
 # find /   -type d   \( -iname "*citron*"   -o -iname "*eden*"   -o -iname "*ryujinx*"   -o -iname "*yuzu*"   -o -iname "*sudachi*"   -o -iname "switch" \)   2>/dev/null

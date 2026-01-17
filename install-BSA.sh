@@ -74,7 +74,7 @@ curl http://127.0.0.1:1234/reloadgames
 ports_dir="/userdata/roms/ports"
 mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
-gamelist_file="$ports_dir/gamelist.xml"
+
 screenshot_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-image.png"
 screenshot_path="$ports_dir/images/toolbox-image.png"
 logo_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-logo.png"
@@ -99,10 +99,7 @@ curl -L -o "$yuzu_config_path" "$yuzu_config_url"
 mkdir -p "$(dirname "$ryujinx_config_path")"
 curl -L -o "$ryujinx_config_path" "$ryujinx_config_url"
 
-# Ensure the gamelist.xml exists
-if [ ! -f "$gamelist_file" ]; then
-    echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
-fi
+
 
 # Installation de xmlstarlet si absent.
 XMLSTARLET_DIR="/userdata/system/pro/extra"
@@ -138,22 +135,29 @@ else
     fi
 fi
 
+gamelist_file="$ports_dir/gamelist.xml"
+
+# Ensure the gamelist.xml exists
+if [ ! -f "$gamelist_file" ]; then
+    echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
+fi
+
 xmlstarlet ed -L \
-    -s "/gameList" -t elem -n "game" -v "" \
-    -s "/gameList/game[last()]" -t elem -n "path" -v "./DreamerCGToolBox.sh" \
-    -s "/gameList/game[last()]" -t elem -n "name" -v "A Toolbox Switch" \
-    -s "/gameList/game[last()]" -t elem -n "desc" -v "Boite à outils de DreamerCG permettant l'installation de la Switch " \
-    -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG" \
-    -s "/gameList/game[last()]" -t elem -n "publisher" -v "DreamerCG" \
-    -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
-    -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
-    -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
-    -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-    -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
-    -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
-    -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolbox-box.png" \
-    "$gamelist_file"
-# Add an entry to gamelist.xml#################################xmledit#########################################################
+  -d "/gameList/game[path='./DreamerCGToolBox.sh']" \
+  -s "/gameList" -t elem -n "game" -v "" \
+  -s "/gameList/game[last()]" -t elem -n "path" -v "./DreamerCGToolBox.sh" \
+  -s "/gameList/game[last()]" -t elem -n "name" -v "A Toolbox Switch" \
+  -s "/gameList/game[last()]" -t elem -n "desc" -v "Boîte à outils DreamerCG pour l'installation de la Switch" \
+  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
+  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
+  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolbox-box.png" \
+  -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG" \
+  -s "/gameList/game[last()]" -t elem -n "publisher" -v "DreamerCG" \
+  -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
+  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
+  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
+  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
+  "$gamelist_file"
 
 
 # Refresh the Ports menu
