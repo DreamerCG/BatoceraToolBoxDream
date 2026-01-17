@@ -68,10 +68,11 @@ post_install_ryujinx() {
 		message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"		
 
 	# On restaure les mods Ryujinx depuis ryujinx_mods_backup_dir
-	mkdir -p "$yuzu_new_mods_dir"
+	mkdir -p "$ryujinx_new_mods_dir"
 	if [ -d "$ryujinx_mods_temp_dir" ] && [ "$(ls -A "$ryujinx_mods_temp_dir")" ]; then
 		message "both" "$addon_log" "<<< [ RESTAURATION DES MODS RYUJINX ]>>>"
-		mv "$ryujinx_mods_temp_dir"/* "$ryujinx_new_mods_dir"/ 2>>"$stderr_log"
+		cp -r "$ryujinx_mods_temp_dir"/* "$ryujinx_new_mods_dir"/ 2>>"$stderr_log"
+		rm -rf "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Ryujinx restaurés depuis $ryujinx_mods_temp_dir vers $ryujinx_new_mods_dir"
 	else
 		message "both" "$addon_log" "Aucun mod Ryujinx trouvé dans $ryujinx_mods_temp_dir pour restauration."
@@ -121,9 +122,11 @@ post_install_yuzu_common() {
 	message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"
 
 	# On restaure les mods Yuzu/Citron/Eden/Sudachi depuis yuzu_mods_backup_dir
+	mkdir -p "$yuzu_new_mods_dir"
 	if [ -d "$yuzu_mods_temp_dir" ] && [ "$(ls -A "$yuzu_mods_temp_dir")" ]; then
 		message "both" "$addon_log" "<<< [ RESTAURATION DES MODS YUZU/CITRON/EDEN/SUDACHI ]>>>"
-		mv "$yuzu_mods_temp_dir"/* "$yuzu_new_mods_dir"/ 2>>"$stderr_log"
+		cp -r "$yuzu_mods_temp_dir"/* "$yuzu_new_mods_dir"/ 2>>"$stderr_log"
+		rm -rf "$yuzu_mods_temp_dir" 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Yuzu/Citron/Eden/Sudachi restaurés depuis $yuzu_mods_temp_dir vers $yuzu_new_mods_dir"
 	else
 		message "both" "$addon_log" "Aucun mod Yuzu/Citron/Eden/Sudachi trouvé dans $yuzu_mods_temp_dir pour restauration."

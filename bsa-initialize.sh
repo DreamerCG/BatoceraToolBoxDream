@@ -100,9 +100,6 @@ initialize_common() {
 # INITIALLIZE RYUJINX STRUCTURES
 initialize_ryujinx() {
 
-	# Backup Yuzu Saves
-	backup_saves_ryujinx
-
 	# SETUP COMMON STRUCTURES
 	initialize_common
 
@@ -131,8 +128,6 @@ initialize_ryujinx() {
 # INITIALLIZE YUZU STRUCTURES
 initialize_yuzu() {
 
-	# Backup Yuzu Saves
-	backup_saves_yuzu
 
 	# SETUP COMMON STRUCTURES
 	initialize_common
@@ -169,9 +164,6 @@ initialize_yuzu() {
 # INITIALLIZE EDEN STRUCTURES
 initialize_eden() {
 
-	# Backup Yuzu Saves
-	backup_saves_yuzu
-
 	# SETUP COMMON STRUCTURES
 	initialize_common
 
@@ -204,9 +196,6 @@ initialize_eden() {
 
 # INITIALLIZE CITRON STRUCTURES
 initialize_citron() {
-
-	# Backup Yuzu Saves
-	backup_saves_yuzu
 
 	# SETUP COMMON STRUCTURES
 	initialize_common
