@@ -69,14 +69,14 @@ purge_old_switch_install() {
 
 	message "both" "$addon_log" "- Supression des icones et lanceurs du bureau"
 
-	rm -rf /userdata/system/cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
-	rm -rf /userdata/system/.cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
-	rm -rf /userdata/cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
-	rm -rf /userdata/.cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
+	rm -rf /userdata/system/cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
+	rm -rf /userdata/system/.cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
+	rm -rf /userdata/cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
+	rm -rf /userdata/.cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
 
     rm -rf \
-        /userdata/system/configs/{eden,citron,sudachi,yuzu} \
-        /userdata/system/.configs/{eden,citron,sudachi,yuzu}
+        /userdata/system/configs/{eden,citron,sudachi,yuzu,Ryujinx} \
+        /userdata/system/.configs/{eden,citron,sudachi,yuzu,Ryujinx} \
 
 	message "both" "$addon_log" "- Supression des caches et configurations"
 }

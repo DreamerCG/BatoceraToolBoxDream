@@ -169,8 +169,6 @@ install_wrapper() {
         uninstall_BSA
         message "both" "$addon_log" "Clean terminé"
         BSA_CLEAN_DONE=1
-    else 
-		# message "both" "$addon_log" "=== Nettoyage déja fait ==="
 	fi
 
     # Ensuite on appelle la vraie installation
