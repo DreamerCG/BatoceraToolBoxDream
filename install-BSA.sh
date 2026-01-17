@@ -83,11 +83,6 @@ logo_path="$ports_dir/images/toolbox-logo.png"
 box_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/toolbox-box.png"
 box_path="$ports_dir/images/toolbox-box.png"
 
-yuzu_config_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/yuzu_config.png"
-yuzu_config_path="$ports_dir/images/yuzu_config.png"
-ryujinx_config_url="https://github.com/DreamerCG/BatoceraToolBoxDream/raw/main/install/roms/ports/images/ryujinx_config.png"
-ryujinx_config_path="$ports_dir/images/ryujinx_config.png"
-
 # Ensure the logo directory exists and download the logo
 mkdir -p "$(dirname "$logo_path")"
 curl -L -o "$logo_path" "$logo_url"
@@ -95,12 +90,6 @@ mkdir -p "$(dirname "$screenshot_path")"
 curl -L -o "$screenshot_path" "$screenshot_url"
 mkdir -p "$(dirname "$box_path")"
 curl -L -o "$box_path" "$box_url"
-mkdir -p "$(dirname "$yuzu_config_path")"
-curl -L -o "$yuzu_config_path" "$yuzu_config_url"
-mkdir -p "$(dirname "$ryujinx_config_path")"
-curl -L -o "$ryujinx_config_path" "$ryujinx_config_url"
-
-
 
 # Installation de xmlstarlet si absent.
 XMLSTARLET_DIR="/userdata/system/pro/extra"

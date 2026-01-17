@@ -60,8 +60,8 @@ post_install_ryujinx() {
 		-s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
 		-s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
 		-s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-		-s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
-		-s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
+		-s "/gameList/game[last()]" -t elem -n "image" -v "./images/ryujinx_config-image.png" \
+		-s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/ryujinx_config-logo.png" \
 		-s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/ryujinx_config.png" \
 		"$gamelist_file"
 
@@ -114,8 +114,8 @@ post_install_yuzu_common() {
 	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
 	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
 	  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
-	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
+	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/yuzu_config-image.png" \
+	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/yuzu_config-logo.png" \
 	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
 	  "$gamelist_file"
 	  

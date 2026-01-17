@@ -130,6 +130,7 @@ switch_install_roms_dir="$switch_install_script_dir/roms"
 switch_install_roms_switch_dir="$switch_install_roms_dir/switch"
 # INSTALLATION: PORTS ROMS :: Ports Roms to Install in Post
 switch_install_roms_ports_dir="$switch_install_script_dir/install/roms/ports"
+switch_install_roms_ports_images_dir="$switch_install_script_dir/install/roms/ports/images"
 
 
 # ******************************************************************************
@@ -197,6 +198,10 @@ switch_amiibo_dir="$switch_bios_dir/amiibo"
 switch_roms_dir="/userdata/roms/switch"
 # PORTS: ROMS
 switch_ports_dir="/userdata/roms/ports"
+# PORTS: IMAGES
+switch_ports_images_dir="/userdata/roms/ports/images"
+
+
 
 # ---------- SYSTEM AREA ----------
 # SWITCH: SAVES

@@ -80,6 +80,12 @@ initialize_common() {
 	cp -rfT "$switch_install_configs_dir" "$system_configs_dir" 2>>"$stderr_log"
 	rename_file	"$system_configs_dir/emulationstation/es_systems_switch.old" "$system_configs_dir/emulationstation/es_systems_switch.cfg" "yes"
 
+
+	# COPIE ALL IMAGE FOR SWITCH PORTS
+	message "log" "$addon_log" "Copying All Images for Switch Ports. => /userdata/roms/ports/images/"
+	cp -rfT "$switch_install_roms_ports_images_dir" "$switch_ports_images_dir" 2>>"$stderr_log"
+
+
 	# SETUP SYSTEM CONFIG GENERATORS
 	message "log" "$addon_log" "Setup Switch Config Generators. => /userdata/system/switch/configgen"
 	cp -rfT "$switch_install_configgen_dir" "$switch_configgen_dir" 2>>"$stderr_log"
