@@ -74,7 +74,7 @@ purge_old_switch_install() {
 	rm -rf /userdata/cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
 	rm -rf /userdata/.cache/{eden,citron,sudachi,yuzu} >>"$LOG" 2>&1
 
-    rm -f \
+    rm -rf \
         /userdata/system/configs/{eden,citron,sudachi,yuzu} \
         /userdata/system/.configs/{eden,citron,sudachi,yuzu}
 
