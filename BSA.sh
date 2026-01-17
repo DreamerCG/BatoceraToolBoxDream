@@ -102,35 +102,31 @@ update_emulator() {
 	# BACKUP RYUJINX SAVES
 	backup_saves_ryujinx() {
 		local save_file="$switch_saves_dir/saves-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
-		message "both" "$addon_log" "<<< [ BACKUP RYUJINX SAVES ]>>>"
 		zip_it "$ryujinx_config_nand_dir" "$save_file"
-		message "both" "$addon_log" "Backup Ryujinx Saves completed: $save_file"
+		message "both" "$addon_log" "Ryujinx Saves completed: $save_file"
 		message "both" "$addon_log" " from $ryujinx_config_nand_dir"
 	}
 
 	# BACKUP YUZU SAVES
 	backup_saves_yuzu() {
 		local save_file="$switch_saves_dir/saves-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
-		message "both" "$addon_log" "<<< [ BACKUP YUZU SAVES ]>>>"
 		zip_it "$yuzu_config_nand_dir" "$save_file"
-		message "both" "$addon_log" "Backup Yuzu Saves completed: $save_file from $yuzu_config_nand_dir"	
+		message "both" "$addon_log" "Yuzu Saves completed"	
 		message "both" "$addon_log" "from $yuzu_config_nand_dir"	
 	}
 	
 	# Backup des mods dans yuzu_mods_backup_dir 
 	backup_mods_yuzu() {
 		local save_mod_file="$switch_saves_dir/mods-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
-		message "both" "$addon_log" "<<< [ BACKUP YUZU MODS/CITRON/EDEN/SUDACHI ]>>>"
 		mkdir -p "$yuzu_mods_temp_dir"
 		zip_it "$yuzu_mods_dir" "$save_mod_file"
 		# cp -r "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
-		message "both" "$addon_log" "Mods Citron/Eden/Sudachi/Yuzu moved to: $yuzu_mods_temp_dir"
+		message "both" "$addon_log" "Mods Yuzu moved to: $yuzu_mods_temp_dir"
 	}
 
 	# Backup des mods dans yuzu_mods_backup_dir 
 	backup_mods_ryujinx() {
 		local save_mod_file="$switch_saves_dir/mods-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
-		message "both" "$addon_log" "<<< [ BACKUP RYUJINX MODS ]>>>"
 		mkdir -p "$ryujinx_mods_temp_dir"
 		zip_it "$ryujinx_mods_dir" "$save_mod_file"		
 		# cp -r "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
@@ -142,7 +138,7 @@ update_emulator() {
 	move_mods_yuzu() {
 		mkdir -p "$yuzu_mods_temp_dir"
 		cp -r "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
-		message "both" "$addon_log" "Mods Citron/Eden/Sudachi/Yuzu moved to: $yuzu_mods_temp_dir"
+		message "both" "$addon_log" "Mods Yuzu moved to: $yuzu_mods_temp_dir"
 	}
 
 	# Backup des mods dans yuzu_mods_backup_dir 
