@@ -44,10 +44,7 @@ purge_old_switch_install() {
         "/userdata/roms/ports/Suyu Qlauncher.sh" \
         "/userdata/roms/ports/Suyu Qlauncher.sh.keys" \
         "/userdata/roms/ports/update*yuzu*.sh" \
-        "/userdata/roms/ports/updateryujinx*.sh" \
-        "/userdata/roms/ports/images\ryujinx_config.png" \
-        "/userdata/roms/ports/images\yuzu_config.png"
-
+        "/userdata/roms/ports/updateryujinx*.sh" 
 
 	message "both" "$addon_log" "- Supression des differents scripts de lancement"
 
