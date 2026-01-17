@@ -4,6 +4,7 @@ export DISPLAY=:0.0
 reset
 clear
 
+
 VERSION_FILE="/userdata/DreamerCGToolBox/version-toolbox.txt"
 VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/version-toolbox.txt"
 INSTALL_CMD="curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
@@ -11,7 +12,24 @@ INSTALL_CMD="curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
 # Cas 1 : fichier de version absent → installation
 if [ ! -f "$VERSION_FILE" ]; then
     echo "Aucune version détectée, installation de la Toolbox…"
-    DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
+	
+	DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black \
+	  -fa "DejaVuSansMono" -en UTF-8 \
+	  -e bash -c '
+	echo
+	echo "========================================="
+	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
+	echo "========================================="
+	echo
+	echo "========================================="
+	echo "   🔧 Relancer la toolbox une fois installation terminer   "
+	echo "========================================="
+	echo
+	echo
+	echo
+	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
+	'
+
     # exit 0
 fi
 
@@ -30,10 +48,31 @@ fi
 # Comparaison
 if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
     echo "Mise à jour détectée ($toolbox_current_version → $toolbox_download_version)"
-    DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
+
+
+	DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black \
+	  -fa "DejaVuSansMono" -en UTF-8 \
+	  -e bash -c '
+	echo
+	echo "========================================="
+	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
+	echo "========================================="
+	echo "Nouvelle version : $toolbox_download_version
+	echo "========================================="
+	echo "   🔧 Relancer la toolbox une fois installation terminer   "
+	echo "========================================="
+	echo
+	echo
+	echo
+	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
+	'
+
 else
     echo "Toolbox déjà à jour (version $toolbox_current_version)"
 fi
+
+
+
 
 # THIS SCRIPT
 this_script_file="${0##*/}"
