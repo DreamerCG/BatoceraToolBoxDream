@@ -102,43 +102,55 @@ update_emulator() {
 	# BACKUP RYUJINX SAVES
 	backup_saves_ryujinx() {
 		local save_file="$switch_saves_dir/saves-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
-		message "log" "$addon_log" "<<< [ BACKUP RYUJINX SAVES ]>>>"
+		message "both" "$addon_log" "<<< [ BACKUP RYUJINX SAVES ]>>>"
 		zip_it "$ryujinx_config_nand_dir" "$save_file"
 		message "both" "$addon_log" "Backup Ryujinx Saves completed: $save_file"
 		message "both" "$addon_log" " from $ryujinx_config_nand_dir"
 	}
 
-
-	# Deplacement des mods dans yuzu_mods_backup_dir 
-	backup_mods_ryujinx() {
-		local save_file="$switch_saves_dir/mods-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
-		message "log" "$addon_log" "<<< [ BACKUP RYUJINX MODS ]>>>"
-		mkdir -p "$ryujinx_mods_temp_dir"
-		zip_it "$ryujinx_mods_dir" "$save_file"		
-		cp -r "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
-		message "both" "$addon_log" "Mods Ryujinx moved to: $ryujinx_mods_temp_dir"
-	}
-
-
 	# BACKUP YUZU SAVES
 	backup_saves_yuzu() {
 		local save_file="$switch_saves_dir/saves-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
-		message "log" "$addon_log" "<<< [ BACKUP YUZU SAVES ]>>>"
+		message "both" "$addon_log" "<<< [ BACKUP YUZU SAVES ]>>>"
 		zip_it "$yuzu_config_nand_dir" "$save_file"
 		message "both" "$addon_log" "Backup Yuzu Saves completed: $save_file from $yuzu_config_nand_dir"	
 		message "both" "$addon_log" "from $yuzu_config_nand_dir"	
 	}
 	
-	# Deplacement des mods dans yuzu_mods_backup_dir 
+	# Backup des mods dans yuzu_mods_backup_dir 
 	backup_mods_yuzu() {
-		local save_file="$switch_saves_dir/mods-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
-		message "log" "$addon_log" "<<< [ BACKUP YUZU MODS/CITRON/EDEN/SUDACHI ]>>>"
+		local save_mod_file="$switch_saves_dir/mods-yuzu_$(date +"%Y%m%d_%H%M%S").zip"
+		message "both" "$addon_log" "<<< [ BACKUP YUZU MODS/CITRON/EDEN/SUDACHI ]>>>"
 		mkdir -p "$yuzu_mods_temp_dir"
-		zip_it "$yuzu_mods_dir" "$save_file"
+		zip_it "$yuzu_mods_dir" "$save_mod_file"
+		# cp -r "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
+		message "both" "$addon_log" "Mods Citron/Eden/Sudachi/Yuzu moved to: $yuzu_mods_temp_dir"
+	}
+
+	# Backup des mods dans yuzu_mods_backup_dir 
+	backup_mods_ryujinx() {
+		local save_mod_file="$switch_saves_dir/mods-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
+		message "both" "$addon_log" "<<< [ BACKUP RYUJINX MODS ]>>>"
+		mkdir -p "$ryujinx_mods_temp_dir"
+		zip_it "$ryujinx_mods_dir" "$save_mod_file"		
+		# cp -r "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
+		message "both" "$addon_log" "Mods Ryujinx moved to: $ryujinx_mods_temp_dir"
+	}
+
+
+	# Backup des mods dans yuzu_mods_backup_dir 
+	move_mods_yuzu() {
+		mkdir -p "$yuzu_mods_temp_dir"
 		cp -r "$yuzu_mods_dir"/* "$yuzu_mods_temp_dir"/ 2>>"$stderr_log"
 		message "both" "$addon_log" "Mods Citron/Eden/Sudachi/Yuzu moved to: $yuzu_mods_temp_dir"
 	}
 
+	# Backup des mods dans yuzu_mods_backup_dir 
+	move_mods_ryujinx() {
+		mkdir -p "$ryujinx_mods_temp_dir"
+		cp -r "$ryujinx_mods_dir"/* "$ryujinx_mods_temp_dir"/ 2>>"$stderr_log"
+		message "both" "$addon_log" "Mods Ryujinx moved to: $ryujinx_mods_temp_dir"
+	}
 
 
 # ******************************************************************************
@@ -199,13 +211,13 @@ updates_menu() {
 saves_menu() {
 	local menu_items=(
 		"BACKUP RYUJINX|Backup Ryujinx Saves|on|fn|backup_saves_ryujinx"
+		"BACKUP Mods RYUJINX|Backup Ryujinx Mods|on|fn|backup_mods_ryujinx"
 		"BACKUP Eden/Citron/YUZU|Backup Yuzu Saves|on|fn|backup_saves_yuzu"
-		"BACKUP RYUJINX|Backup Ryujinx Mods|on|fn|backup_mods_ryujinx"		
-		"BACKUP Eden/Citron/YUZU|Backup Yuzu Mods|on|fn|backup_mods_yuzu"
+		"BACKUP Mods Eden/Citron/YUZU|Backup Yuzu Mods|on|fn|backup_mods_yuzu"
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Saves" "$menu_height" "$menu_width" "$menu_list_height" \
-		"SAVE IT!" "Annuler" "on" \
+		"Sauvegarder!" "Annuler" "on" \
 		"Select Options for Saves" \
 		"Confirm Saves Options" "Save it?" \
 		"BSA :: SAVES" "" \

@@ -79,26 +79,29 @@ purge_old_switch_install() {
         /userdata/system/.configs/{eden,citron,sudachi,yuzu}
 
 	message "both" "$addon_log" "- Supression des caches et configurations"
-
 }
 
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
 
-	# Backup Yuzu Saves
+	# Backup Yuzu Saves & mods
 	backup_saves_ryujinx
-	message "both" "$addon_log" "Preventif : Sauvegardes des saves Ryujinx effectuée dans /userdata/saves/switch/"
-	# Backup Yuzu Saves
-	backup_saves_yuzu
-	message "both" "$addon_log" "Preventif : Sauvegardes des saves Yuzu effectuée dans /userdata/saves/switch/"
+	backup_mods_ryujinx
+	message "both" "$addon_log" "Preventif : Sauvegardes des saves & Mods Ryujinx effectuée dans /userdata/saves/switch/"
 
-	# Deplacement des mods Citron/Eden/Sudachi
-	# move_mods_switch
+	# Backup Yuzu Saves & Mods
+	backup_saves_yuzu
+	backup_mods_yuzu
+	message "both" "$addon_log" "Preventif : Sauvegardes des saves & Mods Yuzu effectuée dans /userdata/saves/switch/"
+
+	# Deplacement des mods Citron/Eden/Sudachi en temporaire
+	move_mods_yuzu
 	message "both" "$addon_log" "Preventif : Deplacement des mods Citron/Eden/Sudachi effectuée dans /userdata/saves/switch/backup_mod_yuzu"
 
 	# Deplacement des mods Ryujinx
-	# move_mods_ryujinx
+	move_mods_ryujinx
 	message "both" "$addon_log" "Preventif : Deplacement des mods Ryujinx effectuée dans /userdata/saves/switch/backup_mod_ryujinx"
+
 	purge_old_switch_install
 
 	gamelist_file="/userdata/roms/ports/gamelist.xml"
