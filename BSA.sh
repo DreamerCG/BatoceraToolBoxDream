@@ -72,8 +72,6 @@ else
 fi
 
 
-
-
 # THIS SCRIPT
 this_script_file="${0##*/}"
 this_script_file_name="${this_script_file%.*}"
