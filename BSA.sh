@@ -73,6 +73,25 @@ full_install() {
 	"post_install_${emu}"		# Post Installation Processes
 }
 
+
+install_selected() {
+	local selected_emulators=("$@")  # tableau des émulateurs cochés
+
+	# 1️⃣ Clean install une seule fois
+	message "both" "$addon_log" "=== Clean Install : suppression des anciennes configurations ==="
+	# uninstall_BSA
+	message "both" "$addon_log" "=== Clean terminé ==="
+
+	# 2️⃣ Installer les émulateurs sélectionnés
+	for emu in "${selected_emulators[@]}"; do
+		message "both" "$addon_log" "=== Installation de $emu ==="
+		# full_install "$emu"
+		message "both" "$addon_log" "=== $emu installé ==="
+	done
+
+	message "both" "$addon_log" "=== Toutes les installations terminées ==="
+}
+
 # UPDATE APPIMAGE
 update_emulator() {
 	local emu="${1,,}"
@@ -164,20 +183,30 @@ display_install_log() {
 # Install Menu
 install_menu() {
 	local menu_items=(
-		"Eden|Installation : Eden|off|fn|full_install "eden""
-		"Citron|Installation : Citron|off|fn|full_install "citron""
-		"Ryujinx|Installation : Ryujinx|off|fn|full_install "ryujinx""
+		"Eden|Installation : Eden|off|fn|eden"
+		"Citron|Installation : Citron|off|fn|citron"
+		"Ryujinx|Installation : Ryujinx|off|fn|ryujinx"
 	)
+
 	unset RAN_POST_INSTALL_COMMON
 	unset RAN_POST_INSTALL_COMMON_YUZU
-	create_dialog_checkbox_menu \
+
+	# Afficher le menu case à cocher
+	selected_items=( $(create_dialog_checkbox_menu \
 		"$menu_title :: Install" "$menu_height" "$menu_width" "$menu_list_height" \
 		"Lancer" "Annuler" "on" \
 		"Choix des emulateurs" \
 		"Confirmer l'installation" "Install?" \
 		"TOOLBOX :: Installation" "" \
 		"Installation" "Installation terminer" \
-		"${menu_items[@]}"
+		"${menu_items[@]}") )
+
+	# Si au moins un émulateur est sélectionné, lancer l'installation globale
+	if (( ${#selected_items[@]} > 0 )); then
+		install_selected "${selected_items[@]}"
+	else
+		message "both" "$addon_log" "Aucun émulateur sélectionné, installation annulée."
+	fi
 }
 
 # Updates Menu
