@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # BATOCERA - SWITCH ADD-ON
 # TERM=xterm clear > /dev/tty 2>/dev/null || printf "\033c" > /dev/tty
-TERM=xterm printf "\033c" > /dev/tty
+
 
 
 trap 'rm -f "$temp_file"' EXIT
