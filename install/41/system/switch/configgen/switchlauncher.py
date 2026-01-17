@@ -2,7 +2,25 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
+import os
+
 from importlib import import_module
+
+# Fichiers à vérifier
+paths_to_check = ["/usr/lib/libSDL3.so", "/usr/lib/libSDL3.so.0"]
+target_lib = "/userdata/system/switch/lib/libSDL3.so.0.2.26"
+
+for path in paths_to_check:
+    if not os.path.exists(path):
+        # Supprime le symlink si il existe mais est cassé
+        if os.path.islink(path):
+            os.unlink(path)
+        # Création du symlink
+        os.symlink(target_lib, path)
+        print(f"Symlink créé : {path} -> {target_lib}")
+    else:
+        print(f"{path} existe déjà.")
+
 
 import configgen
 from configgen.emulatorlauncher import launch

@@ -29,7 +29,6 @@ from evdev import InputDevice, ecodes
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/configgen/sdl2/"
 
 import sdl2
-import sdl3		   
 from sdl2 import joystick
 from ctypes import create_string_buffer
 
@@ -52,8 +51,20 @@ def switch_log(msg):
 def log_stderr(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"{ts} [SWITCH-DEBUG] {msg}", file=sys.stdout)	
-###START PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#######################################################################
-#######################################################################################################################
+
+def ensure_symlink(target, link_path):
+    if os.path.exists(link_path):
+        if not os.path.islink(link_path):
+            shutil.rmtree(link_path)
+            os.symlink(target, link_path)
+        else:
+            if os.readlink(link_path) != target:
+                os.unlink(link_path)
+                os.symlink(target, link_path)
+    else:
+        os.symlink(target, link_path)
+
+
 def hidraw_get_guid(devpath):
     try:
         vid = pid = None
@@ -111,13 +122,6 @@ for d in hidraws:
     hid = d["hidraw"]
     ev = hidmap.get(hid, "no evdev")
 
-    switch_log(f"[HID] {d['name']}")
-    switch_log(f"  hidraw = {hid}")
-    switch_log(f"  evdev  = {ev}")
-    #switch_log(f"  bus    = {d['bus']}")
-    switch_log(f"  guid   = {d['guid']}")
-###END PAD DETECTION--SEE-ES_LAUNCH_STDOUT.LOG#########################################################################
-#######################################################################################################################
 
 def sdlmapping_to_controller(mapping, guid):
 
@@ -227,7 +231,6 @@ def detect_bus_from_hidraw(hidraw_path: str):
 
 def list_sdl_gamepads(sdlversion):
     
-    
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
@@ -269,15 +272,14 @@ def list_sdl_gamepads(sdlversion):
                 guidstring = bustype + guidstring[2:]
 
             mapping = sdl2.SDL_GameControllerMapping(pad);
-            import pprint
-            pprint.pprint(mapping)
-            eslog.debug(str(mapping))
             controller = sdlmapping_to_controller(str(mapping), guidstring)
             sdl_devices[joy_path] = controller
 
     sdl2.SDL_Quit()
 
     return sdl_devices
+
+
 
 class EdenGenerator(Generator):
 
@@ -321,30 +323,17 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/Contents"))
 
         #Link Yuzu firmware/key folder
-        #KEY-------
-        if os.path.exists("/userdata/system/configs/yuzu/keys"):
-            if not os.path.islink("/userdata/system/configs/yuzu/keys"):
-                shutil.rmtree("/userdata/system/configs/yuzu/keys")
-                os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/yuzu/keys")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/keys")
-                if current_target != "/userdata/bios/switch/keys":
-                    os.unlink("/userdata/system/configs/yuzu/keys")
-                    os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/yuzu/keys")
-        else:
-            os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/yuzu/keys")
-        #FIRMWARE-------
-        if os.path.exists("/userdata/system/configs/yuzu/nand/system/Contents/registered"):
-            if not os.path.islink("/userdata/system/configs/yuzu/nand/system/Contents/registered"):
-                shutil.rmtree("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                os.symlink("/userdata/bios/switch/firmware", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                if current_target != "/userdata/bios/switch/firmware":
-                    os.unlink("/userdata/system/configs/yuzu/nand/system/Contents/registered")
-                    os.symlink("/userdata/bios/switch/firmware", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
-        else:
-            os.symlink("/userdata/bios/switch/firmware", "/userdata/system/configs/yuzu/nand/system/Contents/registered")
+        # YUZU KEYS
+        ensure_symlink(
+            "/userdata/bios/switch/keys",
+            "/userdata/system/configs/yuzu/keys"
+        )
+
+        # YUZU FIRMWARE
+        ensure_symlink(
+            "/userdata/bios/switch/firmware",
+            "/userdata/system/configs/yuzu/nand/system/Contents/registered"
+        )
 
         #Link Yuzu App Directory to /system/configs/yuzu
         mkdir_if_not_exists(Path("/userdata/system/.local"))
@@ -399,34 +388,28 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch"))
         mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron"))
         mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/save"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/save/save_user"))
+        mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/save/save_system"))
         mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/mods"))
+        mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/save"))
 
-        #Link YUZU SAVE Directory to /userdata/saves/eden_citron/save
-        if os.path.exists("/userdata/system/configs/yuzu/nand/user/save"):
-            if not os.path.islink("/userdata/system/configs/yuzu/nand/user/save"):
-                shutil.rmtree("/userdata/system/configs/yuzu/nand/user/save")
-                os.symlink("/userdata/saves/switch/eden_citron/save", "/userdata/system/configs/yuzu/nand/user/save")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/nand/user/save")
-                if current_target != "/userdata/saves/switch/eden_citron/save":
-                    os.unlink("/userdata/system/configs/yuzu/nand/user/save")
-                    os.symlink("/userdata/saves/switch/eden_citron/save", "/userdata/system/configs/yuzu/nand/user/save")
-        else:
-            os.symlink("/userdata/saves/switch/eden_citron/save", "/userdata/system/configs/yuzu/nand/user/save")
+        # YUZU USER SAVE
+        ensure_symlink(
+            "/userdata/saves/switch/eden_citron/save/save_user",
+            "/userdata/system/configs/yuzu/nand/user/save"
+        )
 
-        #Link YUZU MODS Directory to /userdata/saves/eden_citron/mods
-        if os.path.exists("/userdata/system/configs/yuzu/load"):
-            if not os.path.islink("/userdata/system/configs/yuzu/load"):
-                shutil.rmtree("/userdata/system/configs/yuzu/load")
-                os.symlink("/userdata/saves/switch/eden_citron/mods", "/userdata/system/configs/yuzu/load")
-            else:
-                current_target = os.readlink("/userdata/system/configs/yuzu/load")
-                if current_target != "/userdata/saves/switch/eden_citron/mods":
-                    os.unlink("/userdata/system/configs/yuzu/load")
-                    os.symlink("/userdata/saves/switch/eden_citron/mods", "/userdata/system/configs/yuzu/load")
-        else:
-            os.symlink("/userdata/saves/switch/eden_citron/mods", "/userdata/system/configs/yuzu/load")
+        # YUZU SYSTEM SAVE
+        ensure_symlink(
+            "/userdata/saves/switch/eden_citron/save/save_system",
+            "/userdata/system/configs/yuzu/nand/system/save"
+        )
 
+        # YUZU MODS
+        ensure_symlink(
+            "/userdata/saves/switch/eden_citron/mods",
+            "/userdata/system/configs/yuzu/load"
+        )
         yuzuConfig = str(CONFIGS) + '/yuzu/qt-config.ini'
         yuzuConfigTemplate = '/userdata/system/switch/configgen/qt-config.ini.template'
 
@@ -773,20 +756,18 @@ class EdenGenerator(Generator):
         if not system.isOptSet('yuzu_auto_controller_config') or system.config["yuzu_auto_controller_config"] != "0":
             #get the evdev->hidraw mapping
             evdev_hidraw = evdev_to_hidraw()
+            # print("PAD :", evdev_hidraw, file=sys.stderr)
             #get sdllib  hidapi/hidraw + evdev guid
             sdl_gamepads = list_sdl_gamepads(sdlversion)
 
-            import pprint
-            # pprint.pprint(evdev_hidraw, stream=sys.stderr)
-            # pprint.pprint(sdl_gamepads, stream=sys.stderr)
-            # pprint.pprint(playersControllers, stream=sys.stderr)
             nplayer = 0
             guid_port = {}
-            for nplayer, pad in enumerate(playersControllers, start=0):
+            for playercontroller, pad in sorted(playersControllers.items()):
                 player_nb_str = "player_" + str(nplayer)
 
                 #if hidraw exist, replace the guid and use the provided mapping
                 if pad.device_path in evdev_hidraw:
+                    # print("PAD :", pad.device_patch, file=sys.stderr)
                     hidraw_path = evdev_hidraw[pad.device_path]
                     if hidraw_path in sdl_gamepads:
                         pad.guid = sdl_gamepads[hidraw_path]['guid']
