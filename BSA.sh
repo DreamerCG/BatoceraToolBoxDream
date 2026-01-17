@@ -7,7 +7,6 @@ clear
 
 VERSION_FILE="/userdata/DreamerCGToolBox/version-toolbox.txt"
 VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/version-toolbox.txt"
-INSTALL_CMD="curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
 
 # Cas 1 : fichier de version absent → installation
 if [ ! -f "$VERSION_FILE" ]; then
@@ -57,7 +56,9 @@ if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
 	echo "========================================="
 	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
 	echo "========================================="
-	echo "Nouvelle version : $toolbox_download_version
+	echo
+	echo
+	echo
 	echo "========================================="
 	echo "   🔧 Relancer la toolbox une fois installation terminer   "
 	echo "========================================="
@@ -70,6 +71,7 @@ if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
 else
     echo "Toolbox déjà à jour (version $toolbox_current_version)"
 fi
+
 
 
 # THIS SCRIPT
