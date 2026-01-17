@@ -44,7 +44,10 @@ purge_old_switch_install() {
         "/userdata/roms/ports/Suyu Qlauncher.sh" \
         "/userdata/roms/ports/Suyu Qlauncher.sh.keys" \
         "/userdata/roms/ports/update*yuzu*.sh" \
-        "/userdata/roms/ports/updateryujinx*.sh"
+        "/userdata/roms/ports/updateryujinx*.sh" \
+        "/userdata/roms/ports/images\ryujinx_config.png" \
+        "/userdata/roms/ports/images\yuzu_config.png"
+
 
 	message "both" "$addon_log" "- Supression des differents scripts de lancement"
 
@@ -135,7 +138,6 @@ uninstall_firmware() {
 	check_and_uninstall_bios
 }
 
-
 # UNINSTALL KEYS
 uninstall_keys() {
 	message "log" "$addon_log" "<<< [ UNINSTALL KEYS ]>>>"
@@ -144,14 +146,12 @@ uninstall_keys() {
 	check_and_uninstall_bios
 }
 
-
 # UNINSTALL AMIIBO
 uninstall_amiibo() {
 	message "log" "$addon_log" "<<< [ UNINSTALL AMIIBO ]>>>"
 	delete_recursive "$switch_amiibo_dir" "Amiibo" "log"
 	check_and_uninstall_bios
 }
-
 
 # UNINSTALL SAVES
 uninstall_saves() {
