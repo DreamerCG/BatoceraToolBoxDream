@@ -4,6 +4,11 @@ export DISPLAY=:0.0
 reset
 clear
 
+
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o /userdata/roms/ports/DreamerCGToolBox.sh
+
+
+
 # THIS SCRIPT
 this_script_file="${0##*/}"
 this_script_file_name="${this_script_file%.*}"
@@ -21,6 +26,10 @@ source bsa-variables.sh
 
 # GLOBAL FUNCTIONS
 source bsa-functions.sh
+
+
+
+
 
 # ******************************************************************************
 # CHECK SYSTEM BEFORE PROCEEDING
