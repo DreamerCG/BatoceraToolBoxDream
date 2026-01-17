@@ -116,9 +116,6 @@ backup_saves_yuzu() {
 }
 
 
-
-
-
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
@@ -178,8 +175,6 @@ saves_menu() {
 	local menu_items=(
 		"BACKUP RYUJINX|Backup Ryujinx Saves|on|fn|backup_saves_ryujinx"
 		"BACKUP Eden/Citron/YUZU|Backup Yuzu Saves|on|fn|backup_saves_yuzu"
-		"BSA RYUJINX|Backup Ryujinx Saves to BSA Packages|off|fn|backup_saves_ryujinx_bsa"
-		"BSA Eden/Citron/YUZU|Backup Yuzu Saves to BSA Packages|off|fn|backup_saves_yuzu_bsa"
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Saves" "$menu_height" "$menu_width" "$menu_list_height" \
