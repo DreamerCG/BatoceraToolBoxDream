@@ -95,22 +95,16 @@ update_emulator() {
 	
 }
 
+# ******************************************************************************
+# FUNCTIONS FOR SAVES BACKUP
+# ******************************************************************************
+
 # BACKUP RYUJINX SAVES
 backup_saves_ryujinx() {
 	local save_file="$switch_saves_dir/saves-ryujinx_$(date +"%Y%m%d_%H%M%S").zip"
 	message "log" "$addon_log" "<<< [ BACKUP RYUJINX SAVES ]>>>"
 	zip_it "$ryujinx_saves_dir" "$save_file"
 	message "log" "$addon_log" "CURRENT RYUJINX SAVES BACKED-UP: $save_file"
-}
-
-# BACKUP RYUJINX SAVES TO BSA PACKAGES
-backup_saves_ryujinx_bsa() {
-	local save_file="$switch_install_packages_dir/saves-ryujinx.zip"
-	message "log" "$addon_log" "<<< [ BACKUP RYUJINX SAVES TO BSA PACKAGES ]>>>"
-	local back_save_file="$(rename_file_with_timestamp "$save_file")"
-	message "log" "$addon_log" "BSA PACKAGES RYUJINX SAVES RENAMED AS: $back_save_file"
-	zip_it "$ryujinx_saves_dir" "$save_file"
-	message "log" "$addon_log" "CURRENT RYUJINX SAVES BACKED-UP TO BSA PACKAGES"
 }
 
 # BACKUP YUZU SAVES
@@ -121,15 +115,8 @@ backup_saves_yuzu() {
 	message "log" "$addon_log" "CURRENT YUZU SAVES BACKED-UP: $save_file"
 }
 
-# BACKUP YUZU SAVES TO BSA PACKAGES
-backup_saves_yuzu_bsa() {
-	local save_file="$switch_install_packages_dir/saves-yuzu.zip"
-	message "log" "$addon_log" "<<< [ BACKUP YUZU SAVES TO BSA PACKAGES ]>>>"
-	local back_save_file="$(rename_file_with_timestamp "$save_file")"
-	message "log" "$addon_log" "BSA PACKAGES YUZU SAVES RENAMED AS: $back_save_file"
-	zip_it "$yuzu_saves_dir" "$save_file"
-	message "log" "$addon_log" "CURRENT YUZU SAVES BACKED-UP TO BSA PACKAGES"
-}
+
+
 
 
 # ******************************************************************************

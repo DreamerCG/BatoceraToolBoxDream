@@ -85,15 +85,27 @@ purge_old_switch_install() {
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
 
-	message "both" "$addon_log" "##### Desinstallation SWITCH ADD-ON #####"
+	# Backup Yuzu Saves
+	backup_saves_ryujinx
+	message "both" "$addon_log" "Preventif : Sauvegardes des saves Ryujinx effectuée dans /userdata/saves/switch/backup_ryujinx"
+	# Backup Yuzu Saves
+	backup_saves_yuzu
+	message "both" "$addon_log" "Preventif : Sauvegardes des saves Yuzu effectuée dans /userdata/saves/switch/backup_yuzu"
 
+	# Deplacement des mods Citron/Eden/Sudachi
+	# move_mods_switch
+	message "both" "$addon_log" "Preventif : Deplacement des mods Citron/Eden/Sudachi effectuée dans /userdata/saves/switch/backup_mod_yuzu"
+
+	# Deplacement des mods Ryujinx
+	# move_mods_ryujinx
+	message "both" "$addon_log" "Preventif : Deplacement des mods Ryujinx effectuée dans /userdata/saves/switch/backup_mod_ryujinx"
 	purge_old_switch_install
 
-	gamelist_file="$ports_dir/gamelist.xml"
+	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	xmlstarlet ed -L -d "/gameList/game[path='./ryujinx_config.sh']" "$gamelist_file"
 	xmlstarlet ed -L -d "/gameList/game[path='./yuzu_config.sh']" "$gamelist_file"
 	xmlstarlet ed -L -d "/gameList/game[path='./Sudachi Qlauncher.sh']" "$gamelist_file"
-	message "both" "$addon_log" "Nettoyage de la Gamelist PORTS terminé $gamelist_file"
+	message "both" "$addon_log" "- Nettoyage de la Gamelist PORTS terminé $gamelist_file"
 
 	message "both" "$addon_log" "##### Desinstallation SWITCH ADD-ON terminée #####"
 	

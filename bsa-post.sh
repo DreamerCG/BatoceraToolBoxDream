@@ -42,14 +42,14 @@ post_install_ryujinx() {
 	copy_make_executable "ryujinx_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
-	gamelist_file="$ports_dir/gamelist.xml"
+	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	# Ensure the gamelist.xml exists
 	if [ ! -f "$gamelist_file" ]; then
 		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
 	fi
 
-
 	xmlstarlet ed -L \
+		-d "/gameList/game[path='./ryujinx_config.sh']" \
 		-s "/gameList" -t elem -n "game" -v "" \
 		-s "/gameList/game[last()]" -t elem -n "path" -v "./ryujinx_config.sh" \
 		-s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Ryujinx" \
@@ -64,6 +64,8 @@ post_install_ryujinx() {
 		-s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
 		-s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/ryujinx_config.png" \
 		"$gamelist_file"
+
+		message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"		
 }
 
 
@@ -82,28 +84,30 @@ post_install_yuzu_common() {
 	copy_make_executable "yuzu_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	copy_make_executable "yuzu_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
-	gamelist_file="$ports_dir/gamelist.xml"
+	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	# Ensure the gamelist.xml exists
 	if [ ! -f "$gamelist_file" ]; then
 		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
 	fi
-
+	
 	xmlstarlet ed -L \
-		-s "/gameList" -t elem -n "game" -v "" \
-		-s "/gameList/game[last()]" -t elem -n "path" -v "./yuzu_config.sh" \
-		-s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Yuzu/Eden/Citron" \
-		-s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Yuzu/Eden/Citron" \
-		-s "/gameList/game[last()]" -t elem -n "developer" -v "Yuzu" \
-		-s "/gameList/game[last()]" -t elem -n "publisher" -v "Yuzu" \
-		-s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
-		-s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
-		-s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
-		-s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-		-s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
-		-s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
-		-s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
-		"$gamelist_file"
-
+	  -d "/gameList/game[path='./yuzu_config.sh']" \
+	  -s "/gameList" -t elem -n "game" -v "" \
+	  -s "/gameList/game[last()]" -t elem -n "path" -v "./yuzu_config.sh" \
+	  -s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Yuzu/Eden/Citron" \
+	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Yuzu/Eden/Citron" \
+	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Yuzu" \
+	  -s "/gameList/game[last()]" -t elem -n "publisher" -v "Yuzu" \
+	  -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
+	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
+	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
+	  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
+	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
+	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
+	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
+	  "$gamelist_file"
+	  
+	message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"
 
 	# SOURCE GUARD TO PREVENT REDUNDANCY
 	RAN_POST_INSTALL_COMMON_YUZU=true
