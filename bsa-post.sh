@@ -65,7 +65,7 @@ post_install_ryujinx() {
 		-s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/ryujinx_config.png" \
 		"$gamelist_file"
 
-		message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"		
+		message "both" "$addon_log" "- Ajout de Ryujinx Config dans la game list $gamelist_file"		
 
 	# On restaure les mods Ryujinx depuis ryujinx_mods_backup_dir
 	mkdir -p "$ryujinx_new_mods_dir"
@@ -121,6 +121,8 @@ post_install_yuzu_common() {
 	  
 	message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"
 
+
+	message "both" "$addon_log" "- Demarrage de la copie des mods Yuzu/Citron/Eden/, Merci de patienter cela peut etre long selon la taille des mods"
 	# On restaure les mods Yuzu/Citron/Eden/Sudachi depuis yuzu_mods_backup_dir
 	mkdir -p "$yuzu_new_mods_dir"
 	if [ -d "$yuzu_mods_temp_dir" ] && [ "$(ls -A "$yuzu_mods_temp_dir")" ]; then
