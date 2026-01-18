@@ -30,16 +30,16 @@ export SDL_JOYSTICK_HIDAPI_STEAMDECK=0
 batocera-mouse show
 
 # Lancement du script de préparation Ryujinx
-PY_SCRIPT="/userdata/system/switch/configgen/generators/RyujinxFirmwareLoad.py"
+SH_SCRIPT="/userdata/system/switch/configgen/generators/ryujinxloadfirmware.sh"
 
-if [ -x "$PY_SCRIPT" ]; then
+if [ -x "$SH_SCRIPT" ]; then
     echo "[INFO] Préparation Ryujinx (keys + NCA)..."
-    python3 "$PY_SCRIPT" || {
-        echo "[ERROR] Échec du script Python, abandon du lancement Ryujinx"
+    "$SH_SCRIPT" || {
+        echo "[ERROR] Échec du script Bash, abandon du lancement Ryujinx"
         exit 1
     }
 else
-    echo "[WARN] Script Python introuvable ou non exécutable : $PY_SCRIPT"
+    echo "[WARN] Script Bash introuvable ou non exécutable : $SH_SCRIPT"
 fi
 
 cd /userdata/system/switch/appimages/

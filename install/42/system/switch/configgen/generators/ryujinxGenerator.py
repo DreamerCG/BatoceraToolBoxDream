@@ -27,26 +27,13 @@ if TYPE_CHECKING:
 
 subprocess.run(["batocera-mouse", "show"], check=False)
 
-def prepare_ryujinx() -> bool:
-    proc = subprocess.Popen(
-        ["/usr/bin/python3", "/userdata/system/switch/configgen/generators/RyujinxFirmwareLoad.py"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
 
-    out, err = proc.communicate()
-
-    if proc.returncode != 0:
-        print("[RYUJINX][ERROR] Échec préparation NCA/keys")
-        if out:
-            print(out.decode())
-        if err:
-            print(err.decode())
-        return False
-
-    print("[RYUJINX] Préparation NCA/keys OK")
-    return True
-
+try:
+    # exécute le script et attend la fin
+    subprocess.Popen(["/userdata/system/switch/configgen/generators/ryujinxloadfirmware.sh"], stderr=subprocess.PIPE, shell=True)
+    print("[RYUJINX] Script Bash exécuté avec succès", file=sys.stderr)
+except subprocess.CalledProcessError as e:
+    print("[RYUJINX][ERROR] Le script Bash a échoué :", file=sys.stderr)
 
 def getCurrentCard() -> str | None:
     proc = subprocess.Popen(["/userdata/system/switch/configgen/generators/detectvideo.sh"], stdout=subprocess.PIPE, shell=True)
@@ -61,7 +48,6 @@ class RyujinxGenerator(Generator):
             "name": "ryujinx-emu",
             "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"]}
         }
-
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
