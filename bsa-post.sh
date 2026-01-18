@@ -122,7 +122,9 @@ post_install_yuzu_common() {
 	message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"
 
 
-	message "both" "$addon_log" "- Demarrage de la copie des mods Yuzu/Citron/Eden/, Merci de patienter cela peut etre long selon la taille des mods"
+	message "both" "$addon_log" "- Demarrage de la copie des mods Yuzu/Citron/Eden/, Merci de patienter cela peut etre long"
+	message "both" "$addon_log" "- Selon la taille des mods cela peut prendre plusieurs minutes..."
+	
 	# On restaure les mods Yuzu/Citron/Eden/Sudachi depuis yuzu_mods_backup_dir
 	mkdir -p "$yuzu_new_mods_dir"
 	if [ -d "$yuzu_mods_temp_dir" ] && [ "$(ls -A "$yuzu_mods_temp_dir")" ]; then
