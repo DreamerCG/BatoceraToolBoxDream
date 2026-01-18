@@ -80,18 +80,18 @@ class RyujinxGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/mods"))
 
     #Link Ryujinx key folder
-        #KEY-------
-        if os.path.exists("/userdata/system/configs/Ryujinx/system"):
-            if not os.path.islink("/userdata/system/configs/Ryujinx/system"):
-                shutil.rmtree("/userdata/system/configs/Ryujinx/system")
-                os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
-            else:
-                current_target = os.readlink("/userdata/system/configs/Ryujinx/system")
-                if current_target != "/userdata/bios/switch/keys":
-                    os.unlink("/userdata/bios/switch/keys")
-                    os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
-        else:
-            os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+        # #KEY-------
+        # if os.path.exists("/userdata/system/configs/Ryujinx/system"):
+        #     if not os.path.islink("/userdata/system/configs/Ryujinx/system"):
+        #         shutil.rmtree("/userdata/system/configs/Ryujinx/system")
+        #         os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+        #     else:
+        #         current_target = os.readlink("/userdata/system/configs/Ryujinx/system")
+        #         if current_target != "/userdata/bios/switch/keys":
+        #             os.unlink("/userdata/bios/switch/keys")
+        #             os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+        # else:
+        #     os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
 
     #Link Ryujinx User save/mods folder (bis/user)/(bis/system/save)
         # #USER SAVE (bis/user)-------
