@@ -795,7 +795,7 @@ class EdenGenerator(Generator):
                     yuzuConfig.set("Controls", player_nb_str + "_type", 0)
 
                 for x in yuzuButtonsMapping:
-                    yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setButton(emulator, yuzuButtonsMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
+                    yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setButton(emulator, yuzuButtonsMapping[x], pad.guid, pad.inputs, guid_port[pad.guid],pad.name)))
                 for x in yuzuAxisMapping:
                     yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setAxis(yuzuAxisMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
 
@@ -837,11 +837,17 @@ class EdenGenerator(Generator):
         with open(yuzuConfigFile, 'w') as configfile:
             yuzuConfig.write(configfile)
 
+    XBOX_GUID_PREFIXES = (
+        "060000005e04",
+        "06000000c82d",
+    )
+
     def is_xbox_controller(padGuid, padName=None):
         return (
-            padGuid.startswith("060000005e04") or
-            (padName and "xbox" in padName.lower())
+            any(padGuid.startswith(prefix) for prefix in XBOX_GUID_PREFIXES)
+            or (padName and "xbox" in padName.lower())
         )
+
 
     @staticmethod
     def setButton(emulator, key, padGuid, padInputs, port, padName=None):
@@ -867,8 +873,11 @@ class EdenGenerator(Generator):
 
         is_xbox = (
             padGuid.startswith("060000005e04") or
+            padGuid.startswith("06000000c82d") or
             (padName and "xbox" in padName.lower())
         )
+
+        log_stderr("[SETBUTTON]  controller detected {padGuid}")
 
         if is_xbox:
             log_stderr("[SETBUTTON] Xbox controller detected")
