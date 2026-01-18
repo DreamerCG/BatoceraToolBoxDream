@@ -832,11 +832,6 @@ class EdenGenerator(Generator):
         with open(yuzuConfigFile, 'w') as configfile:
             yuzuConfig.write(configfile)
 
-    def is_xbox_controller(padGuid, padName=None):
-        return (
-            padGuid.startswith("060000005e04") or
-            (padName and "xbox" in padName.lower())
-        )
 
     @staticmethod
     def setButton(emulator, key, padGuid, padInputs, port, padName=None):
@@ -862,6 +857,7 @@ class EdenGenerator(Generator):
 
         is_xbox = (
             padGuid.startswith("060000005e04") or
+            padGuid.startswith("030000007e05") or
             (padName and "xbox" in padName.lower())
         )
 
