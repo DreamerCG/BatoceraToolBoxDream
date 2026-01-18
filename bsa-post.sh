@@ -19,7 +19,7 @@ post_install_common() {
 	# copy_make_executable "bsa-functions.sh" "./" "$switch_system_dir"
 	# copy_make_executable "bsa-pre-common.sh" "$switch_install_scripts_dir" "$switch_system_dir"
 	# copy_make_executable "bsa-mousemove.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir" "$switch_configgen_dir"
+	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir/generators" "$switch_configgen_dir/generators"
 
 	# INSTALL PORTS
 	post_install_ports
