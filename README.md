@@ -1,7 +1,5 @@
 # DreamerCG Toolbox
 
-
-
 **REQUIRED**
 - Batocera x86_64
 - File System (*userdata*) supporting **symlinking (EXT4, BTRFS)**
@@ -24,12 +22,8 @@ Based on the works of:
 <pre>
 curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
 </pre>
-- Put Emulators in '/userdata/BSA/emus' (Optional, as will attempt remote if missing.)
 - Put Firmware, Keys in /bios/switch/keys and /bios/switch/firmware
-
-
 <br></br>
-
 
 **INITIAL CHANGES FROM CODE BASE**
 
@@ -38,7 +32,7 @@ curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
 - Switched to AppImage for All Emulators
 - Emulator AppImage Not Found Locally will Attempt to Get Remotely
 - Ability to Select Individual Emulators to Install
-- Update Emulator AppImage (currently no version tracker - working on it)
+- Update Emulator AppImage
 - Separate Firmware & Keys for Ryujinx & Yuzu (+Forks)
 - Changed Saves to now reflect NAND structure for easier backup
 - Backup Saves from Menu (working on restore function)
