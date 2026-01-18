@@ -258,9 +258,9 @@ install_ryujinx() { install_wrapper "ryujinx"; }
 
 install_menu() {
 	local menu_items=(
-		"Eden|Installation : Eden|off|fn|install_eden"
-		"Citron|Installation : Citron|off|fn|install_citron"
-		"Ryujinx|Installation : Ryujinx|off|fn|install_ryujinx"
+		"Eden|Installation : Eden|on|fn|install_eden"
+		"Citron|Installation : Citron|on|fn|install_citron"
+		"Ryujinx|Installation : Ryujinx|on|fn|install_ryujinx"
 	)
 	unset RAN_POST_INSTALL_COMMON
 	unset RAN_POST_INSTALL_COMMON_YUZU
