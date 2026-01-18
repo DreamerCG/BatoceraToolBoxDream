@@ -1,7 +1,5 @@
-# Batocera Switch Add-on (BSA)
+# DreamerCG Toolbox
 
-![BSA: Main Menu](./screenshots/BSA-MainMenu.png)
-<br></br>
 
 
 **REQUIRED**
