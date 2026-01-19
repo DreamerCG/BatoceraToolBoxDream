@@ -150,10 +150,24 @@ xmlstarlet ed -L \
   -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
   "$gamelist_file"
 
+ # Nettoyage du custom.sh
+    CUSTOM="/userdata/system/custom.sh"
+    if [[ -f "$CUSTOM" ]]; then
+        sed -i '\|/userdata/system/switch/extra/batocera-switch-startup|d' "$CUSTOM"
+    fi
+	
+# Ajout du service d'autoudpate
+$SERVICE_DIR = "/userdata/system/services"
+mkdir -p "$SERVICE_DIR"
+
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o "$SERVICE_DIR/DreamerCGToolBox.sh"
+
+
 
 # Refresh the Ports menu
 echo "Refreshing Ports menu..."
 curl http://127.0.0.1:1234/reloadgames
+# batocera-services enable DreamerCG_toolbox_update
 
 killall -9 emulationstation
 

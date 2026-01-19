@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# BATOCERA - SWITCH ADD-ON
+
+LOG_DIR="/userdata/DreamerCGToolBox/logs"
+LOG="$LOG_DIR/update_toolbox.log"
+
+VERSION_FILE="/userdata/DreamerCGToolBox/configgen-version.txt"
+VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/configgen-version.txt"
+
+# Récupération de la version principale de Batocera
+batocera_version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
+
+# Sécurité : création du dossier de logs AVANT toute redirection
+mkdir -p "$LOG_DIR"
+
+# Duplication sortie écran + log
+exec > >(tee -a "$LOG") 2>&1
+
+echo "[$(date)] ===== START TOOLBOX UPDATE ====="
+
+# Version locale
+if [ -f "$VERSION_FILE" ]; then
+    toolbox_version_local="$(tr -d '\r\n' < "$VERSION_FILE")"
+else
+    toolbox_version_local="none"
+fi
+
+# Version distante
+toolbox_download_version="$(curl -sL "$VERSION_URL" | tr -d '\r\n')"
+
+echo "[$(date)] Batocera Version   : $batocera_version"
+echo "[$(date)] Local Version   : $toolbox_version_local"
+echo "[$(date)] Distant Version : $toolbox_download_version"
+
+# Cas 1 : fichier de version absent → installation
+if [ ! -f "$VERSION_FILE" ]; then
+    echo "[$(date)] Aucune version détectée, installation de la Toolbox…"
+    echo "[$(date)] Lancement par précautions du téléchargement des configgen…"
+    exit 0
+fi
+
+# Sécurité : si curl échoue
+if [ -z "$toolbox_download_version" ]; then
+    echo "[$(date)] ERREUR : impossible de récupérer la version distante"
+    exit 1
+fi
+
+# Comparaison
+if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
+    echo "[$(date)] Mise à jour détectée ($toolbox_version_local → $toolbox_download_version)"
+else
+    echo "[$(date)] Toolbox déjà à jour (version $toolbox_version_local)"
+fi
+
+echo "[$(date)] ===== END TOOLBOX UPDATE ====="
