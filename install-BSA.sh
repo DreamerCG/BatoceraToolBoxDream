@@ -157,7 +157,7 @@ xmlstarlet ed -L \
     fi
 	
 # Ajout du service d'autoudpate
-$SERVICE_DIR = "/userdata/system/services"
+SERVICE_DIR = "/userdata/system/services"
 mkdir -p "$SERVICE_DIR"
 curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/app/DreamerCG_toolbox_update -o "$SERVICE_DIR/DreamerCG_toolbox_update"
 dos2unix "$SERVICE_DIR/DreamerCG_toolbox_update"
