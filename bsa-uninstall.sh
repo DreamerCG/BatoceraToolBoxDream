@@ -60,6 +60,7 @@ purge_old_switch_install() {
     rm -f /userdata/system/.local/share/applications/*eden*
     rm -f /userdata/system/.local/share/applications/*citron*
     rm -f /userdata/system/.local/share/applications/*sudachi*
+	rm -f /userdata/system/.local/share/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
 
     rm -f /usr/share/applications/*yuzu*
     rm -f /usr/share/applications/*ryujinx*
@@ -69,6 +70,7 @@ purge_old_switch_install() {
 
 	message "both" "$addon_log" "- Supression des icones et lanceurs du bureau"
 
+	
 	rm -rf /userdata/system/cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
 	rm -rf /userdata/system/.cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
 	rm -rf /userdata/cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
