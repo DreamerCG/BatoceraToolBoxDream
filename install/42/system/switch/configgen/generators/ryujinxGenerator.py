@@ -144,74 +144,110 @@ class RyujinxGenerator(Generator):
 
 
         #==================================================================
-        # Patch pour manette Xbox (Bato)
+        # Patch manettes (GUID-based) – Batocera V42 / Ryujinx
         #==================================================================
+
         print("[INFO] Generating SDL_GAMECONTROLLERCONFIG for Ryujinx")
         print(playersControllers, file=sys.stderr)
+
         original = generate_sdl_game_controller_config(playersControllers)
-        
-        print ("[DEBUG] Original SDL_GAMECONTROLLERCONFIG:")
-        print (original, file=sys.stderr)
 
-        XBOX_GUID_MAP = {
-            "060000005e040000120b000001050000": "Microsoft Xbox Series Controller",
-            "060000005e040000c82d000000010000": "Microsoft Xbox Series Controller",
-            # "050000007e0500000920000001800000": "Nintendo Switch Pro Controller",
-            # extensible sans toucher au code
-        }
+        print("[DEBUG] Original SDL_GAMECONTROLLERCONFIG:")
+        print(original, file=sys.stderr)
 
-        
-        def is_xbox_controller(ctrl):
-            if ctrl.guid in XBOX_GUID_MAP:
-                return True
-            return "xbox" in ctrl.name.lower()
-  
-        def patch_xbox_controller(ctrl):
-            # 1️⃣ Forcer le name UNIQUEMENT si GUID connu
-            if ctrl.guid in XBOX_GUID_MAP:
-                new_name = XBOX_GUID_MAP[ctrl.guid]
+
+        #------------------------------------------------------------------
+        # Base de données des patches par GUID
+        #------------------------------------------------------------------
+
+        def load_controller_guid_db(path):
+            db = {}
+
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+
+                        # skip commentaires / lignes vides
+                        if not line or line.startswith("#"):
+                            continue
+
+                        guid, name, mapping_str = line.split("|", 2)
+
+                        input_remap = {}
+                        for pair in mapping_str.split(","):
+                            key, value = pair.split(":", 1)
+                            input_remap[key] = value
+
+                        db[guid.lower()] = {
+                            "name": name,
+                            "input_remap": input_remap
+                        }
+
+            except FileNotFoundError:
+                print(f"[WARN] Controller DB not found: {path}", file=sys.stderr)
+
+            return db
+
+        CONTROLLER_GUID_DB = load_controller_guid_db(
+            "/userdata/system/switch/configgen/generators/gamecontroller_ryujinx.txt"
+        )
+
+
+        #------------------------------------------------------------------
+        # Helpers
+        #------------------------------------------------------------------
+
+        def has_guid_patch(ctrl):
+            return ctrl.guid in CONTROLLER_GUID_DB
+
+
+        def patch_controller(ctrl):
+            patch = CONTROLLER_GUID_DB.get(ctrl.guid)
+            if not patch:
+                return
+
+            # 1 Forcer uniquement
+            new_name = patch.get("name")
+            if new_name:
                 ctrl.name = new_name
                 ctrl.real_name = new_name
 
-            # 2️⃣ Remap inputs
-            for input_name, new_id in XBOX_INPUT_REMAP.items():
+            # 2 Remap inputs
+            input_remap = patch.get("input_remap", {})
+            for input_name, new_id in input_remap.items():
                 if input_name in ctrl.inputs:
                     ctrl.inputs[input_name].id = new_id
-    
-            
-        XBOX_INPUT_REMAP = {
-            # boutons principaux
-            "b":  "1",
-            "a":  "0",
-            "y":  "3",
-            "x":  "2",
 
-            # épaules
-            "pageup": "4",
-            "pagedown": "5",
-            "leftshoulder":  "5",
-            "lefttrigger":  "2",
 
-            # menu
-            "select": "6",
-            "start":  "7",
-            "hotkey": "8",   # guide
-
-            # sticks
-            "l3": "9",
-            "r3": "10",
-        }
+        #------------------------------------------------------------------
+        # Application des patches
+        #------------------------------------------------------------------
 
         for ctrl in playersControllers:
-            if is_xbox_controller(ctrl):
-                print(f"[INFO] Xbox detected → {ctrl.guid} / {ctrl.name}")
-                patch_xbox_controller(ctrl)
-            
-        #==================================================================
-        # Patch pour manette Xbox (Bato)
-        #==================================================================
-     
+            if has_guid_patch(ctrl):
+                print(f"[INFO] Controller GUID patch applied → {ctrl.guid} / {ctrl.name}")
+                patch_controller(ctrl)
+            else:
+                print(f"[DEBUG] No GUID patch for → {ctrl.guid} / {ctrl.name}", file=sys.stderr)
 
+
+        #------------------------------------------------------------------
+        # Génération finale SDL après patch
+        #------------------------------------------------------------------
+
+        patched = generate_sdl_game_controller_config(playersControllers)
+
+        print("[DEBUG] Patched SDL_GAMECONTROLLERCONFIG:")
+        print(patched, file=sys.stderr)
+
+        #==================================================================
+        # Fin patch manettes
+        #==================================================================
+
+        print(playersControllers, file=sys.stderr)
+        
+        
         environment = {
             "SDL_GAMECONTROLLERCONFIG": generate_sdl_game_controller_config(playersControllers),
             "DRI_PRIME": "1",

@@ -162,6 +162,7 @@ dos2unix "/userdata/system/services/DreamerCG_toolbox_update"
 chmod a+x "/userdata/system/services/DreamerCG_toolbox_update"
 batocera-services enable DreamerCG_toolbox_update
 
+rm -rf /userdata/DreamerCGToolBox/configgen-version.txt
 
 # Refresh the Ports menu
 echo "Refreshing Ports menu..."
