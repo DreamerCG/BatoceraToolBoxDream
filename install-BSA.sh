@@ -159,20 +159,18 @@ xmlstarlet ed -L \
 # Ajout du service d'autoudpate
 $SERVICE_DIR = "/userdata/system/services"
 mkdir -p "$SERVICE_DIR"
-
-curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o "$SERVICE_DIR/DreamerCGToolBox.sh"
-
-
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/app/DreamerCG_toolbox_update -o "$SERVICE_DIR/DreamerCG_toolbox_update"
+dos2unix "$SERVICE_DIR/DreamerCG_toolbox_update"
+chmod a+x "$SERVICE_DIR/DreamerCG_toolbox_update"
+batocera-services enable DreamerCG_toolbox_update
 
 # Refresh the Ports menu
 echo "Refreshing Ports menu..."
 curl http://127.0.0.1:1234/reloadgames
-# batocera-services enable DreamerCG_toolbox_update
-
+# Restart EmulationStation to apply changes
 killall -9 emulationstation
 
 sleep 1
 
 echo "ToolBox Installed!"
 echo "Launch DreamerCG ToolBox from the Ports menu."
-echo ""
