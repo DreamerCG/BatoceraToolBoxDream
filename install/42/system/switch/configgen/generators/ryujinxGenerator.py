@@ -197,7 +197,7 @@ class RyujinxGenerator(Generator):
             "r3": "10",
         }
 
-        for ctrl in playersControllers.values():
+        for ctrl in playersControllers:
             if is_xbox_controller(ctrl):
                 print(f"[INFO] Xbox detected → {ctrl.guid} / {ctrl.name}")
                 patch_xbox_controller(ctrl)
@@ -205,7 +205,7 @@ class RyujinxGenerator(Generator):
         #==================================================================
         # Patch pour manette Xbox (Bato)
         #==================================================================
-
+     
 
         environment = {
             "SDL_GAMECONTROLLERCONFIG": generate_sdl_game_controller_config(playersControllers),
