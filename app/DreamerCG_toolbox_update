@@ -82,5 +82,3 @@ else
 fi
 
 echo "[$(date)] ===== END TOOLBOX UPDATE ====="
-
-
