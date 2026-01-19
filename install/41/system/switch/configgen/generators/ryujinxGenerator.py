@@ -144,6 +144,71 @@ class RyujinxGenerator(Generator):
         #Configuration update
         RyujinxGenerator.writeRyujinxConfig(str(CONFIGS) + '/Ryujinx/Config.json', RyujinxConfigFileBefore, RyujinxConfigTemplate, system, playersControllers)
 
+
+        #==================================================================
+        # Patch pour manette Xbox (Bato)
+        #==================================================================
+        original = generate_sdl_game_controller_config(playersControllers)
+
+
+        XBOX_GUID_MAP = {
+            "060000005e040000120b000001050000": "Microsoft Xbox Series Controller",
+            "060000005e040000c82d000000010000": "Microsoft Xbox Series Controller",
+            # extensible sans toucher au code
+        }
+
+        
+        def is_xbox_controller(ctrl):
+            if ctrl.guid in XBOX_GUID_MAP:
+                return True
+            return "xbox" in ctrl.name.lower()
+  
+        def patch_xbox_controller(ctrl):
+            # 1️⃣ Forcer le name UNIQUEMENT si GUID connu
+            if ctrl.guid in XBOX_GUID_MAP:
+                new_name = XBOX_GUID_MAP[ctrl.guid]
+                ctrl.name = new_name
+                ctrl.real_name = new_name
+
+            # 2️⃣ Remap inputs
+            for input_name, new_id in XBOX_INPUT_REMAP.items():
+                if input_name in ctrl.inputs:
+                    ctrl.inputs[input_name].id = new_id
+    
+            
+        XBOX_INPUT_REMAP = {
+            # boutons principaux
+            "b":  "1",
+            "a":  "0",
+            "y":  "3",
+            "x":  "2",
+
+            # épaules
+            "pageup": "4",
+            "pagedown": "5",
+            "leftshoulder":  "5",
+            "lefttrigger":  "2",
+
+            # menu
+            "select": "6",
+            "start":  "7",
+            "hotkey": "8",   # guide
+
+            # sticks
+            "l3": "9",
+            "r3": "10",
+        }
+
+        for ctrl in playersControllers.values():
+            if is_xbox_controller(ctrl):
+                print(f"[INFO] Xbox detected → {ctrl.guid} / {ctrl.name}")
+                patch_xbox_controller(ctrl)
+            
+        #==================================================================
+        # Patch pour manette Xbox (Bato)
+        #==================================================================
+
+
         environment = {
             "SDL_GAMECONTROLLERCONFIG": generate_sdl_game_controller_config(playersControllers),
             "DRI_PRIME": "1",

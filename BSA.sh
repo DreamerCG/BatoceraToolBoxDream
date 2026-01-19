@@ -48,6 +48,7 @@ fi
 if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
     echo "Mise à jour détectée ($toolbox_current_version → $toolbox_download_version)"
 
+	
 
 	DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black \
 	  -fa "DejaVuSansMono" -en UTF-8 \
