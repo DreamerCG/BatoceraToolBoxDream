@@ -10,6 +10,21 @@ VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/ma
 # Récupération de la version principale de Batocera
 batocera_version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
 
+case "$batocera_version" in
+	41)
+		folder_version=41
+		;;
+	4[2-3])
+		folder_version=42
+		;;
+	*)
+		echo "Unsupported Batocera version: $batocera_version" >&2
+		exit 1
+		;;
+esac
+
+
+
 # Sécurité : création du dossier de logs AVANT toute redirection
 mkdir -p "$LOG_DIR"
 
@@ -57,7 +72,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_TOOLBOX="/userdata/DreamerCGToolBox/"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
-    URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$batocera_version/system/switch/configgen/"
+    URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
 	
     mkdir -p "$DIR_TOOLBOX"
     mkdir -p "$DIR_CONFIGGEN"
