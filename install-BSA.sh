@@ -155,13 +155,11 @@ xmlstarlet ed -L \
     if [[ -f "$CUSTOM" ]]; then
         sed -i '\|/userdata/system/switch/extra/batocera-switch-startup|d' "$CUSTOM"
     fi
-	
-# Ajout du service d'autoudpate
-SERVICE_DIR="/userdata/system/services"
-mkdir -p "$SERVICE_DIR"
-curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/app/DreamerCG_toolbox_update -o "$SERVICE_DIR/DreamerCG_toolbox_update"
-dos2unix "$SERVICE_DIR/DreamerCG_toolbox_update"
-chmod a+x "$SERVICE_DIR/DreamerCG_toolbox_update"
+
+mkdir -p "/userdata/system/services"
+curl -L https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/app/DreamerCG_toolbox_update -o "/userdata/system/services/DreamerCG_toolbox_update"
+dos2unix "/userdata/system/services/DreamerCG_toolbox_update"
+chmod a+x "/userdata/system/services/DreamerCG_toolbox_update"
 batocera-services enable DreamerCG_toolbox_update
 
 # Refresh the Ports menu
