@@ -146,12 +146,17 @@ class RyujinxGenerator(Generator):
         #==================================================================
         # Patch pour manette Xbox (Bato)
         #==================================================================
+        print("[INFO] Generating SDL_GAMECONTROLLERCONFIG for Ryujinx")
+        print(playersControllers, file=sys.stderr)
         original = generate_sdl_game_controller_config(playersControllers)
-
+        
+        print ("[DEBUG] Original SDL_GAMECONTROLLERCONFIG:")
+        print (original, file=sys.stderr)
 
         XBOX_GUID_MAP = {
             "060000005e040000120b000001050000": "Microsoft Xbox Series Controller",
             "060000005e040000c82d000000010000": "Microsoft Xbox Series Controller",
+            # "050000007e0500000920000001800000": "Nintendo Switch Pro Controller",
             # extensible sans toucher au code
         }
 
