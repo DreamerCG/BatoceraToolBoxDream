@@ -41,6 +41,7 @@ post_install_ryujinx() {
 	# copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "ryujinx_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
+	cp -f "gamecontroller_ryujinx.txt" "$switch_install_script_dir/install/" "$switch_configgen_dir/generators"
 
 	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	# Ensure the gamelist.xml exists
@@ -79,7 +80,6 @@ post_install_ryujinx() {
 	fi
 
 }
-
 
 # POST INSTALL YUZU COMMON
 post_install_yuzu_common() {
