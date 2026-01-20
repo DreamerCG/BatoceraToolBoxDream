@@ -340,15 +340,26 @@ confirm_purge_install_log() {
 	fi
 }
 
+tools_menu() {
+	local menu_items=(
+		"SAUVEGARDES|Gestion des sauvegardes|fn|saves_menu"
+		"DESINSTALLATION|Desinstaller les emulateurs|fn|uninstall_menu"
+		"MISE A JOUR MANUEL TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
+	)
+	create_dialog_list_menu \
+		"$menu_title :: Tools" "$menu_height" "$menu_width" "$menu_list_height" \
+		"Confirmer" "Annuler" "on" \
+		"Menu" \
+		"${menu_items[@]}"
+}
+
 # Main Menu
 main_menu() {
 	local exit_status
 	local menu_items=(
 		"INSTALLATION|Installation des emulateurs|fn|install_menu"
 		"MISE A JOUR|Mise à jour des emulateurs|fn|updates_menu"
-		"SAUVEGARDES|Gestion des sauvegardes|fn|saves_menu"
-		"DESINSTALLATION|Desinstaller les emulateurs|fn|uninstall_menu"
-		"MISE A JOUR TOOLBOX|Mise à jour de la toolbox|fn|update_bsa_toolbox"
+		"OUTILS AVANCES|Outils avances|fn|tools_menu"
 		"QUITTER|Quitter|cmd|killall -9 xterm; exit 0"
 	)
 	while true; do

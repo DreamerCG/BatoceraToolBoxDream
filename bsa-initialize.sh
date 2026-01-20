@@ -98,6 +98,12 @@ initialize_common() {
 	message "log" "$addon_log" "Creating Switch LIB Directory. => /userdata/system/switch/lib"
 	mkdir -p "$switch_lib_dir" 2>>"$stderr_log"
 
+	# CREATE NEW SAVES DIRECTORY
+	message "log" "$addon_log" "Yuzu Emulator Directory Saves."
+	mkdir -p "$yuzu_system_saves_dir" 2>>"$stderr_log"
+	mkdir -p "$yuzu_user_saves_dir" 2>>"$stderr_log"
+
+
 	# SOURCE GUARD TO PREVENT REDUNDANCY
 	RAN_INITIALIZE_COMMON=true
 }
@@ -152,8 +158,6 @@ initialize_yuzu() {
 	# CREATE EMULATOR DIRECTORY
 	message "log" "$addon_log" "Yuzu Emulator Directory Created."
 	mkdir -p "$yuzu_emu_dir" 2>>"$stderr_log"
-
-	# CREATE MODS_YUZU_TMP DIRECTORY
 
 	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
 	add_emulator_to_es_systems "yuzu-emu"

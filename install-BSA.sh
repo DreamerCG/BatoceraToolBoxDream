@@ -142,7 +142,7 @@ xmlstarlet ed -L \
   -s "/gameList/game[last()]" -t elem -n "image" -v "./images/toolbox-image.png" \
   -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/toolbox-logo.png" \
   -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/toolbox-box.png" \
-  -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG" \
+  -s "/gameList/game[last()]" -t elem -n "developer" -v "DreamerCG / Foclabroc / Spirit" \
   -s "/gameList/game[last()]" -t elem -n "publisher" -v "DreamerCG" \
   -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
   -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
