@@ -80,6 +80,16 @@ purge_old_switch_install() {
         /userdata/system/configs/{eden,citron,sudachi,yuzu,Ryujinx} \
         /userdata/system/.configs/{eden,citron,sudachi,yuzu,Ryujinx} \
 
+	# Nettoyage du batocera.conf (Switch) #Thanks Foclabroc
+	BATOCERA_CONF="/userdata/system/batocera.conf"
+
+	if [[ -f "$BATOCERA_CONF" ]]; then
+		sed -i \
+			-e '/^switch/d' \
+			"$BATOCERA_CONF"
+	fi
+
+
 	message "both" "$addon_log" "- Supression des caches et configurations"
 }
 
