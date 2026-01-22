@@ -27,8 +27,8 @@ if [ ! -f "$VERSION_FILE" ]; then
 	echo
 	echo
 	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
+	curl -sL https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/app/dcg_service_update.sh | bash
 	'
-
     # exit 0
 fi
 
