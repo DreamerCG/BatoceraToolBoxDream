@@ -193,6 +193,35 @@ initialize_eden() {
 	add_emulator_to_es_systems "eden-emu"
 }
 
+# INITIALLIZE EDEN STRUCTURES
+initialize_eden_pgo() {
+
+	# SETUP COMMON STRUCTURES
+	initialize_common
+
+	message "log" "$addon_log" "<<< [ INITIALLIZE EDEN PGO STRUCTURES ]>>>"
+
+	# SETUP FIRMWARE DIRECTORY
+	if [ ! -d "$switch_yuzu_firmware_dir" ]; then
+		message "log" "$addon_log" "Creating Firmware Directory."
+		mkdir -p "$switch_yuzu_firmware_dir" 2>>"$stderr_log"
+	fi
+
+	# SETUP KEYS DIRECTORY
+	if [ ! -d "$switch_yuzu_keys_dir" ]; then
+		message "log" "$addon_log" "Creating Keys Directory."
+		mkdir -p "$switch_yuzu_keys_dir" 2>>"$stderr_log"
+	fi
+
+	# CREATE EMULATOR DIRECTORY
+	message "log" "$addon_log" "Eden Emulator Directory Created."
+	mkdir -p "$eden_emu_dir" 2>>"$stderr_log"
+
+
+	# ADD EMULATOR TO ES SYSTEMS CONFIG FILE
+	add_emulator_to_es_systems "eden-pgo"
+}
+
 
 # INITIALLIZE CITRON STRUCTURES
 initialize_citron() {

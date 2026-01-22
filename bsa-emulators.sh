@@ -60,8 +60,29 @@ install_emulator_eden() {
 	fi
 }
 
+# INSTALL EDEN APPIMAGE
+install_emulator_eden_pgo() {
+	message "log" "$addon_log" "<<< [ INSTALL : EDEN PGO ]>>>"
 
-install_emulator_citron() {
+	# INSTALL/UNPACK EMULATOR
+	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
+	message "log" "$addon_log" "Installing Eden PGO Emulator App"
+	# Get lastest version from database & set the version for download
+	eden_release_html=""
+	eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest | grep -o '"tag_name": *"[^"]*"' | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
+	eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/Eden-Linux-${eden_release_version}-amd64-clang-pgo.AppImage"
+
+	message "log" "$addon_log" "$eden_install_url"
+
+	# If missing from local storage then attempt to download latest version
+	download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_pgo_install_file" "Eden-pgo"
+	if [ $wget_exit_code -eq 0 ]; then
+		copy_make_executable "$eden_pgo_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
+	fi
+}
+
+
+install_emulator_citron_final() {
 	message "log" "$addon_log" "<<< [ INSTALL : CITRON ]>>>"
 
 	# INSTALL/UNPACK EMULATOR
@@ -79,5 +100,51 @@ install_emulator_citron() {
 		copy_make_executable "$citron_install_file" "$switch_install_emus_dir" "$citron_emu_dir"
 	fi
 }
+
+# Version PKG FORGE - Spécial Thanks @Foclabroc
+install_emulator_citron() {
+
+	message "log" "$addon_log" "<<< [ INSTALL : CITRON ]>>>"
+
+	# INSTALL/UNPACK EMULATOR
+	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
+	message "log" "$addon_log" "Installing Citron Emulator App"
+	# Get lastest version from database & set the version for download
+    page=$(curl -Ls "https://github.com/pkgforge-dev/Citron-AppImage/tags")
+
+    if [[ -z "$page" ]]; then
+        echo "ERROR Citron: unable to download tags page"
+        echo "STATUS_CITRON=ERREUR" >> "$STATUS_FILE"
+        return
+    fi
+
+    # Dernier tag stable (URL encodé)
+    tag=$(echo "$page" |
+        grep -Eo '/pkgforge-dev/Citron-AppImage/releases/tag/[^"]+' |
+        grep -v nightly |
+        head -n1 |
+        sed 's#.*/##')
+
+    if [[ -z "$tag" ]]; then
+        echo "ERROR Citron: no stable tag found"
+        echo "STATUS_CITRON=ERREUR" >> "$STATUS_FILE"
+        return
+    fi
+
+    # Décodage %40 ? @
+    tag_decoded="${tag//%40/@}"
+
+    # Version = avant @
+    version="${tag_decoded%%@*}"
+
+    citron_install_url="https://github.com/pkgforge-dev/Citron-AppImage/releases/download/$tag_decoded/Citron-$version-anylinux-x86_64.AppImage"
+
+	# If missing from local storage then attempt to download latest version
+	download_missing_file "$citron_install_url" "$switch_install_emus_dir/$citron_install_file" "Citron"
+	if [ $wget_exit_code -eq 0 ]; then
+		copy_make_executable "$citron_install_file" "$switch_install_emus_dir" "$citron_emu_dir"
+	fi
+}
+
 
 

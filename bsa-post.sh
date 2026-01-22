@@ -23,10 +23,10 @@ post_install_common() {
 
 	CONFIG_FILE="/userdata/system/batocera.conf"
 
-	# Récupère la langue actuelle
+	# Rï¿½cupï¿½re la langue actuelle
 	batocera_language=$(grep '^system.language=' "$CONFIG_FILE" | cut -d '=' -f2)
 	
-	# Si la langue est FR, ajoute les lignes seulement si elles n'existent pas déjà
+	# Si la langue est FR, ajoute les lignes seulement si elles n'existent pas dï¿½jï¿½
 	if [ "$batocera_language" = "fr_FR" ]; then
 		grep -q "^switch.region=" "$CONFIG_FILE" || echo "switch.region=2" >> "$CONFIG_FILE"
 		grep -q "^switch.language=" "$CONFIG_FILE" || echo "switch.language=2" >> "$CONFIG_FILE"
@@ -99,6 +99,8 @@ post_install_yuzu_common() {
 	# copy_make_executable "yuzu-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "yuzu_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	copy_make_executable "yuzu_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
+	copy_make_executable "citron_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
+	copy_make_executable "citron_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
 	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	# Ensure the gamelist.xml exists
@@ -107,13 +109,13 @@ post_install_yuzu_common() {
 	fi
 	
 	xmlstarlet ed -L \
-	  -d "/gameList/game[path='./yuzu_config.sh']" \
+	  -d "/gameList/game[path='./citron_config.sh']" \
 	  -s "/gameList" -t elem -n "game" -v "" \
-	  -s "/gameList/game[last()]" -t elem -n "path" -v "./yuzu_config.sh" \
-	  -s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Yuzu/Eden/Citron" \
-	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Yuzu/Eden/Citron" \
-	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Yuzu" \
-	  -s "/gameList/game[last()]" -t elem -n "publisher" -v "Yuzu" \
+	  -s "/gameList/game[last()]" -t elem -n "path" -v "./citron_config.sh" \
+	  -s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Citron" \
+	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Citron" \
+	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Citron" \
+	  -s "/gameList/game[last()]" -t elem -n "publisher" -v "Citron" \
 	  -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
 	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
 	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
@@ -123,7 +125,27 @@ post_install_yuzu_common() {
 	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
 	  "$gamelist_file"
 	  
-	message "both" "$addon_log" "- Ajout de Yuzu/Eden/Citron Config dans la game list $gamelist_file"
+	message "both" "$addon_log" "- Ajout de Eden Config dans la game list $gamelist_file"
+
+
+	xmlstarlet ed -L \
+	  -d "/gameList/game[path='./yuzu_config.sh']" \
+	  -s "/gameList" -t elem -n "game" -v "" \
+	  -s "/gameList/game[last()]" -t elem -n "path" -v "./yuzu_config.sh" \
+	  -s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Eden" \
+	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Eden" \
+	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Eden" \
+	  -s "/gameList/game[last()]" -t elem -n "publisher" -v "Eden" \
+	  -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
+	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
+	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
+	  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
+	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/yuzu_config-image.png" \
+	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/yuzu_config-logo.png" \
+	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
+	  "$gamelist_file"
+	  
+	message "both" "$addon_log" "- Ajout de Eden Config dans la game list $gamelist_file"
 
 
 	message "both" "$addon_log" "- Demarrage de la copie des mods Yuzu/Citron/Eden/, Merci de patienter cela peut etre long"
@@ -152,6 +174,17 @@ post_install_yuzu() {
 
 # POST INSTALL EDEN
 post_install_eden() {
+	# POST INSTALL COMMON YUZU
+	post_install_yuzu_common
+
+	message "log" "$addon_log" "<<< [ POST INSTALL FOR EDEN ]>>>"
+
+	# REPLACE WITH CODE
+	message "log" "$addon_log" "N/A"
+}
+
+# POST INSTALL EDEN PGO
+post_install_eden_pgo() {
 	# POST INSTALL COMMON YUZU
 	post_install_yuzu_common
 

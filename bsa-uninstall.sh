@@ -244,6 +244,7 @@ uninstall_BSA() {
 	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	xmlstarlet ed -L -d "/gameList/game[path='./ryujinx_config.sh']" "$gamelist_file"
 	xmlstarlet ed -L -d "/gameList/game[path='./yuzu_config.sh']" "$gamelist_file"
+	xmlstarlet ed -L -d "/gameList/game[path='./citron_config.sh']" "$gamelist_file"
 	xmlstarlet ed -L -d "/gameList/game[path='./Sudachi Qlauncher.sh']" "$gamelist_file"
 	message "both" "$addon_log" "- Nettoyage de la Gamelist PORTS terminé $gamelist_file"
 	

@@ -253,6 +253,7 @@ install_wrapper() {
 }
 
 install_eden()   { install_wrapper "eden"; }
+install_eden_pgo()   { install_wrapper "eden_pgo"; }
 install_citron() { install_wrapper "citron"; }
 install_ryujinx() { install_wrapper "ryujinx"; }
 
@@ -261,6 +262,7 @@ install_ryujinx() { install_wrapper "ryujinx"; }
 install_menu() {
 	local menu_items=(
 		"Eden|Installation : Eden|on|fn|install_eden"
+		"Eden-PGO|Installation : Eden-PGO|on|fn|install_eden_pgo"
 		"Citron|Installation : Citron|on|fn|install_citron"
 		"Ryujinx|Installation : Ryujinx|on|fn|install_ryujinx"
 	)
