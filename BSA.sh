@@ -281,12 +281,13 @@ install_menu() {
 # Updates Menu
 updates_menu() {
 	local menu_items=(
-		"Eden Local|Mise à jour Eden Local|off|fn|update_emulator "eden" "local""
-		"Eden Remote|Mise à jour Eden Remote|off|fn|update_emulator "eden" "remote""
-		"Citron Local|Mise à jour Citron Local|off|fn|update_emulator "citron" "local""
-		"Citron Remote|Mise à jour Citron Remote|off|fn|update_emulator "citron" "remote""
-		"Ryujinx Local|Mise à jour Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
-		"Ryujinx Remote|Mise à jour Ryujinx Remote|off|fn|update_emulator "ryujinx" "remote""
+		# "Eden Local|Mise à jour Eden Local|off|fn|update_emulator "eden" "local""
+		"Eden Remote|Mise à jour Eden |off|fn|update_emulator "eden" "remote""
+		"Eden PGO Remote|Mise à jour Eden PGO |off|fn|update_emulator "eden_pgo" "remote""		
+		# "Citron Local|Mise à jour Citron Local|off|fn|update_emulator "citron" "local""
+		"Citron Remote|Mise à jour Citron |off|fn|update_emulator "citron" "remote""
+		# "Ryujinx Local|Mise à jour Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
+		"Ryujinx Remote|Mise à jour Ryujinx |off|fn|update_emulator "ryujinx" "remote""
 	)
 	create_dialog_checkbox_menu \
 		"$menu_title :: Update" "$menu_height" "$menu_width" "$menu_list_height" \

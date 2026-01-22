@@ -120,9 +120,9 @@ post_install_yuzu_common() {
 	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
 	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
 	  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/yuzu_config-image.png" \
-	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/yuzu_config-logo.png" \
-	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
+	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/citron_config-image.png" \
+	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/citron_config-logo.png" \
+	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/citron_config.png" \
 	  "$gamelist_file"
 	  
 	message "both" "$addon_log" "- Ajout de Eden Config dans la game list $gamelist_file"
