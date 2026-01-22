@@ -58,6 +58,8 @@ echo "[PURGE] Starting old Switch cleanup" >>"$addon_log"
 		"ryujinx_config.sh.keys"
 		"yuzu_config.sh"
 		"yuzu_config.sh.keys"
+		"citron_config.sh"
+		"citron_config.sh.keys"
 		"Suyu Qlauncher.sh"
 		"Suyu Qlauncher.sh.keys"
 	)
