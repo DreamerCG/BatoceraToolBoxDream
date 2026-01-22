@@ -5,13 +5,6 @@
 [ -n "$SOURCED_UNINSTALL" ] && return
 SOURCED_UNINSTALL=true
 
-log_msg() {
-    message "both" "$addon_log" "$1"
-}
-
-rm_logged() {
-    rm -rf "$@" >>"$LOG" 2>&1
-}
 
 
 # REMOVE EMULATOR TO ES SYSTEMS CONFIG FILE
@@ -20,13 +13,29 @@ remove_emulator_to_es_systems() {
 	xml_file_delete_node "$system_configs_dir/emulationstation/es_systems_switch.cfg" "//system[name='switch']/emulators/emulator[@name='$emu']"
 }
 
+
+	log_msg() {
+		message "both" "$addon_log" "$1"
+	}
+
+	rm_logged() {
+		rm -rf "$@" >>"$addon_log" 2>&1
+	}
+
+
 purge_old_switch_install() {
 
-echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
+echo "[PURGE] Starting old Switch cleanup" >>"$addon_log"
 
 # ===== Dossiers principaux =====
 	rm_logged /userdata/system/switch
 	log_msg "- Suppression du dossier switch system"
+
+
+	if [ -d "/userdata/system/configs/yuzu" ]; then
+		rm -rf /userdata/saves/switch
+		log_msg "- suppression du dossier saves/switch"
+	fi
 
 	# ===== Firmwares & keys =====
 	FIRMWARE_DIRS=(
@@ -74,8 +83,8 @@ echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
 	EMULATORS=(eden citron sudachi yuzu Ryujinx suyu)
 
 	for emu in "${EMULATORS[@]}"; do
-		rm -f /userdata/system/.local/share/applications/*"$emu"* >>"$LOG" 2>&1
-		rm -f /usr/share/applications/*"$emu"* >>"$LOG" 2>&1
+		rm -f /userdata/system/.local/share/applications/*"$emu"* >>"$addon_log" 2>&1
+		rm -f /usr/share/applications/*"$emu"* >>"$addon_log" 2>&1
 	done
 
 	rm_logged /userdata/system/.local/share/{eden,citron,sudachi,yuzu,Ryujinx,yuzu-early-access}
@@ -116,43 +125,129 @@ echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
 			"$BATOCERA_CONF"
 	fi
 
+	message "both" "$addon_log" "- Nettoyage de Batocera CONF [SWITCH]."
+
     # Nettoyage du custom.sh
     CUSTOM="/userdata/system/custom.sh"
     if [[ -f "$CUSTOM" ]]; then
         sed -i '\|/userdata/system/switch/extra/batocera-switch-startup|d' "$CUSTOM"
     fi
 
+		message "both" "$addon_log" "- Nettoyage de Custom SH [SWITCH]."
+
 }
 
+backup_saves_mods() {
+
+    mkdir -p /userdata/DreamerCGToolBox/tmp/
+    mkdir -p /userdata/DreamerCGToolBox/tmp/tmp_yuzu_mods
+    mkdir -p /userdata/DreamerCGToolBox/tmp/tmp_yuzu_save_user
+    mkdir -p /userdata/DreamerCGToolBox/tmp/tmp_yuzu_save_system
+    mkdir -p /userdata/DreamerCGToolBox/tmp/tmp_ryujinx_save_user
+    mkdir -p /userdata/DreamerCGToolBox/tmp/tmp_ryujinx_save_system
+    mkdir -p /userdata/DreamerCGToolBox/tmp/tmp_ryujinx_mods
+
+	# Activer le déplacement des fichiers cachés
+	shopt -s dotglob
+
+	[ -d "/userdata/system/configs/yuzu/load" ] && \
+	[ "$(ls -A /userdata/system/configs/yuzu/load 2>/dev/null)" ] && \
+	mv /userdata/system/configs/yuzu/load/* /userdata/DreamerCGToolBox/tmp/tmp_yuzu_mods/ 2>/dev/null
+	message "both" "$addon_log" "- Deplacement de yuzu/Mods"
+
+	[ -d "/userdata/system/configs/yuzu/nand/user/save" ] && \
+	[ "$(ls -A /userdata/system/configs/yuzu/nand/user/save 2>/dev/null)" ] && \
+	mv /userdata/system/configs/yuzu/nand/user/save/* /userdata/DreamerCGToolBox/tmp/tmp_yuzu_save_user/ 2>/dev/null
+	message "both" "$addon_log" "- Deplacement de yuzu/Saves User"
+
+	[ -d "/userdata/system/configs/yuzu/nand/system/save" ] && \
+	[ "$(ls -A /userdata/system/configs/yuzu/nand/system/save 2>/dev/null)" ] && \
+	mv /userdata/system/configs/yuzu/nand/system/save/* /userdata/DreamerCGToolBox/tmp/tmp_yuzu_save_system/ 2>/dev/null
+	message "both" "$addon_log" "- Deplacement de yuzu/Saves System"
+
+	[ -d "/userdata/system/configs/Ryujinx/bis/user" ] && \
+	[ "$(ls -A /userdata/system/configs/Ryujinx/bis/user 2>/dev/null)" ] && \
+	mv /userdata/system/configs/Ryujinx/bis/user/* /userdata/DreamerCGToolBox/tmp/tmp_ryujinx_save_user/ 2>/dev/null
+	message "both" "$addon_log" "- Deplacement de Ryujinx/Saves User"
+
+
+	[ -d "/userdata/system/configs/Ryujinx/bis/system/save" ] && \
+	[ "$(ls -A /userdata/system/configs/Ryujinx/bis/system/save 2>/dev/null)" ] && \
+	mv /userdata/system/configs/Ryujinx/bis/system/save/* /userdata/DreamerCGToolBox/tmp/tmp_ryujinx_save_system/ 2>/dev/null
+	message "both" "$addon_log" "- Deplacement de Ryujinx/Saves System"
+
+	[ -d "/userdata/system/configs/Ryujinx/mods" ] && \
+	[ "$(ls -A /userdata/system/configs/Ryujinx/mods 2>/dev/null)" ] && \
+	mv /userdata/system/configs/Ryujinx/mods/* /userdata/DreamerCGToolBox/tmp/tmp_ryujinx_mods/ 2>/dev/null
+	message "both" "$addon_log" "- Deplacement de Ryujinx/Mods"
+	# Désactiver après usage (important)
+	shopt -u dotglob
+
+
+}
+
+restore_saves_mods_yuzu() {
+	
+    move_content() {
+        SRC="$1"
+        DEST="$2"
+
+        if [[ -d "$SRC" ]]; then
+            mkdir -p "$DEST"
+
+            shopt -s dotglob nullglob
+            mv "$SRC"/* "$DEST"/ 2>/dev/null
+            shopt -u dotglob nullglob
+        fi
+    }
+
+    move_content "/userdata/DreamerCGToolBox/tmp/tmp_yuzu_mods" "/userdata/saves/switch/eden_citron/mods"
+    move_content "/userdata/DreamerCGToolBox/tmp/tmp_yuzu_save_user" "/userdata/saves/switch/eden_citron/save/save_user"
+    move_content "/userdata/DreamerCGToolBox/tmp/tmp_yuzu_save_system" "/userdata/saves/switch/eden_citron/save/save_system"
+
+
+}
+
+
+restore_saves_mods_ryujinx() {
+	
+    move_content() {
+        SRC="$1"
+        DEST="$2"
+
+        if [[ -d "$SRC" ]]; then
+            mkdir -p "$DEST"
+
+            shopt -s dotglob nullglob
+            mv "$SRC"/* "$DEST"/ 2>/dev/null
+            shopt -u dotglob nullglob
+        fi
+    }
+
+    move_content "/userdata/DreamerCGToolBox/tmp/tmp_ryujinx_save_user" "/userdata/saves/switch/ryujinx/save/save_user"
+    move_content "/userdata/DreamerCGToolBox/tmp/tmp_ryujinx_save_system" "/userdata/saves/switch/ryujinx/save/save_system"
+    move_content "/userdata/DreamerCGToolBox/tmp/tmp_ryujinx_mods" "/userdata/saves/switch/ryujinx/mods"
+}
 
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
 
-	# Backup Yuzu Saves & mods
-	backup_saves_ryujinx
-	message "both" "$addon_log" "Preventif : Sauvegardes des saves & Mods Ryujinx effectuée dans /userdata/saves/switch/"
-
-	# Backup Yuzu Saves & Mods
-	backup_saves_yuzu
-	message "both" "$addon_log" "Preventif : Sauvegardes des saves & Mods Yuzu effectuée dans /userdata/saves/switch/"
-
-	# Deplacement des mods Citron/Eden/Sudachi en temporaire
-	move_mods_yuzu
-	message "both" "$addon_log" "Preventif : Deplacement des mods Citron/Eden/Sudachi effectuée dans /userdata/saves/switch/backup_mod_yuzu"
-
-	# Deplacement des mods Ryujinx
-	move_mods_ryujinx
-	message "both" "$addon_log" "Preventif : Deplacement des mods Ryujinx effectuée dans /userdata/saves/switch/backup_mod_ryujinx"
-
+	message "both" "$addon_log" "- Sauvegarde préventive des saves & mods Yuzu & Ryujinx en cours..."
+	backup_saves_mods
+	message "both" "$addon_log" "- Sauvegarde préventive des saves & mods Yuzu & Ryujinx terminée."
+	sleep 2
+	
+	message "both" "$addon_log" "Clean Install : suppression des anciennes configurations"
 	purge_old_switch_install
-
+	sleep 2
+	
 	gamelist_file="/userdata/roms/ports/gamelist.xml"
 	xmlstarlet ed -L -d "/gameList/game[path='./ryujinx_config.sh']" "$gamelist_file"
 	xmlstarlet ed -L -d "/gameList/game[path='./yuzu_config.sh']" "$gamelist_file"
 	xmlstarlet ed -L -d "/gameList/game[path='./Sudachi Qlauncher.sh']" "$gamelist_file"
 	message "both" "$addon_log" "- Nettoyage de la Gamelist PORTS terminé $gamelist_file"
-
-	message "both" "$addon_log" "##### Desinstallation SWITCH ADD-ON terminée #####"
+	
+    message "both" "$addon_log" "Clean terminé"
 	
 }
 

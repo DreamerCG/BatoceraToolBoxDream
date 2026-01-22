@@ -21,6 +21,18 @@ post_install_common() {
 	# copy_make_executable "bsa-mousemove.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir/generators" "$switch_configgen_dir/generators"
 
+	CONFIG_FILE="/userdata/system/batocera.conf"
+
+	# RÈcupËre la langue actuelle
+	batocera_language=$(grep '^system.language=' "$CONFIG_FILE" | cut -d '=' -f2)
+	
+	# Si la langue est FR, ajoute les lignes seulement si elles n'existent pas dÈj‡
+	if [ "$batocera_language" = "fr_FR" ]; then
+		grep -q "^switch.region=" "$CONFIG_FILE" || echo "switch.region=2" >> "$CONFIG_FILE"
+		grep -q "^switch.language=" "$CONFIG_FILE" || echo "switch.language=2" >> "$CONFIG_FILE"
+		message "both" "$addon_log" "- Preconfiguration en FR pour la switch"		
+	fi
+
 	# INSTALL PORTS
 	post_install_ports
 
@@ -69,15 +81,7 @@ post_install_ryujinx() {
 		message "both" "$addon_log" "- Ajout de Ryujinx Config dans la game list $gamelist_file"		
 
 	# On restaure les mods Ryujinx depuis ryujinx_mods_backup_dir
-	mkdir -p "$ryujinx_new_mods_dir"
-	if [ -d "$ryujinx_mods_temp_dir" ] && [ "$(ls -A "$ryujinx_mods_temp_dir")" ]; then
-		cp -r "$ryujinx_mods_temp_dir"/* "$ryujinx_new_mods_dir"/ 2>>"$stderr_log"
-		rm -rf "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
-		message "both" "$addon_log" "Mods Ryujinx restaur√©s"
-	else
-	    rm -rf "$ryujinx_mods_temp_dir" 2>>"$stderr_log"
-		message "both" "$addon_log" "Aucun mod Ryujinx trouv√©  pour restauration."
-	fi
+	restore_saves_mods_ryujinx
 
 }
 
@@ -126,15 +130,7 @@ post_install_yuzu_common() {
 	message "both" "$addon_log" "- Selon la taille des mods cela peut prendre plusieurs minutes..."
 	
 	# On restaure les mods Yuzu/Citron/Eden/Sudachi depuis yuzu_mods_backup_dir
-	mkdir -p "$yuzu_new_mods_dir"
-	if [ -d "$yuzu_mods_temp_dir" ] && [ "$(ls -A "$yuzu_mods_temp_dir")" ]; then
-		cp -r "$yuzu_mods_temp_dir"/* "$yuzu_new_mods_dir"/ 2>>"$stderr_log"
-		rm -rf "$yuzu_mods_temp_dir" 2>>"$stderr_log"
-		message "both" "$addon_log" "Mods Yuzu restaur√©s "
-	else
-		rm -rf "$yuzu_mods_temp_dir" 2>>"$stderr_log"
-		message "both" "$addon_log" "Aucun mod Yuzu/Citron/Eden/Sudachi trouv√© pour restauration."
-	fi
+	restore_saves_mods_yuzu
 
 
 	# SOURCE GUARD TO PREVENT REDUNDANCY
