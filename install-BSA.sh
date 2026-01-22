@@ -174,3 +174,4 @@ sleep 1
 
 echo "ToolBox Installed!"
 echo "Launch DreamerCG ToolBox from the Ports menu."
+echo "Special Thanks To @Spirit, @Foclabroc @RetroGameSet & @EVH for their contributions."

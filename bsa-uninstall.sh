@@ -5,6 +5,14 @@
 [ -n "$SOURCED_UNINSTALL" ] && return
 SOURCED_UNINSTALL=true
 
+log_msg() {
+    message "both" "$addon_log" "$1"
+}
+
+rm_logged() {
+    rm -rf "$@" >>"$LOG" 2>&1
+}
+
 
 # REMOVE EMULATOR TO ES SYSTEMS CONFIG FILE
 remove_emulator_to_es_systems() {
@@ -14,71 +22,88 @@ remove_emulator_to_es_systems() {
 
 purge_old_switch_install() {
 
-# find /   -type d   \( -iname "*citron*"   -o -iname "*eden*"   -o -iname "*ryujinx*"   -o -iname "*yuzu*"   -o -iname "*sudachi*"   -o -iname "switch" \)   2>/dev/null
+echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
 
-    LOG="/userdata/system/logs/bsa.log"
+# ===== Dossiers principaux =====
+	rm_logged /userdata/system/switch
+	log_msg "- Suppression du dossier switch system"
 
-    echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
+	# ===== Firmwares & keys =====
+	FIRMWARE_DIRS=(
+		/userdata/bios/switch/firmware_ryujinx
+		/userdata/bios/switch/firmware_yuzu
+		/userdata/bios/switch/keys_yuzu
+		/userdata/bios/switch/keys_ryujinx
+	)
 
-    rm -rf /userdata/system/switch >>"$LOG" 2>&1
-	message "both" "$addon_log" "- Supression du dossier switch system"
+	rm_logged "${FIRMWARE_DIRS[@]}"
+	log_msg "- Suppression des anciens dossiers firmware et keys"
 
-    rm -rf \
-        /userdata/bios/switch/firmware_ryujinx \
-        /userdata/bios/switch/firmware_yuzu \
-        /userdata/bios/switch/keys_yuzu \
-        /userdata/bios/switch/keys_ryujinx \
-        >>"$LOG" 2>&1
+	# ===== Scripts ports =====
+	PORT_SCRIPTS=(
+		"Sudachi Qlauncher.sh"
+		"Sudachi Qlauncher.sh.keys"
+		"Switch Updater40.sh"
+		"Switch Updater40.sh.keys"
+		"ryujinx_config.sh"
+		"ryujinx_config.sh.keys"
+		"yuzu_config.sh"
+		"yuzu_config.sh.keys"
+		"Suyu Qlauncher.sh"
+		"Suyu Qlauncher.sh.keys"
+	)
 
-	message "both" "$addon_log" "- Supression des anciens  dossier firmware et keys"
+	for script in "${PORT_SCRIPTS[@]}"; do
+		rm -f "/userdata/roms/ports/$script"
+	done
 
-    rm -f \
-        "/userdata/roms/ports/Sudachi Qlauncher.sh" \
-        "/userdata/roms/ports/Sudachi Qlauncher.sh.keys" \
-        "/userdata/roms/ports/Switch Updater40.sh" \
-        "/userdata/roms/ports/Switch Updater40.sh.keys" \
-        "/userdata/roms/ports/ryujinx_config.sh" \
-        "/userdata/roms/ports/ryujinx_config.sh.keys" \
-        "/userdata/roms/ports/yuzu_config.sh" \
-        "/userdata/roms/ports/yuzu_config.sh.keys" \
-        "/userdata/roms/ports/Suyu Qlauncher.sh" \
-        "/userdata/roms/ports/Suyu Qlauncher.sh.keys" \
-        "/userdata/roms/ports/update*yuzu*.sh" \
-        "/userdata/roms/ports/updateryujinx*.sh" 
+	rm -f /userdata/roms/ports/update*yuzu*.sh
+	rm -f /userdata/roms/ports/updateryujinx*.sh
 
-	message "both" "$addon_log" "- Supression des differents scripts de lancement"
+	log_msg "- Suppression des scripts de lancement"
 
-    rm -f \
-        /userdata/system/configs/emulationstation/es_systems_switch.cfg \
-        /userdata/system/configs/emulationstation/es_features_switch.cfg \
-        /userdata/system/configs/evmapy/switch.keys
+	# ===== Config EmulationStation =====
+	rm_logged \
+		/userdata/system/configs/emulationstation/es_systems_switch.cfg \
+		/userdata/system/configs/emulationstation/es_features_switch.cfg \
+		/userdata/system/configs/evmapy/switch.keys
 
-	message "both" "$addon_log" "- Supression et nettoyage des fichiers de configuration"
+	log_msg "- Suppression et nettoyage des fichiers de configuration"
 
-    rm -f /userdata/system/.local/share/applications/*yuzu*
-    rm -f /userdata/system/.local/share/applications/*ryujinx*
-    rm -f /userdata/system/.local/share/applications/*eden*
-    rm -f /userdata/system/.local/share/applications/*citron*
-    rm -f /userdata/system/.local/share/applications/*sudachi*
-	rm -f /userdata/system/.local/share/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
+	# ===== Apps / émulateurs =====
+	EMULATORS=(eden citron sudachi yuzu Ryujinx suyu)
 
-    rm -f /usr/share/applications/*yuzu*
-    rm -f /usr/share/applications/*ryujinx*
-    rm -f /usr/share/applications/*eden*
-    rm -f /usr/share/applications/*citron*
-    rm -f /usr/share/applications/*sudachi*
+	for emu in "${EMULATORS[@]}"; do
+		rm -f /userdata/system/.local/share/applications/*"$emu"* >>"$LOG" 2>&1
+		rm -f /usr/share/applications/*"$emu"* >>"$LOG" 2>&1
+	done
 
-	message "both" "$addon_log" "- Supression des icones et lanceurs du bureau"
+	rm_logged /userdata/system/.local/share/{eden,citron,sudachi,yuzu,Ryujinx,yuzu-early-access}
 
-	
-	rm -rf /userdata/system/cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
-	rm -rf /userdata/system/.cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
-	rm -rf /userdata/cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
-	rm -rf /userdata/.cache/{eden,citron,sudachi,yuzu,Ryujinx} >>"$LOG" 2>&1
+	log_msg "- Suppression des icônes et lanceurs du bureau"
 
-    rm -rf \
-        /userdata/system/configs/{eden,citron,sudachi,yuzu,Ryujinx} \
-        /userdata/system/.configs/{eden,citron,sudachi,yuzu,Ryujinx} \
+	# ===== Cache =====
+	CACHE_BASES=(
+		/userdata/system/cache
+		/userdata/system/.cache
+		/userdata/cache
+		/userdata/.cache
+	)
+
+	for base in "${CACHE_BASES[@]}"; do
+		rm_logged "$base"/{eden,citron,sudachi,yuzu,Ryujinx,suyu}
+	done
+
+	rm_logged \
+		/userdata/system/cache/mesa_shader_cache \
+		/userdata/system/.cache/mesa_shader_cache \
+		/userdata/system/cache/radv_builtin_shaders \
+		/userdata/system/.cache/radv_builtin_shaders
+
+	# ===== Configs émulateurs =====
+	rm_logged \
+		/userdata/system/configs/{eden,citron,sudachi,yuzu,Ryujinx,suyu} \
+		/userdata/system/.configs/{eden,citron,sudachi,yuzu,Ryujinx,suyu}
 
 	# Nettoyage du batocera.conf (Switch) #Thanks Foclabroc
 	BATOCERA_CONF="/userdata/system/batocera.conf"
@@ -89,9 +114,14 @@ purge_old_switch_install() {
 			"$BATOCERA_CONF"
 	fi
 
+    # Nettoyage du custom.sh
+    CUSTOM="/userdata/system/custom.sh"
+    if [[ -f "$CUSTOM" ]]; then
+        sed -i '\|/userdata/system/switch/extra/batocera-switch-startup|d' "$CUSTOM"
+    fi
 
-	message "both" "$addon_log" "- Supression des caches et configurations"
 }
+
 
 # UNINSTALL BATOCERA SWITCH ADD-ON
 uninstall_BSA() {
