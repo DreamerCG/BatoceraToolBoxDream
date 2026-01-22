@@ -818,6 +818,8 @@ class EdenGenerator(Generator):
         yuzuConfig.set("WebService", "enable_telemetry", "false")
         yuzuConfig.set("WebService", "enable_telemetry\\default", "false") 
 
+        yuzuConfig.set("WebService", "enable_auto_update_check", "false")
+        yuzuConfig.set("WebService", "enable_auto_update_check\\default", "false") 
 
     # Services section
         if not yuzuConfig.has_section("Services"):
