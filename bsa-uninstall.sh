@@ -100,6 +100,8 @@ echo "[PURGE] Starting old Switch cleanup" >>"$LOG"
 		/userdata/system/cache/radv_builtin_shaders \
 		/userdata/system/.cache/radv_builtin_shaders
 
+	log_msg "- Suppression des caches Vulkan et Mesa"
+
 	# ===== Configs émulateurs =====
 	rm_logged \
 		/userdata/system/configs/{eden,citron,sudachi,yuzu,Ryujinx,suyu} \
