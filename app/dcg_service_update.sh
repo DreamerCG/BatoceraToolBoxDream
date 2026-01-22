@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# BATOCERA - SWITCH ADD-ON
+
+LOG_DIR="/userdata/DreamerCGToolBox/logs"
+LOG="$LOG_DIR/update_toolbox.log"
+
+VERSION_FILE="/userdata/DreamerCGToolBox/configgen-version.txt"
+VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/configgen-version.txt"
+
+# Récupération de la version principale de Batocera
+batocera_version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
+
+case "$batocera_version" in
+	41)
+		folder_version=41
+		;;
+	4[2-3])
+		folder_version=42
+		;;
+	*)
+		echo "Unsupported Batocera version: $batocera_version" >&2
+		exit 1
+		;;
+esac
+
+# Sécurité : création du dossier de logs AVANT toute redirection
+mkdir -p "$LOG_DIR"
+
+# Duplication sortie écran + log
+exec > >(tee -a "$LOG") 2>&1
+
+echo "[$(date)] ===== START TOOLBOX UPDATE ====="
+
+# Version locale
+if [ -f "$VERSION_FILE" ]; then
+    toolbox_version_local="$(tr -d '\r\n' < "$VERSION_FILE")"
+else
+    toolbox_version_local="none"
+fi
+
+# Version distante
+toolbox_download_version="$(curl -sL "$VERSION_URL" | tr -d '\r\n')"
+
+echo "[$(date)] Batocera Version   : $batocera_version"
+echo "[$(date)] Local Version   : $toolbox_version_local"
+echo "[$(date)] Distant Version : $toolbox_download_version"
+
+# Vérification et lecture de la version locale
+if [ -f "$VERSION_FILE" ]; then
+    toolbox_version_local=$(<"$VERSION_FILE")
+else
+    toolbox_version_local=""
+fi
+
+# Sécurité : si curl échoue
+if [ -z "$toolbox_download_version" ]; then
+    echo "[$(date)] ERREUR : impossible de récupérer la version distante"
+    exit 1
+fi
+
+# Installation ou mise à jour
+if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
+    if [ -z "$toolbox_version_local" ]; then
+        echo "[$(date)] Aucune version détectée, installation des configgens…"
+    else
+        echo "[$(date)] Mise à jour détectée ($toolbox_version_local → $toolbox_download_version)"
+    fi
+    echo "[$(date)] Lancement par précautions du téléchargement des configgen…"
+    
+    DIR_TOOLBOX="/userdata/DreamerCGToolBox/"
+    DIR_CONFIGGEN="/userdata/system/switch/configgen"
+    DIR_GENERATOR="/userdata/system/switch/configgen/generators"
+    URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
+	
+    mkdir -p "$DIR_TOOLBOX"
+    mkdir -p "$DIR_CONFIGGEN"
+    mkdir -p "$DIR_GENERATOR"
+
+	echo "[$(date)] Configgen Local Dir   : $DIR_CONFIGGEN"
+	echo "[$(date)] Generator Local Dir  : $DIR_GENERATOR"
+	echo "[$(date)] Distant URL          : $URL_BASE"
+    
+    # Téléchargement des nouveaux fichiers
+    curl -L "$URL_BASE/switchlauncher.py" -o "$DIR_CONFIGGEN/switchlauncher.py"
+    curl -L "$URL_BASE/generators/edenGenerator.py" -o "$DIR_GENERATOR/edenGenerator.py"
+    curl -L "$URL_BASE/generators/ryujinxGenerator.py" -o "$DIR_GENERATOR/ryujinxGenerator.py"
+    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
+    curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
+    curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
+
+    chmod a+x "$DIR_CONFIGGEN/switchlauncher.py"
+    chmod a+x "$DIR_GENERATOR/edenGenerator.py"
+    chmod a+x "$DIR_GENERATOR/ryujinxGenerator.py"
+    chmod a+x "$DIR_GENERATOR/ryujinxloadfirmware.sh"
+
+else
+    echo "[$(date)] Toolbox déjà à jour (version $toolbox_version_local)"
+fi
+
+echo "[$(date)] ===== END TOOLBOX UPDATE ====="
