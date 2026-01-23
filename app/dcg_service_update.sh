@@ -7,6 +7,8 @@ LOG="$LOG_DIR/update_toolbox.log"
 VERSION_FILE="/userdata/DreamerCGToolBox/configgen-version.txt"
 VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/configgen-version.txt"
 
+
+
 # Récupération de la version principale de Batocera
 batocera_version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
 
@@ -39,7 +41,7 @@ else
 fi
 
 # Version distante
-toolbox_download_version="$(curl -sL "$VERSION_URL" | tr -d '\r\n')"
+toolbox_download_version="$(curl -L "$VERSION_URL" | tr -d '\r\n')"
 
 echo "[$(date)] Batocera Version   : $batocera_version"
 echo "[$(date)] Local Version   : $toolbox_version_local"
