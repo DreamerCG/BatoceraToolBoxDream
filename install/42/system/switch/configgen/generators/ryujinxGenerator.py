@@ -231,11 +231,7 @@ class RyujinxGenerator(Generator):
                 ctrl.name = new_name
                 ctrl.real_name = new_name
 
-            if system.isOptSet('ryu_inverse_button'):
-                ryu_inverse_button = system.config['ryu_inverse_button']
-            else:
-                ryu_inverse_button = False
-
+            ryu_inverse_button = system.config.get('ryu_inverse_button', 'false').lower() == 'true'
             controller = apply_inverse_buttons(patch, ryu_inverse_button)
 
             # 2 Remap inputs
