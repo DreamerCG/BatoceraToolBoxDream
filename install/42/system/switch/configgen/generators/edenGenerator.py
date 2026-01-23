@@ -310,6 +310,7 @@ class EdenGenerator(Generator):
     def executionDirectory(self, config, rom):
         return "/userdata/system/switch/appimages"
 
+
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
         emulator = system.config['emulator']
@@ -384,20 +385,20 @@ class EdenGenerator(Generator):
         if not os.path.exists("/userdata/system/configs/"+emudir):
             st = os.symlink("/userdata/system/configs/yuzu","/userdata/system/configs/"+emudir)
 
-        cachedir = ".cache/" + emudir
-        #Link .cache Directory to /userdata/saves/yuzu
-        mkdir_if_not_exists(Path("/userdata/system/.cache"))
-        mkdir_if_not_exists(Path("/userdata/system/" + cachedir))
+        # cachedir = ".cache/" + emudir
+        # #Link .cache Directory to /userdata/saves/yuzu
+        # mkdir_if_not_exists(Path("/userdata/system/.cache"))
+        # mkdir_if_not_exists(Path("/userdata/system/" + cachedir))
 
-        #remove game_list if it exists and isn't a link
-        if os.path.exists("/userdata/system/.cache/"+emudir+"/game_list"):
-            if not os.path.islink("/userdata/system/.cache/"+emudir+"/game_list"):
-                shutil.rmtree("/userdata/system/.cache/"+emudir+"/game_list")
+        # #remove game_list if it exists and isn't a link
+        # if os.path.exists("/userdata/system/.cache/"+emudir+"/game_list"):
+        #     if not os.path.islink("/userdata/system/.cache/"+emudir+"/game_list"):
+        #         shutil.rmtree("/userdata/system/.cache/"+emudir+"/game_list")
 
-        mkdir_if_not_exists(Path("/userdata/saves/yuzu"))
-        mkdir_if_not_exists(Path("/userdata/saves/yuzu/game_list"))
-        if not os.path.exists("/userdata/system/.cache/"+emudir+"/game_list"):
-            st = os.symlink("/userdata/saves/yuzu/game_list","/userdata/system/.cache/"+emudir+"/game_list")
+        # mkdir_if_not_exists(Path("/userdata/saves/yuzu"))
+        # mkdir_if_not_exists(Path("/userdata/saves/yuzu/game_list"))
+        # if not os.path.exists("/userdata/system/.cache/"+emudir+"/game_list"):
+        #     st = os.symlink("/userdata/saves/yuzu/game_list","/userdata/system/.cache/"+emudir+"/game_list")
 
         #Create Save/Mods Folder
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user"))
@@ -445,15 +446,19 @@ class EdenGenerator(Generator):
                         "XDG_CONFIG_DIRS":"/etc/xdg",
                         "XDG_CURRENT_DESKTOP":"XFCE",
                         "DESKTOP_SESSION":"XFCE",
-
+                        "XDG_CONFIG_HOME":"/userdata/system/configs",
+                        "XDG_DATA_HOME":"/userdata/system/configs",
+                        "XDG_CACHE_HOME":"/userdata/system/configs",
                         "QT_FONT_DPI":"96",
                         "QT_SCALE_FACTOR":"1",
                         "GDK_SCALE":"1",
-                        "XDG_CACHE_HOME":"/userdata/system/.cache",
+                        # "XDG_CACHE_HOME":"/userdata/system/.cache",
                         "QT_QPA_PLATFORM": "xcb",
                         "USER":"root",
                         "LANG":"en_US.UTF-8",
         }
+
+
 
         return Command.Command(array=commandArray, env=environment)
 
@@ -518,6 +523,11 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "check_for_updates_on_start", "false")
         yuzuConfig.set("UI", "check_for_updates_on_start\\default", "false")
 
+        if emulator == "citron-emu":
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list", "false")
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "false")
+
+
         #citron shortcuts
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\size", "1")#adjust to number of shortcut sets
         #exit citron
@@ -527,6 +537,13 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\controller_keyseq", "Y+ZL")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\context", "1")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\repeat", "false")
+
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan\\default", "false")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\expanded", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\expanded\\default", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\path", "/userdata/roms/switch")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\size", "3")
 
         # Interface language (citron)
         if system.isOptSet('yuzu_intlanguage'):
@@ -814,8 +831,13 @@ class EdenGenerator(Generator):
                 else:
                     yuzuConfig.set("Controls", player_nb_str + "_type", 0)
 
+                if system.isOptSet('yuzu_inverse_button'):
+                    yuzu_inverse_button = system.config['yuzu_inverse_button']
+                else:
+                    yuzu_inverse_button = False
+
                 for x in yuzuButtonsMapping:
-                    yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setButton(emulator, yuzuButtonsMapping[x], pad.guid, pad.inputs, guid_port[pad.guid],pad.name)))
+                    yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setButton(emulator, yuzuButtonsMapping[x], pad.guid, pad.inputs, guid_port[pad.guid],pad.name,yuzu_inverse_button)))
                 for x in yuzuAxisMapping:
                     yuzuConfig.set("Controls", player_nb_str + "_" + x, '"{}"'.format(EdenGenerator.setAxis(yuzuAxisMapping[x], pad.guid, pad.inputs, guid_port[pad.guid])))
 
@@ -861,30 +883,48 @@ class EdenGenerator(Generator):
 
 
     @staticmethod
-    def setButton(emulator, key, padGuid, padInputs, port, padName=None):
+    def setButton(emulator, key, padGuid, padInputs, port, padName=None, yuzu_inverse_button=False):
 
         if key not in padInputs:
             return ""
 
         input = padInputs[key]
+       
+        if yuzu_inverse_button:
+            XBOX_BUTTON_REMAP = {
+                "a": 0,
+                "b": 1,
+                "x": 2,
+                "y": 3,
+                "pageup": 4,     # LB
+                "pagedown": 5,   # RB
+                "select": 6,     # Back
+                "start": 7,
+                "hotkey": 8,     # Guide
+                "l3": 9,
+                "r3": 10,				
+            }
+        else:
+            XBOX_BUTTON_REMAP = {
+                "a": 1,
+                "b": 0,
+                "x": 3,
+                "y": 2,
+                "pageup": 4,     # LB
+                "pagedown": 5,   # RB
+                "select": 6,     # Back
+                "start": 7,
+                "hotkey": 8,     # Guide
+                "l3": 9,
+                "r3": 10,
+            }
 
-        XBOX_BUTTON_REMAP = {
-            "a": 0,
-            "b": 1,
-            "x": 2,
-            "y": 3,
-            "pageup": 4,     # LB
-            "pagedown": 5,   # RB
-            "select": 6,     # Back
-            "start": 7,
-            "hotkey": 8,     # Guide
-            "l3": 9,
-            "r3": 10,
-        }
+        print(XBOX_BUTTON_REMAP, file=sys.stderr)
 
         is_xbox = (
             padGuid.startswith("060000005e04") or
             padGuid.startswith("030000007e05") or
+            padGuid.startswith("030000005e04") or
             (padName and "xbox" in padName.lower())
         )
         

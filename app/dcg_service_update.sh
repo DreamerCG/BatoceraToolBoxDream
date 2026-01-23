@@ -68,6 +68,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Lancement par précautions du téléchargement des configgen…"
     
     DIR_TOOLBOX="/userdata/DreamerCGToolBox/"
+    DIR_EMULATIONSTATION="/userdata/system/configs/emulationstation"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
     URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
@@ -87,6 +88,9 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
     curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
+
+    # Mise à jour du Switch Features
+    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_features_switch.cfg" -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
 
     chmod a+x "$DIR_CONFIGGEN/switchlauncher.py"
     chmod a+x "$DIR_GENERATOR/edenGenerator.py"
