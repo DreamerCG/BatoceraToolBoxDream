@@ -8,3 +8,4 @@
 060000005e040000000b000018050000|Microsoft Xbox Series Controller|a:0,b:1,x:2,y:3,leftshoulder:5,lefttrigger:2,pageup:4,pagedown:5,select:6,start:7,hotkey:8,l3:9,r3:10
 060000005e040000c82d000000010000|Microsoft Xbox Series Controller|a:0,b:1,x:2,y:3,leftshoulder:5,lefttrigger:2,pageup:4,pagedown:5,select:6,start:7,hotkey:8,l3:9,r3:10
 06000000c82d00003120000000010000|Microsoft Xbox Series Controller|a:0,b:1,x:2,y:3,leftshoulder:5,lefttrigger:2,pageup:4,pagedown:5,select:6,start:7,hotkey:8,l3:9,r3:10
+050000007e0500000920000001800000|Microsoft Xbox Series Controller|a:0,b:1,x:2,y:3,leftshoulder:5,lefttrigger:2,pageup:4,pagedown:5,select:6,start:7,hotkey:8,l3:9,r3:10

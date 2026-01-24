@@ -920,6 +920,7 @@ class EdenGenerator(Generator):
             (padName and "xbox" in padName.lower())
         )
         
+      
         log_stderr("[SETBUTTON]  controller detected {padGuid}")
 
         if is_xbox:
