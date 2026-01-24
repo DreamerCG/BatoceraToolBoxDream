@@ -339,12 +339,12 @@ class RyujinxGenerator(Generator):
         if system.isOptSet('system_language'):
             data['system_language'] = system.config["system_language"]
         else:
-            data['system_language'] = 'AmericanEnglish'
+            data['system_language'] = 'French'
 
         if system.isOptSet('system_region'):
             data['system_region'] = system.config["system_region"]
         else:
-            data['system_region'] = 'USA'
+            data['system_region'] = 'Europe'
 
         if system.isOptSet('ryu_docked_mode'):
             data['docked_mode'] = bool(int(system.config["ryu_docked_mode"]))
