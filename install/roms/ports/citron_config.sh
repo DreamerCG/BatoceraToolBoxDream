@@ -64,5 +64,3 @@ cd /userdata/system/switch/appimages/
 chmod +x /userdata/system/switch/appimages/*.AppImage 2>/dev/null
 ./citron-emu.AppImage
 batocera-mouse hide
-
-
