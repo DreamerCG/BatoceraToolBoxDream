@@ -297,7 +297,7 @@ class RyujinxGenerator(Generator):
         if rom == 'config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
         else:
-            commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage" , rom]
+            commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage", "-f",  "-g", rom]
 
         writelog("Controller Config before Playing: {}".format(generate_sdl_game_controller_config(playersControllers)))
 
