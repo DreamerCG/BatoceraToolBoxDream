@@ -362,6 +362,12 @@ class RyujinxGenerator(Generator):
         else:
             data['enable_vsync'] = bool(1)
 
+        if system.isOptSet('ryu_backend'):
+            data['graphics_backend'] = system.config["ryu_backend"]
+        else:
+            data['graphics_backend'] = 'Vulkan'
+
+
         data['language_code'] = str(getLangFromEnvironment())
         data['game_dirs'] = ["/userdata/roms/switch"]
 
