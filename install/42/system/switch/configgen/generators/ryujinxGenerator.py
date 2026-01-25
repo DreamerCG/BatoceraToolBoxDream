@@ -294,7 +294,7 @@ class RyujinxGenerator(Generator):
         environment["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
 
         rom_nameq = os.path.basename(rom)
-        if rom_nameq == 'config':
+        if rom_nameq == 'ryujinx_config.xci_config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
         else:
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage", "-f", rom]
