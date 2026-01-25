@@ -92,7 +92,14 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
 
     # Mise à jour du Switch Features
-    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_features_switch.cfg" -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
+    curl -fL \
+    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_features_switch.cfg" \
+    -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
+
+    # Mise à jour du Switch System
+    curl -fL \
+    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_systems_switch.cfg" \
+    -o "$DIR_EMULATIONSTATION/es_systems_switch.cfg"
 
     chmod a+x "$DIR_CONFIGGEN/switchlauncher.py"
     chmod a+x "$DIR_GENERATOR/edenGenerator.py"
