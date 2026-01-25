@@ -4,7 +4,6 @@ export DISPLAY=:0.0
 reset
 clear
 
-
 VERSION_FILE="/userdata/DreamerCGToolBox/version-toolbox.txt"
 VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/version-toolbox.txt"
 
@@ -30,7 +29,7 @@ if [ ! -f "$VERSION_FILE" ]; then
 	curl -sL https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/app/dcg_service_update.sh | bash
 	killall -9 xterm
 	'
-    # exit 0
+    exit 0
 fi
 
 # Lecture version locale
