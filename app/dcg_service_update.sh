@@ -84,22 +84,32 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 	echo "[$(date)] Distant URL          : $URL_BASE"
     
     # Téléchargement des nouveaux fichiers
-    curl -L "$URL_BASE/switchlauncher.py" -o "$DIR_CONFIGGEN/switchlauncher.py"
-    curl -L "$URL_BASE/generators/edenGenerator.py" -o "$DIR_GENERATOR/edenGenerator.py"
-    curl -L "$URL_BASE/generators/ryujinxGenerator.py" -o "$DIR_GENERATOR/ryujinxGenerator.py"
-    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
-    curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
-    curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
+    curl -sL "$URL_BASE/switchlauncher.py" -o "$DIR_CONFIGGEN/switchlauncher.py"
+    echo "[$(date)] Mise à jour de switchlauncher"
+    curl -sL "$URL_BASE/generators/edenGenerator.py" -o "$DIR_GENERATOR/edenGenerator.py"
+    echo "[$(date)] Mise à jour de EdenGenerator"
+    curl -sL "$URL_BASE/generators/ryujinxGenerator.py" -o "$DIR_GENERATOR/ryujinxGenerator.py"
+    echo "[$(date)] Mise à jour de ryujinxGenerator"
+    curl -sL "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
+    echo "[$(date)] Mise à jour de gamecontroller_ryujinx"
+    curl -sL "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
+    echo "[$(date)] Mise à jour de ryujinxloadfirmware"
+    curl -sL "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
+    echo "[$(date)] Mise à jour de configgen-version.txt"
 
     # Mise à jour du Switch Features
-    curl -fL \
+    curl -sfL \
     "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_features_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
 
+    echo "[$(date)] Mise à jour de es_features_switch"
+
     # Mise à jour du Switch System
-    curl -fL \
+    curl -sfL \
     "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_systems_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_systems_switch.cfg"
+
+    echo "[$(date)] Mise à jour de es_systems_switch"
 
     chmod a+x "$DIR_CONFIGGEN/switchlauncher.py"
     chmod a+x "$DIR_GENERATOR/edenGenerator.py"
