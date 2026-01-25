@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
+import os
 import yaml
 
 from importlib import import_module
@@ -25,8 +26,13 @@ def _new_get_generator(emulator: str):
     yuzuemu['citron-emu'] = 1
     yuzuemu['eden-pgo'] = 1
 
+    rom_nameq = os.path.basename(rom)
     if rom == 'ryujinx_config.xci_config':
         emulator = 'ryujinx-emu'
+
+    
+    print(f"Selected emulator: {emulator}", file=sys.stderr)    
+    print(f"Selected Rom : {rom_nameq}", file=sys.stderr)    
 
     if emulator in yuzuemu:
         from generators.edenGenerator import EdenGenerator
