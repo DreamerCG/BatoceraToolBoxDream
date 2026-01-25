@@ -21,7 +21,7 @@ if [[ -z "$version" ]]; then
 fi
 
 # Vérification stricte : uniquement Batocera 43 autorisée
-[[ "$version" =~ ^(40|41|42|43)$ ]] || {
+[[ "$version" =~ ^(41|42|43)$ ]] || {
     echo "ERROR: Batocera non supportée (détectée: $version)"
     echo "Versions supportées : 40, 41, 42, 43"
     exit 1
