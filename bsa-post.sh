@@ -15,12 +15,6 @@ post_install_common() {
 	message "log" "$addon_log" "<<< [ POST INSTALL COMMON ]>>>"
 
 	# INSTALL BSA SCRIPTS
-	# copy_make_executable "bsa-variables.sh" "./" "$switch_system_dir"
-	# copy_make_executable "bsa-functions.sh" "./" "$switch_system_dir"
-	# copy_make_executable "bsa-pre-common.sh" "$switch_install_scripts_dir" "$switch_system_dir"
-	# copy_make_executable "bsa-mousemove.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir/generators" "$switch_configgen_dir/generators"
-
 	CONFIG_FILE="/userdata/system/batocera.conf"
 
 	# R�cup�re la langue actuelle
@@ -54,20 +48,24 @@ post_install_ryujinx() {
 	# INSTALL BSA SCRIPTS
 	# copy_make_executable "ryujinx-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	# copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "ryujinx_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
-	copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
-	cp -f "$switch_install_script_dir/install/gamecontroller_ryujinx.txt" "$switch_configgen_dir/generators/gamecontroller_ryujinx.txt" 2>>"$stderr_log"
+	# copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
-	gamelist_file="/userdata/roms/ports/gamelist.xml"
+	copy_make_executable "ryujinx_config.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
+	cp -f "$switch_install_script_dir/install/gamecontroller_ryujinx.txt" "$switch_configgen_dir/generators/gamecontroller_ryujinx.txt" 2>>"$stderr_log"
+	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir/generators" "$switch_configgen_dir/generators"
+
+	# gamelist_file="/userdata/roms/ports/gamelist.xml"
+	gamelist_file="/userdata/roms/switch/gamelist.xml"
+
 	# Ensure the gamelist.xml exists
 	if [ ! -f "$gamelist_file" ]; then
 		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
 	fi
 
 	xmlstarlet ed -L \
-		-d "/gameList/game[path='./ryujinx_config.sh']" \
+		-d "/gameList/game[path='./ryujinx_config.xci_config']" \
 		-s "/gameList" -t elem -n "game" -v "" \
-		-s "/gameList/game[last()]" -t elem -n "path" -v "./ryujinx_config.sh" \
+		-s "/gameList/game[last()]" -t elem -n "path" -v "./ryujinx_config.xci_config" \
 		-s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Ryujinx" \
 		-s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Ryujinx" \
 		-s "/gameList/game[last()]" -t elem -n "developer" -v "Ryujinx" \
@@ -99,22 +97,25 @@ post_install_yuzu_common() {
 	message "log" "$addon_log" "<<< [ POST INSTALL COMMON FOR YUZU & FORKS ]>>>"
 
 	# INSTALL BSA SCRIPTS
-	# copy_make_executable "yuzu-controller-patcher.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
-	copy_make_executable "yuzu_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
-	copy_make_executable "yuzu_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
-	copy_make_executable "citron_config.sh" "$switch_install_roms_ports_dir" "$switch_ports_dir"
-	copy_make_executable "citron_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
+	copy_make_executable "eden_config.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
+	copy_make_executable "eden_qlaunch.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
+	copy_make_executable "citron_config.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
 
-	gamelist_file="/userdata/roms/ports/gamelist.xml"
+	# copy_make_executable "citron_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
+	# copy_make_executable "yuzu_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
+
+	gamelist_file="/userdata/roms/switch/gamelist.xml"
+	# gamelist_file="/userdata/roms/ports/gamelist.xml"
+
 	# Ensure the gamelist.xml exists
 	if [ ! -f "$gamelist_file" ]; then
 		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
 	fi
 	
 	xmlstarlet ed -L \
-	  -d "/gameList/game[path='./citron_config.sh']" \
+	  -d "/gameList/game[path='./citron_config.xci_config']" \
 	  -s "/gameList" -t elem -n "game" -v "" \
-	  -s "/gameList/game[last()]" -t elem -n "path" -v "./citron_config.sh" \
+	  -s "/gameList/game[last()]" -t elem -n "path" -v "./citron_config.xci_config" \
 	  -s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Citron" \
 	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Citron" \
 	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Citron" \
@@ -132,9 +133,9 @@ post_install_yuzu_common() {
 
 
 	xmlstarlet ed -L \
-	  -d "/gameList/game[path='./yuzu_config.sh']" \
+	  -d "/gameList/game[path='./eden_config.xci_config']" \
 	  -s "/gameList" -t elem -n "game" -v "" \
-	  -s "/gameList/game[last()]" -t elem -n "path" -v "./yuzu_config.sh" \
+	  -s "/gameList/game[last()]" -t elem -n "path" -v "./eden_config.xci_config" \
 	  -s "/gameList/game[last()]" -t elem -n "name" -v "Configuration de Eden" \
 	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Configuration de Eden" \
 	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Eden" \
@@ -143,20 +144,38 @@ post_install_yuzu_common() {
 	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
 	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
 	  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
-	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/yuzu_config-image.png" \
-	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/yuzu_config-logo.png" \
-	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/yuzu_config.png" \
+	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/eden_config-image.png" \
+	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/eden_config-logo.png" \
+	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/eden_config.png" \
 	  "$gamelist_file"
 	  
 	message "both" "$addon_log" "- Ajout de Eden Config dans la game list $gamelist_file"
 
+
+	xmlstarlet ed -L \
+	  -d "/gameList/game[path='./eden_qlaunch.xci_config']" \
+	  -s "/gameList" -t elem -n "game" -v "" \
+	  -s "/gameList/game[last()]" -t elem -n "path" -v "./eden_qlaunch.xci_config" \
+	  -s "/gameList/game[last()]" -t elem -n "name" -v "Eden QLauncher" \
+	  -s "/gameList/game[last()]" -t elem -n "desc" -v "Eden QLauncher" \
+	  -s "/gameList/game[last()]" -t elem -n "developer" -v "Eden" \
+	  -s "/gameList/game[last()]" -t elem -n "publisher" -v "Eden" \
+	  -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
+	  -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
+	  -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
+	  -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
+	  -s "/gameList/game[last()]" -t elem -n "image" -v "./images/eden_eden_qlaunchconfig-image.png" \
+	  -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/eden_qlaunch-logo.png" \
+	  -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/eden_qlaunch.png" \
+	  "$gamelist_file"
+	  
+	message "both" "$addon_log" "- Ajout de Eden Config dans la game list $gamelist_file"	
 
 	message "both" "$addon_log" "- Demarrage de la copie des mods Yuzu/Citron/Eden/, Merci de patienter cela peut etre long"
 	message "both" "$addon_log" "- Selon la taille des mods cela peut prendre plusieurs minutes..."
 	
 	# On restaure les mods Yuzu/Citron/Eden/Sudachi depuis yuzu_mods_backup_dir
 	restore_saves_mods_yuzu
-
 
 	# SOURCE GUARD TO PREVENT REDUNDANCY
 	RAN_POST_INSTALL_COMMON_YUZU=true

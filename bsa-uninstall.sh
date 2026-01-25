@@ -68,6 +68,19 @@ echo "[PURGE] Starting old Switch cleanup" >>"$addon_log"
 		rm -f "/userdata/roms/ports/$script"
 	done
 
+
+	# ===== Scripts Roms Config XCI =====
+	SWITCH_ROMS_SCRIPTS=(
+		"citron_config.xci_config"
+		"eden_config.xci_config"
+		"eden_qlaunch.xci_config"
+		"ryujinx_config.xci_config"
+	)
+
+	for script in "${SWITCH_ROMS_SCRIPTS[@]}"; do
+		rm -f "/userdata/roms/switch/$script"
+	done
+
 	rm -f /userdata/roms/ports/update*yuzu*.sh
 	rm -f /userdata/roms/ports/updateryujinx*.sh
 

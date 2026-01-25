@@ -73,10 +73,12 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_TOOLBOX="/userdata/DreamerCGToolBox/"
     DIR_EMULATIONSTATION="/userdata/system/configs/emulationstation"
     DIR_ROM_SWITCH="/userdata/roms/switch"
+    DIR_ROM_PORT="/userdata/roms/ports"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
     URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
-	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/"
+	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
+    URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/images"
 
 
     mkdir -p "$DIR_TOOLBOX"
@@ -122,38 +124,81 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 
     #On Verifie si les roms suivants existe dans /userdata/roms/switch/
 
-    # FILES=(
-    #     "citron_config.xci_config"
-    #     "eden_config.xci_config"
-    #     "ryujinx_config.xci_config"
-    #     "eden_qlaunch.xci_config"
-    # )
 
-    # # Boucle sur chaque fichier
-    # for FILE in "${FILES[@]}"; do
-    #     FILEPATH="$DIR_ROM_SWITCH/$FILE"
-    #     URL="$URL_ROM_INSTALL/$FILE"
+	gamelist_file="/userdata/roms/switch/gamelist.xml"
+	# Ensure the gamelist.xml exists
+	if [ ! -f "$gamelist_file" ]; then
+		echo '<?xml version="1.0" encoding="UTF-8"?><gameList></gameList>' > "$gamelist_file"
+	fi
 
-    #     if [ -f "$FILEPATH" ]; then
-    #         echo "Le fichier '$FILE' existe déjà, téléchargement ignoré."
-    #     else
-    #         echo "Téléchargement de '$FILE'..."
-    #         curl -fSL "$URL" -o "$FILEPATH"
-    #         if [ $? -eq 0 ]; then
-    #             echo "Téléchargement de '$FILE' terminé avec succès."
-    #         else
-    #             echo "Erreur lors du téléchargement de '$FILE' !"
-    #         fi
-    #     fi
-    # done
+    FILES=(
+        "citron_config.xci_config"
+        "eden_config.xci_config"
+        "ryujinx_config.xci_config"
+        "eden_qlaunch.xci_config"
+    )
 
 
+    # Noms personnalisés
+    declare -A NOMS_PERSONNALISES
+    NOMS_PERSONNALISES=(
+        ["citron_config.xci_config"]="Configuration de Citron Toolbox"
+        ["eden_config.xci_config"]="Configuration de Eden Toolbox"
+        ["ryujinx_config.xci_config"]="Configuration de Ryujinx Toolbox"
+        ["eden_qlaunch.xci_config"]="Eden QLauncher"
+    )
+
+# Boucle sur chaque fichier
+for FILE in "${FILES[@]}"; do
+    FILEPATH="$DIR_ROM_SWITCH/$FILE"
+    URL="$URL_ROM_INSTALL/$FILE"
+    BASENAME="${FILE%.*}"
+    # Si un nom personnalisé existe, on le prend, sinon fallback sur BASENAME
+    NOM="${NOMS_PERSONNALISES[$FILE]:-$BASENAME}"
+
+    if [ -f "$FILEPATH" ]; then
+        echo "[$(date)] Le fichier '$FILE' existe déjà, téléchargement ignoré."
+    else
+        echo "Téléchargement de '$FILE'..."
+        curl -fsL "$URL" -o "$FILEPATH"
+        if [ $? -eq 0 ]; then
+            echo "[$(date)] Téléchargement de '$FILE' terminé avec succès."
+
+            xmlstarlet ed -L \
+                -d "/gameList/game[path='./$FILE']" \
+                -s "/gameList" -t elem -n "game" -v "" \
+                -s "/gameList/game[last()]" -t elem -n "path" -v "./$FILE" \
+                -s "/gameList/game[last()]" -t elem -n "name" -v "$NOM" \
+                -s "/gameList/game[last()]" -t elem -n "desc" -v "$NOM" \
+                -s "/gameList/game[last()]" -t elem -n "developer" -v "$NOM" \
+                -s "/gameList/game[last()]" -t elem -n "publisher" -v "$NOM" \
+                -s "/gameList/game[last()]" -t elem -n "genre" -v "Toolbox" \
+                -s "/gameList/game[last()]" -t elem -n "rating" -v "1.00" \
+                -s "/gameList/game[last()]" -t elem -n "region" -v "eu" \
+                -s "/gameList/game[last()]" -t elem -n "lang" -v "fr" \
+                -s "/gameList/game[last()]" -t elem -n "image" -v "./images/$BASENAME-image.png" \
+                -s "/gameList/game[last()]" -t elem -n "marquee" -v "./images/$BASENAME-logo.png" \
+                -s "/gameList/game[last()]" -t elem -n "thumbnail" -v "./images/$BASENAME.png" \
+                "$gamelist_file"
+
+            echo "[$(date)] - Ajout de $NOM dans la game list $gamelist_file"
+        else
+            echo "[$(date)] Erreur lors du téléchargement de '$FILE' !"
+        fi
+    fi
+done
+
+# Ajout des images
     FILES_IMAGES=(
         "citron_config.png"
         "citron_config-logo.png"
-        "yuzu_config-logo.png"
-        "yuzu_config-logo.png"
-        "yuzu_config-image.png"
+        "citron_config-image.png"
+        "eden_config.png"
+        "eden_config-logo.png"
+        "eden_config-image.png"
+        "eden_qlaunch.png"
+        "eden_qlaunch-logo.png"
+        "eden_qlaunch-image.png"        
         "ryujinx_config.png"
         "ryujinx_config-logo.png"
         "ryujinx_config-image.png"
@@ -162,22 +207,41 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     # Boucle sur chaque fichier
     for FILE in "${FILES_IMAGES[@]}"; do
         FILEPATH="$DIR_ROM_SWITCH/images/$FILE"
-        URL="$URL_ROM_INSTALL/images/$FILE"
+        URL="$URL_ROM_IMAGE_INSTALL/$FILE"
 
         if [ -f "$FILEPATH" ]; then
-            echo "Le fichier '$FILE' existe déjà, téléchargement ignoré."
+            echo "[$(date)]Le fichier '$FILE' existe déjà, téléchargement ignoré."
         else
-            echo "Téléchargement de '$FILE'..."
-            curl -fSL "$URL" -o "$FILEPATH"
+            echo "[$(date)] Téléchargement de '$FILE'..."
+            curl -fsL "$URL" -o "$FILEPATH"
             if [ $? -eq 0 ]; then
-                echo "Téléchargement de '$FILE' terminé avec succès."
+                echo "[$(date)] Téléchargement de '$FILE' terminé avec succès."
             else
-                echo "Erreur lors du téléchargement de '$FILE' !"
+                echo "[$(date)] Erreur lors du téléchargement de '$FILE' à partir de $URL  !"
             fi
         fi
     done
 
+    # Suppression des anciens Ports Configs
+    FILES_CONFIG_SH=(
+        "ryujinx_config.sh"
+        "ryujinx_config.sh.keys"
+        "citron_config.sh"
+        "citron_config.sh.keys"
+        "yuzu_config.sh"
+        "yuzu_config.sh.keys"
+    )
 
+    # Boucle sur chaque fichier
+    for FILE in "${FILES_CONFIG_SH[@]}"; do
+        FILEPATH="$DIR_ROM_PORT/$FILE"
+
+        if [ -f "$FILEPATH" ]; then
+             echo "[$(date)] Suppression de $FILE"
+             rm $FILEPATH
+            
+        fi
+    done
 
 else
     echo "[$(date)] Toolbox déjà à jour (version $toolbox_version_local)"

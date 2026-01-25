@@ -98,6 +98,7 @@ switch_install_roms_switch_dir="$switch_install_roms_dir/switch"
 # INSTALLATION: PORTS ROMS :: Ports Roms to Install in Post
 switch_install_roms_ports_dir="$switch_install_script_dir/install/roms/ports"
 switch_install_roms_ports_images_dir="$switch_install_script_dir/install/roms/ports/images"
+switch_install_roms_switch_images_dir="$switch_install_script_dir/install/roms/switch/images"
 
 
 # ******************************************************************************
@@ -167,6 +168,7 @@ switch_roms_dir="/userdata/roms/switch"
 switch_ports_dir="/userdata/roms/ports"
 # PORTS: IMAGES
 switch_ports_images_dir="/userdata/roms/ports/images"
+switch_switch_images_dir="/userdata/roms/switch/images"
 
 
 
