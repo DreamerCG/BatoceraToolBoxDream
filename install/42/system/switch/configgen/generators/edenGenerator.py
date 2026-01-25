@@ -552,7 +552,7 @@ class EdenGenerator(Generator):
             yuzuConfig.set("UI", "Paths\\language", system.config["yuzu_intlanguage"])
             yuzuConfig.set("UI", "Paths\\language\\default", "false")
         else:
-            yuzuConfig.set("UI", "Paths\\language", "fr")
+            yuzuConfig.set("UI", "Paths\\language", "en")
             yuzuConfig.set("UI", "Paths\\language\\default", "false")
 
         # Single Window Mode

@@ -31,7 +31,8 @@ post_install_common() {
 		grep -q "^switch.region=" "$CONFIG_FILE" || echo "switch.region=2" >> "$CONFIG_FILE"
 		grep -q "^switch.language=" "$CONFIG_FILE" || echo "switch.language=2" >> "$CONFIG_FILE"
 		grep -q "^switch.system_language=" "$CONFIG_FILE" || echo "switch.system_language=French" >> "$CONFIG_FILE"
-		grep -q "^switch.system_region=" "$CONFIG_FILE" || echo "switch.system_region=Europe" >> "$CONFIG_FILE"
+		grep -q "^switch.system_language=" "$CONFIG_FILE" || echo "switch.system_language=French" >> "$CONFIG_FILE"
+		grep -q "^switch.yuzu_intlanguage=" "$CONFIG_FILE" || echo "switch.yuzu_intlanguage=fr" >> "$CONFIG_FILE"
 		message "both" "$addon_log" "- Preconfiguration en FR pour la switch"		
 	fi
 
