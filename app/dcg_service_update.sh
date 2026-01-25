@@ -13,14 +13,14 @@ echo "[$(date)] Batocera Version   : $VERSION_URL"
 batocera_version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
 
 set -u
-unset folder_version || true
+unset folder_update_version || true
 
 case "$batocera_version" in
 	41)
-		folder_version=41
+		folder_update_version=41
 		;;
 	4[2-3])
-		folder_version=42
+		folder_update_version=42
 		;;
 	*)
 		echo "Unsupported Batocera version: $batocera_version" >&2
@@ -28,7 +28,7 @@ case "$batocera_version" in
 		;;
 esac
 
-echo "[$(date)] DEBUG folder_version=$folder_version"
+echo "[$(date)] DEBUG folder_version=$folder_update_version"
 
 # Sécurité : création du dossier de logs AVANT toute redirection
 mkdir -p "$LOG_DIR"
@@ -48,7 +48,7 @@ fi
 # Version distante
 toolbox_download_version="$(curl -sL "$VERSION_URL" | tr -d '\r\n')"
 
-echo "[$(date)] Batocera Version   : $folder_version"
+echo "[$(date)] Batocera Version   : $folder_update_version"
 echo "[$(date)] Local Version   : $toolbox_version_local"
 echo "[$(date)] Distant Version : $toolbox_download_version"
 
@@ -82,9 +82,9 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
 
-    echo "[$(date)] DEBUG folder_version=$folder_version"
+    echo "[$(date)] DEBUG folder_version=$folder_update_version"
 
-    URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
+    URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/switch/configgen/"
 	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
     URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/images"
 
@@ -113,14 +113,14 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 
     # Mise à jour du Switch Features
     curl -sfL \
-    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_features_switch.cfg" \
+    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/configs/emulationstation/es_features_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
 
     echo "[$(date)] Mise à jour de es_features_switch"
 
     # Mise à jour du Switch System
     curl -sfL \
-    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/configs/emulationstation/es_systems_switch.cfg" \
+    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/configs/emulationstation/es_systems_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_systems_switch.cfg"
 
     echo "[$(date)] Mise à jour de es_systems_switch"
