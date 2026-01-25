@@ -50,7 +50,7 @@ post_install_ryujinx() {
 	# copy_make_executable "ryujinx-fixes.sh" "$switch_install_scripts_dir" "$switch_bin_dir"
 	# copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
-	copy_make_executable "ryujinx_config.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
+	copy_make_executable "ryujinx_config.xci_config" "$switch_install_roms_switch_dir" "$switch_roms_dir"
 	cp -f "$switch_install_script_dir/install/gamecontroller_ryujinx.txt" "$switch_configgen_dir/generators/gamecontroller_ryujinx.txt" 2>>"$stderr_log"
 	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir/generators" "$switch_configgen_dir/generators"
 
@@ -97,9 +97,9 @@ post_install_yuzu_common() {
 	message "log" "$addon_log" "<<< [ POST INSTALL COMMON FOR YUZU & FORKS ]>>>"
 
 	# INSTALL BSA SCRIPTS
-	copy_make_executable "eden_config.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
-	copy_make_executable "eden_qlaunch.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
-	copy_make_executable "citron_config.xci_config" "$switch_install_roms_dir" "$switch_roms_dir"
+	copy_make_executable "eden_config.xci_config" "$switch_install_roms_switch_dir" "$switch_roms_dir"
+	copy_make_executable "eden_qlaunch.xci_config" "$switch_install_roms_switch_dir" "$switch_roms_dir"
+	copy_make_executable "citron_config.xci_config" "$switch_install_roms_switch_dir" "$switch_roms_dir"
 
 	# copy_make_executable "citron_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 	# copy_make_executable "yuzu_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
