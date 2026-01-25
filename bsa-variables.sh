@@ -94,9 +94,10 @@ switch_install_configgen_dir="$switch_install_script_dir/install/$folder_version
 # INSTALLATION: ROMS :: Roms to Install in Post
 switch_install_roms_dir="$switch_install_script_dir/roms"
 # INSTALLATION: SWITCH ROMS :: Switch Roms to Install in Post
-switch_install_roms_switch_dir="$switch_install_roms_dir/switch"
+# switch_install_roms_switch_dir="$switch_install_roms_dir/switch"
 # INSTALLATION: PORTS ROMS :: Ports Roms to Install in Post
 switch_install_roms_ports_dir="$switch_install_script_dir/install/roms/ports"
+switch_install_roms_switch_dir="$switch_install_script_dir/install/roms/switch"
 switch_install_roms_ports_images_dir="$switch_install_script_dir/install/roms/ports/images"
 switch_install_roms_switch_images_dir="$switch_install_script_dir/install/roms/switch/images"
 
