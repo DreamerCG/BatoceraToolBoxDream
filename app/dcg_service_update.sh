@@ -12,6 +12,9 @@ echo "[$(date)] Batocera Version   : $VERSION_URL"
 # Récupération de la version principale de Batocera
 batocera_version=$(batocera-es-swissknife --version | grep -oE '^[0-9]+')
 
+set -u
+unset folder_version || true
+
 case "$batocera_version" in
 	41)
 		folder_version=41
@@ -24,6 +27,8 @@ case "$batocera_version" in
 		exit 1
 		;;
 esac
+
+echo "[$(date)] DEBUG folder_version=$folder_version"
 
 # Sécurité : création du dossier de logs AVANT toute redirection
 mkdir -p "$LOG_DIR"
@@ -43,7 +48,7 @@ fi
 # Version distante
 toolbox_download_version="$(curl -sL "$VERSION_URL" | tr -d '\r\n')"
 
-echo "[$(date)] Batocera Version   : $batocera_version"
+echo "[$(date)] Batocera Version   : $folder_version"
 echo "[$(date)] Local Version   : $toolbox_version_local"
 echo "[$(date)] Distant Version : $toolbox_download_version"
 
@@ -76,6 +81,9 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_ROM_PORT="/userdata/roms/ports"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
+
+    echo "[$(date)] DEBUG folder_version=$folder_version"
+
     URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
 	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
     URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/images"
