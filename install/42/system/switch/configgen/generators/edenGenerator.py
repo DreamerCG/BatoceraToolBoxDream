@@ -450,12 +450,7 @@ class EdenGenerator(Generator):
                 "emulator": "citron-emu",
                 "qlaunch": False,
                 "use_rom": False,                
-            },
-            "citron_qlaunch.xci_config": {
-                "emulator": "eden-emu",
-                "qlaunch": True,
-                "use_rom": False,                                
-            },             
+            },          
             "eden_config.xci_config": {
                 "emulator": "eden-emu",
                 "qlaunch": False,
