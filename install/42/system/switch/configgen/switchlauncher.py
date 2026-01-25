@@ -27,7 +27,7 @@ def _new_get_generator(emulator: str):
     yuzuemu['eden-pgo'] = 1
 
     rom_nameq = os.path.basename(rom)
-    if rom == 'ryujinx_config.xci_config':
+    if rom_nameq == 'ryujinx_config.xci_config':
         emulator = 'ryujinx-emu'
 
     
