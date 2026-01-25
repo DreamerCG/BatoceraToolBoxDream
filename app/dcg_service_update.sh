@@ -69,12 +69,16 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     fi
     echo "[$(date)] Lancement par précautions du téléchargement des configgen…"
     
+    # Configuration des dossiers pour updates
     DIR_TOOLBOX="/userdata/DreamerCGToolBox/"
     DIR_EMULATIONSTATION="/userdata/system/configs/emulationstation"
+    DIR_ROM_SWITCH="/userdata/roms/switch"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
     URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_version/system/switch/configgen/"
-	
+	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/"
+
+
     mkdir -p "$DIR_TOOLBOX"
     mkdir -p "$DIR_CONFIGGEN"
     mkdir -p "$DIR_GENERATOR"
@@ -115,6 +119,65 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     chmod a+x "$DIR_GENERATOR/edenGenerator.py"
     chmod a+x "$DIR_GENERATOR/ryujinxGenerator.py"
     chmod a+x "$DIR_GENERATOR/ryujinxloadfirmware.sh"
+
+    #On Verifie si les roms suivants existe dans /userdata/roms/switch/
+
+    # FILES=(
+    #     "citron_config.xci_config"
+    #     "eden_config.xci_config"
+    #     "ryujinx_config.xci_config"
+    #     "eden_qlaunch.xci_config"
+    # )
+
+    # # Boucle sur chaque fichier
+    # for FILE in "${FILES[@]}"; do
+    #     FILEPATH="$DIR_ROM_SWITCH/$FILE"
+    #     URL="$URL_ROM_INSTALL/$FILE"
+
+    #     if [ -f "$FILEPATH" ]; then
+    #         echo "Le fichier '$FILE' existe déjà, téléchargement ignoré."
+    #     else
+    #         echo "Téléchargement de '$FILE'..."
+    #         curl -fSL "$URL" -o "$FILEPATH"
+    #         if [ $? -eq 0 ]; then
+    #             echo "Téléchargement de '$FILE' terminé avec succès."
+    #         else
+    #             echo "Erreur lors du téléchargement de '$FILE' !"
+    #         fi
+    #     fi
+    # done
+
+
+    FILES_IMAGES=(
+        "citron_config.png"
+        "citron_config-logo.png"
+        "yuzu_config-logo.png"
+        "yuzu_config-logo.png"
+        "yuzu_config-image.png"
+        "ryujinx_config.png"
+        "ryujinx_config-logo.png"
+        "ryujinx_config-image.png"
+    )
+
+    # Boucle sur chaque fichier
+    for FILE in "${FILES_IMAGES[@]}"; do
+        FILEPATH="$DIR_ROM_SWITCH/images/$FILE"
+        URL="$URL_ROM_INSTALL/images/$FILE"
+
+        if [ -f "$FILEPATH" ]; then
+            echo "Le fichier '$FILE' existe déjà, téléchargement ignoré."
+        else
+            echo "Téléchargement de '$FILE'..."
+            curl -fSL "$URL" -o "$FILEPATH"
+            if [ $? -eq 0 ]; then
+                echo "Téléchargement de '$FILE' terminé avec succès."
+            else
+                echo "Erreur lors du téléchargement de '$FILE' !"
+            fi
+        fi
+    done
+
+
 
 else
     echo "[$(date)] Toolbox déjà à jour (version $toolbox_version_local)"
