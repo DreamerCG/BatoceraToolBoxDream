@@ -1,39 +1,6 @@
 #!/usr/bin/env bash 
 #	BATOCERA - SWITCH ADD-ON: VARIABLES
 
-# ******************************************************************************
-# SOURCE GUARD VARIABLES : TO PREVENT REDUNDANCY (UNSET TO RE-RUN AS NEEDED)
-# ******************************************************************************
-#	SOURCED_VARIABLES		[bsa-variables.sh]		BSA Global Variables
-#
-#	SOURCED_FUNCTIONS		[bsa-functions.sh]		BSA General Fuctions
-#
-#	SOURCED_INITIALIZE		[bsa-initialize.sh]		Directory Structures
-#		|
-#		|-	RAN_INITIALIZE_COMMON		Used to initialize common structures for all emulators
-#		^
-#
-#	SOURCED_EMULATORS		[bsa-emulators.sh]		Install Emulators (AppImages / Binaries)
-#
-#	SOURCED_PACKAGES		[bsa-packages.sh]		Install Firmware, Keys, Saves, Amiiboo, etc.
-#		|
-#		|-	RAN_UNPACK_PACKAGES_COMMON			Used to unpack common packages for all emulators
-#		|-	RAN_UNPACK_PACKAGES_COMMON_YUZU		Used to unpack common packages for yuzu & forks
-#		^
-#
-#	SOURCED_POST			[bsa-post.sh]			Install other required libraries, apps, binaries, scripts, etc.
-#		|
-#		|-	RAN_POST_INSTALL_COMMON				Used to install common items for all emulators
-#		|-	RAN_POST_INSTALL_COMMON_YUZU		Used to install common items for yuzu & forks
-#		^
-#
-#	SOURCED_UNINSTALL		[bsa-uninstall.sh]		Uninstall components
-#
-# ******************************************************************************
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# ******************************************************************************
-
-
 # SOURCE GUARD TO PREVENT REDUNDANCY
 [ -n "$SOURCED_VARIABLES" ] && return
 SOURCED_VARIABLES=true
