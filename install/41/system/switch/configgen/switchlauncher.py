@@ -66,6 +66,9 @@ def _new_get_system_config(system, defaultyml, defaultarchyml):
 # --- patch ---
 configgen.emulatorlauncher.Emulator.get_system_config = _new_get_system_config
 
+rom = None
+if "-rom" in sys.argv:
+    rom = sys.argv[sys.argv.index("-rom") + 1]
 
 def _new_get_generator(emulator: str):
     
@@ -73,8 +76,12 @@ def _new_get_generator(emulator: str):
     yuzuemu['eden-emu'] = 1
     yuzuemu['citron-emu'] = 1
     yuzuemu['eden-pgo'] = 1
-
-    print(f"Selected emulator: {emulator}", file=sys.stderr)
+    
+    rom_nameq = os.path.basename(rom)
+    if rom_nameq == 'ryujinx_config.xci_config':
+        emulator = 'ryujinx-emu'    
+    
+    print(f"Selected emulator: {emulator}", file=sys.stderr)    
     
     if emulator in yuzuemu:
         from generators.edenGenerator import EdenGenerator

@@ -293,8 +293,8 @@ class RyujinxGenerator(Generator):
         environment["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
         environment["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
 
-
-        if rom == 'config':
+        rom_nameq = os.path.basename(rom)
+        if rom_nameq == 'config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
         else:
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage", "-f", rom]

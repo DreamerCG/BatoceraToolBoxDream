@@ -434,7 +434,58 @@ class EdenGenerator(Generator):
 
         EdenGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emulator)
 
-        commandArray = ["./"+emulator+".AppImage", "-f",  "-g", rom ]
+        # commandArray = ["./"+emulator+".AppImage", "-f",  "-g", rom ]
+
+
+        # Cas spécial : Home Menu
+        BASE_COMMAND = {
+            "emulator": emulator,
+            "use_rom": True,
+            "qlaunch": False,
+        }
+
+        
+        XCI_CONFIG_MAP = {
+            "citron_config.xci_config": {
+                "emulator": "citron-emu",
+                "qlaunch": False,
+                "use_rom": False,                
+            },
+            "citron_qlaunch.xci_config": {
+                "emulator": "eden-emu",
+                "qlaunch": True,
+                "use_rom": False,                                
+            },             
+            "eden_config.xci_config": {
+                "emulator": "eden-emu",
+                "qlaunch": False,
+                "use_rom": False,                                
+            },
+            "eden_qlaunch.xci_config": {
+                "emulator": "eden-emu",
+                "qlaunch": True,
+                "use_rom": False,                                
+            },            
+        }
+        
+        rom_nameq = os.path.basename(rom)
+        cfg = XCI_CONFIG_MAP.get(rom_nameq, BASE_COMMAND)
+
+        emulator_to_use = cfg["emulator"]
+        use_qlaunch = cfg["qlaunch"]
+        use_rom = cfg["use_rom"]
+
+        commandArray = [
+            f"./{emulator_to_use}.AppImage",
+            "-f",
+        ]
+
+        if use_qlaunch:
+            commandArray.append("-qlaunch")
+
+        if use_rom:
+            commandArray.extend(["-g", rom])
+
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
