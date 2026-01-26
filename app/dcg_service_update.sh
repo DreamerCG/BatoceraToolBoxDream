@@ -105,7 +105,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de ryujinxGenerator"
     curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
     echo "[$(date)] Mise à jour de Game Controller DB SDL"
-    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontrollerdb.txt" -o "$DIR_CONFIGGEN/gamecontroller_ryujinx.txt"
+    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontrollerdb.txt" -o "$DIR_CONFIGGEN/gamecontrollerdb.txt"
     echo "[$(date)] Mise à jour de gamecontroller_ryujinx"
     curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
