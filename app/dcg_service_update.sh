@@ -255,6 +255,7 @@ done
              echo "[$(date)] Suppression de $DIR_GENERATOR/gamecontroller_ryujinx.txt"
              rm $DIR_GENERATOR/gamecontroller_ryujinx.txt
         fi    
+    echo "[$(date)] Nettoyage de fichier divers"
     
 else
     echo "[$(date)] Toolbox déjà à jour (version $toolbox_version_local)"
