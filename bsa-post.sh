@@ -30,6 +30,10 @@ post_install_common() {
 		message "both" "$addon_log" "- Preconfiguration en FR pour la switch"		
 	fi
 
+	# Installation de la base de donnes SDL Controller port
+	cp -f "$switch_install_script_dir/install/gamecontrollerdb.txt" "$switch_configgen_dir/gamecontrollerdb.txt" 2>>"$stderr_log"	
+
+
 	# INSTALL PORTS
 	post_install_ports
 
@@ -51,7 +55,6 @@ post_install_ryujinx() {
 	# copy_make_executable "ryujinx_config.sh.keys" "$switch_install_roms_ports_dir" "$switch_ports_dir"
 
 	copy_make_executable "ryujinx_config.xci_config" "$switch_install_roms_switch_dir" "$switch_roms_dir"
-	cp -f "$switch_install_script_dir/install/gamecontroller_ryujinx.txt" "$switch_configgen_dir/generators/gamecontroller_ryujinx.txt" 2>>"$stderr_log"
 	copy_make_executable "ryujinxloadfirmware.sh" "$switch_install_configgen_dir/generators" "$switch_configgen_dir/generators"
 
 	# gamelist_file="/userdata/roms/ports/gamelist.xml"
