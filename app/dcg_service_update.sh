@@ -103,10 +103,8 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de EdenGenerator"
     curl -L "$URL_BASE/generators/ryujinxGenerator.py" -o "$DIR_GENERATOR/ryujinxGenerator.py"
     echo "[$(date)] Mise à jour de ryujinxGenerator"
-    curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
-    echo "[$(date)] Mise à jour de Game Controller DB SDL"
     curl -L "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontrollerdb.txt" -o "$DIR_CONFIGGEN/gamecontrollerdb.txt"
-    echo "[$(date)] Mise à jour de gamecontroller_ryujinx"
+    echo "[$(date)] Mise à jour de Game Controller DB SDL"
     curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
     curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
@@ -252,6 +250,12 @@ done
         fi
     done
 
+    # Nettoyage complementaire
+        if [ -f "$DIR_GENERATOR/gamecontroller_ryujinx.txt" ]; then
+             echo "[$(date)] Suppression de $DIR_GENERATOR/gamecontroller_ryujinx.txt"
+             rm $DIR_GENERATOR/gamecontroller_ryujinx.txt
+        fi    
+    
 else
     echo "[$(date)] Toolbox déjà à jour (version $toolbox_version_local)"
 fi
