@@ -28,7 +28,6 @@ case "$batocera_version" in
 		;;
 esac
 
-echo "[$(date)] DEBUG folder_version=$folder_update_version"
 
 # Sécurité : création du dossier de logs AVANT toute redirection
 mkdir -p "$LOG_DIR"
@@ -82,7 +81,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
 
-    echo "[$(date)] DEBUG folder_version=$folder_update_version"
+    # echo "[$(date)] DEBUG folder_version=$folder_update_version"
 
     URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/switch/configgen/"
 	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
@@ -105,6 +104,8 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -sL "$URL_BASE/generators/ryujinxGenerator.py" -o "$DIR_GENERATOR/ryujinxGenerator.py"
     echo "[$(date)] Mise à jour de ryujinxGenerator"
     curl -sL "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontroller_ryujinx.txt" -o "$DIR_GENERATOR/gamecontroller_ryujinx.txt"
+    echo "[$(date)] Mise à jour de Game Controller DB SDL"
+    curl -sL "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontrollerdb.txt" -o "$DIR_CONFIGGEN/gamecontroller_ryujinx.txt"
     echo "[$(date)] Mise à jour de gamecontroller_ryujinx"
     curl -sL "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
