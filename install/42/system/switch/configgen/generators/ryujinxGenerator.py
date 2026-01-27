@@ -165,6 +165,9 @@ def detect_bus_from_hidraw(hidraw_path: str):
 def list_sdl_gamepads(sdlversion):
 
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
+    os.environ["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
+    os.environ["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
+    os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"  #reported by frolabroc, not tested myself yet
     os.environ["SDL_GAMECONTROLLERCONFIG_FILE"] = "/userdata/system/switch/configgen/gamecontrollerdb.txt"
@@ -327,6 +330,7 @@ class RyujinxGenerator(Generator):
                         "GDK_SCALE":"1",
                         "DOTNET_EnableAlternateStackCheck":"1",
                         "XDG_CONFIG_HOME":"/userdata/system/configs",
+                        "XDG_DATA_HOME":"/userdata/system/configs",                        
                         "XDG_CACHE_HOME":"/userdata/system/.cache",
         }
 
@@ -403,7 +407,15 @@ class RyujinxGenerator(Generator):
         else:
             data['graphics_backend'] = 'Vulkan'
 
-
+        # Fullscreen mode
+        if system.isOptSet('fullscreen_mode'):
+            data['fullscreen_mode'] = bool(int(system.config["fullscreen_mode"]))
+        else:
+            data['fullscreen_mode'] = bool(1)
+        
+        # Hide Cursor Mouse
+        data['hide_cursor'] = bool(2)
+        
         data['language_code'] = str(getLangFromEnvironment())
         data['game_dirs'] = ["/userdata/roms/switch"]
 

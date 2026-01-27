@@ -708,6 +708,15 @@ class EdenGenerator(Generator):
             yuzuConfig.set("Renderer", "max_anisotropy", "0")
             yuzuConfig.set("Renderer", "max_anisotropy\\default", "true")
 
+        # Fullscreen mode
+        if system.isOptSet('fullscreen_mode'):
+            yuzuConfig.set("Renderer", "fullscreen_mode", system.config["fullscreen_mode"])
+            yuzuConfig.set("Renderer", "fullscreen_mode\\default", "false")
+        else:
+            yuzuConfig.set("Renderer", "fullscreen_mode", "1")
+            yuzuConfig.set("Renderer", "fullscreen_mode\\default", "true")
+
+
         # Resolution scaler
         if system.isOptSet('resolution_scale'):
             yuzuConfig.set("Renderer", "resolution_setup", system.config["resolution_scale"])

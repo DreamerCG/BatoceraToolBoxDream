@@ -13,6 +13,11 @@
             "type": "key",
             "target": ["KEY_ENTER"],
             "description": "Press enter"
+        },
+        {
+            "trigger": "r3",
+            "type": "key",
+            "target": "BTN_RIGHT"
         }
 	]
 }
