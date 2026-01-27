@@ -11,6 +11,23 @@ do_nothing() {
 	:
 }
 
+detect_handheld_platform() {
+    pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
+    vendor="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/sys_vendor 2>/dev/null)"
+
+    case "$pname" in
+        jupiter|galileo|*"steam deck"*)
+            echo "steamdeck"
+            return
+            ;;
+        *rc71l*|*"rog ally"*|*"rog-ally"*)
+            echo "rog-ally"
+            return
+            ;;
+    esac
+
+    echo "generic"
+}
 
 # Rename File is Exists
 # Usage: rename_file <old filename> <new filename> <overwrite {**no** | yes}>

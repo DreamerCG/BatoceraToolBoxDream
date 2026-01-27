@@ -42,44 +42,126 @@ install_emulator_yuzu() {
 }
 
 
+
+
+# # INSTALL EDEN APPIMAGE
+# install_emulator_eden() {
+# 	message "log" "$addon_log" "<<< [ INSTALL : EDEN ]>>>"
+
+# 	# INSTALL/UNPACK EMULATOR
+# 	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
+# 	message "log" "$addon_log" "Installing Eden Emulator App"
+# 	# Get lastest version from database & set the version for download
+# 	eden_release_html=""
+# 	eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest | grep -o '"tag_name": *"[^"]*"' | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
+# 	eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/Eden-Linux-${eden_release_version}-amd64-gcc-standard.AppImage"
+# 	# If missing from local storage then attempt to download latest version
+# 	download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_install_file" "Eden"
+# 	if [ $wget_exit_code -eq 0 ]; then
+# 		copy_make_executable "$eden_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
+# 	fi
+# }
+
 # INSTALL EDEN APPIMAGE
 install_emulator_eden() {
-	message "log" "$addon_log" "<<< [ INSTALL : EDEN ]>>>"
 
-	# INSTALL/UNPACK EMULATOR
-	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
-	message "log" "$addon_log" "Installing Eden Emulator App"
-	# Get lastest version from database & set the version for download
-	eden_release_html=""
-	eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest | grep -o '"tag_name": *"[^"]*"' | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
-	eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/Eden-Linux-${eden_release_version}-amd64-gcc-standard.AppImage"
-	# If missing from local storage then attempt to download latest version
-	download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_install_file" "Eden"
-	if [ $wget_exit_code -eq 0 ]; then
-		copy_make_executable "$eden_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
-	fi
+    # Latest version
+    eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest \
+        | grep -o '"tag_name": *"[^"]*"' \
+        | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
+
+    # Detect platform
+    pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
+
+    case "$pname" in
+        jupiter|galileo|*"steam deck"*)
+            platform="steamdeck"
+            eden_appimage="Eden-Linux-${eden_release_version}-steamdeck-gcc-standard.AppImage"
+            ;;
+        *rc71l*|*"rog ally"*|*"rog-ally"*)
+            platform="rog-ally"
+            eden_appimage="Eden-Linux-${eden_release_version}-rog-ally-gcc-standard.AppImage"
+            ;;
+        *)
+            platform="generic"
+            eden_appimage="Eden-Linux-${eden_release_version}-amd64-gcc-standard.AppImage"
+            ;;
+    esac
+
+    eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/${eden_appimage}"
+
+    message "both" "$addon_log" "Platform detected : $platform"
+    message "both" "$addon_log" "Eden Version : $eden_appimage"
+    message "both" "$addon_log" "Download URL       : $eden_install_url"
+
+    # Download & install
+    download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_install_file" "Eden"
+    if [ $wget_exit_code -eq 0 ]; then
+        copy_make_executable "$eden_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
+    fi
 }
 
-# INSTALL EDEN APPIMAGE
+
+# # INSTALL EDEN APPIMAGE
+# install_emulator_eden_pgo() {
+# 	message "log" "$addon_log" "<<< [ INSTALL : EDEN PGO ]>>>"
+
+# 	# INSTALL/UNPACK EMULATOR
+# 	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
+# 	message "log" "$addon_log" "Installing Eden PGO Emulator App"
+# 	# Get lastest version from database & set the version for download
+# 	eden_release_html=""
+# 	eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest | grep -o '"tag_name": *"[^"]*"' | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
+# 	eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/Eden-Linux-${eden_release_version}-amd64-clang-pgo.AppImage"
+
+# 	message "log" "$addon_log" "$eden_install_url"
+
+# 	# If missing from local storage then attempt to download latest version
+# 	download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_pgo_install_file" "Eden-pgo"
+# 	if [ $wget_exit_code -eq 0 ]; then
+# 		copy_make_executable "$eden_pgo_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
+# 	fi
+# }
+
+
 install_emulator_eden_pgo() {
-	message "log" "$addon_log" "<<< [ INSTALL : EDEN PGO ]>>>"
 
-	# INSTALL/UNPACK EMULATOR
-	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
-	message "log" "$addon_log" "Installing Eden PGO Emulator App"
-	# Get lastest version from database & set the version for download
-	eden_release_html=""
-	eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest | grep -o '"tag_name": *"[^"]*"' | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
-	eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/Eden-Linux-${eden_release_version}-amd64-clang-pgo.AppImage"
+    # Latest version
+    eden_release_version="$(curl -Ls https://api.github.com/repos/eden-emulator/Releases/releases/latest \
+        | grep -o '"tag_name": *"[^"]*"' \
+        | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
 
-	message "log" "$addon_log" "$eden_install_url"
+    # Detect platform
+    pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
 
-	# If missing from local storage then attempt to download latest version
-	download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_pgo_install_file" "Eden-pgo"
-	if [ $wget_exit_code -eq 0 ]; then
-		copy_make_executable "$eden_pgo_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
-	fi
+    case "$pname" in
+        jupiter|galileo|*"steam deck"*)
+            platform="steamdeck"
+            eden_appimage="Eden-Linux-${eden_release_version}-steamdeck-clang-pgo.AppImage"
+            ;;
+        *rc71l*|*"rog ally"*|*"rog-ally"*)
+            platform="rog-ally"
+            eden_appimage="Eden-Linux-${eden_release_version}-rog-ally-clang-pgo.AppImage"
+            ;;
+        *)
+            platform="generic"
+            eden_appimage="Eden-Linux-${eden_release_version}-amd64-clang-pgo.AppImage"
+            ;;
+    esac
+
+    eden_install_url="https://github.com/eden-emulator/Releases/releases/download/${eden_release_version}/${eden_appimage}"
+
+    message "both" "$addon_log" "Platform detected : $platform"
+    message "both" "$addon_log" "Eden Version : $eden_appimage"
+    message "both" "$addon_log" "Download URL       : $eden_install_url"
+
+    # Download & install
+    download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_pgo_install_file" "Eden-pgo"
+    if [ $wget_exit_code -eq 0 ]; then
+        copy_make_executable "$eden_pgo_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
+    fi
 }
+
 
 
 install_emulator_citron_final() {
