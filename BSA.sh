@@ -12,24 +12,24 @@ if [ ! -f "$VERSION_FILE" ]; then
     echo "Aucune version détectée, installation de la Toolbox…"
 	
 	DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black \
-	  -fa "DejaVuSansMono" -en UTF-8 \
-	  -e bash -c '
+	-fa "DejaVuSansMono" -en UTF-8 \
+	-e bash -c '
 	echo
 	echo "========================================="
 	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
 	echo "========================================="
 	echo
-	echo "========================================="
-	echo "   🔧 Relancer la toolbox une fois installation terminer   "
-	echo "========================================="
-	echo
-	echo
-	echo
 	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
 	curl -sL https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/app/dcg_service_update.sh | bash
-	killall -9 xterm
+	echo
+	echo "========================================="
+	echo "   🔄 Redémarrage EmulationStation       "
+	echo "========================================="
+	sleep 2
+	killall xterm
 	'
-    exit 0
+
+ 
 fi
 
 # Lecture version locale
@@ -48,25 +48,21 @@ fi
 if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
     echo "Mise à jour détectée ($toolbox_current_version → $toolbox_download_version)"
 
-	
-
 	DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black \
-	  -fa "DejaVuSansMono" -en UTF-8 \
-	  -e bash -c '
+	-fa "DejaVuSansMono" -en UTF-8 \
+	-e bash -c '
 	echo
 	echo "========================================="
 	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
 	echo "========================================="
 	echo
-	echo
-	echo
-	echo "========================================="
-	echo "   🔧 Relancer la toolbox une fois installation terminer   "
-	echo "========================================="
-	echo
-	echo
-	echo
 	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
+	echo
+	echo "========================================="
+	echo "   🔄 Redémarrage EmulationStation       "
+	echo "========================================="
+	sleep 2
+	killall xterm
 	'
 
 else
@@ -225,7 +221,8 @@ update_emulator() {
 # ******************************************************************************
 # MENUS
 # ******************************************************************************
-menu_title="DreamerCG Toolbox $toolbox_current_version -  Batocera : V$batocera_version"
+platform=$(detect_handheld_platform)
+menu_title="DCG Toolbox $toolbox_current_version - Batocera : V$batocera_version - Support $platform"
 menu_width=100
 menu_height=30
 menu_list_height=20
