@@ -77,6 +77,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_TOOLBOX="/userdata/DreamerCGToolBox/"
     DIR_EMULATIONSTATION="/userdata/system/configs/emulationstation"
     DIR_ROM_SWITCH="/userdata/roms/switch"
+    DIR_ROM_IMAGES_SWITCH="/userdata/roms/switch/images"
     DIR_ROM_PORT="/userdata/roms/ports"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
@@ -91,9 +92,11 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     mkdir -p "$DIR_TOOLBOX"
     mkdir -p "$DIR_CONFIGGEN"
     mkdir -p "$DIR_GENERATOR"
+    mkdir -p "$DIR_ROM_IMAGES_SWITCH"
 
 	echo "[$(date)] Configgen Local Dir   : $DIR_CONFIGGEN"
 	echo "[$(date)] Generator Local Dir  : $DIR_GENERATOR"
+	echo "[$(date)] Image Local Dir  : $DIR_ROM_IMAGES_SWITCH"
 	echo "[$(date)] Distant URL          : $URL_BASE"
     
     # Téléchargement des nouveaux fichiers
@@ -213,7 +216,7 @@ done
 
     # Boucle sur chaque fichier
     for FILE in "${FILES_IMAGES[@]}"; do
-        FILEPATH="$DIR_ROM_SWITCH/images/$FILE"
+        FILEPATH="$DIR_ROM_IMAGES_SWITCH/$FILE"
         URL="$URL_ROM_IMAGE_INSTALL/$FILE"
 
         if [ -f "$FILEPATH" ]; then

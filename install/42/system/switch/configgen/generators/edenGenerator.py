@@ -233,6 +233,7 @@ def list_sdl_gamepads(sdlversion):
 
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"   #it's disable in yuzu for xbox
+    os.environ["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"  #reported by frolabroc, not tested myself yet
     os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
     os.environ["SDL_JOYSTICK_HIDAPI_PS4"] = "0"

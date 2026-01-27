@@ -310,6 +310,7 @@ class RyujinxGenerator(Generator):
         environment = { 
                         "SDL_JOYSTICK_HIDAPI": "1",
                         "SDL_JOYSTICK_HIDAPI_XBOX": "0",
+                        "SDL_JOYSTICK_HIDAPI_XBOX_ONE": "0",
                         "SDL_JOYSTICK_HIDAPI_STEAMDECK" : "0",
                         "SDL_JOYSTICK_HIDAPI_PS4" : "0",
                         "SDL_JOYSTICK_HIDAPI_PS5" : "0",
