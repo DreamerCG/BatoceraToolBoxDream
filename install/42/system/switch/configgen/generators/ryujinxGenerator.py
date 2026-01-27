@@ -407,14 +407,14 @@ class RyujinxGenerator(Generator):
         else:
             data['graphics_backend'] = 'Vulkan'
 
-        # Fullscreen mode
-        if system.isOptSet('fullscreen_mode'):
-            data['fullscreen_mode'] = bool(int(system.config["fullscreen_mode"]))
-        else:
-            data['fullscreen_mode'] = bool(1)
+        # # Fullscreen mode
+        # if system.isOptSet('fullscreen_mode'):
+        #     data['fullscreen_mode'] = bool(int(system.config["fullscreen_mode"]))
+        # else:
+        #     data['fullscreen_mode'] = bool(1)
         
-        # Hide Cursor Mouse
-        data['hide_cursor'] = bool(2)
+        # # Hide Cursor Mouse
+        # data['hide_cursor'] = bool(2)
         
         data['language_code'] = str(getLangFromEnvironment())
         data['game_dirs'] = ["/userdata/roms/switch"]
