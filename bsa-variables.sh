@@ -171,8 +171,6 @@ switch_ports_dir="/userdata/roms/ports"
 switch_ports_images_dir="/userdata/roms/ports/images"
 switch_switch_images_dir="/userdata/roms/switch/images"
 
-
-
 # ---------- SYSTEM AREA ----------
 # SWITCH: SAVES
 switch_saves_dir="$system_saves_dir/switch"
