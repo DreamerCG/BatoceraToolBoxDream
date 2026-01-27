@@ -52,13 +52,6 @@ echo "[$(date)] Dossier utilisé   : $folder_update_version"
 echo "[$(date)] Local Version   : $toolbox_version_local"
 echo "[$(date)] Distant Version : $toolbox_download_version"
 
-# Vérification et lecture de la version locale
-if [ -f "$VERSION_FILE" ]; then
-    toolbox_version_local=$(<"$VERSION_FILE")
-else
-    toolbox_version_local=""
-fi
-
 # Sécurité : si curl échoue
 if [ -z "$toolbox_download_version" ]; then
     echo "[$(date)] ERREUR : impossible de récupérer la version distante"
