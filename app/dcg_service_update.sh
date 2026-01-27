@@ -47,7 +47,8 @@ fi
 # Version distante
 toolbox_download_version="$(curl -L "$VERSION_URL" | tr -d '\r\n')"
 
-echo "[$(date)] Batocera Version   : $folder_update_version"
+echo "[$(date)] Version de Batocera Version   : $batocera_version"
+echo "[$(date)] Dossier utilisé   : $folder_update_version"
 echo "[$(date)] Local Version   : $toolbox_version_local"
 echo "[$(date)] Distant Version : $toolbox_download_version"
 
