@@ -311,6 +311,8 @@ class RyujinxGenerator(Generator):
                         "SDL_JOYSTICK_HIDAPI": "1",
                         "SDL_JOYSTICK_HIDAPI_XBOX": "0",
                         "SDL_JOYSTICK_HIDAPI_STEAMDECK" : "0",
+                        "SDL_JOYSTICK_HIDAPI_PS4" : "0",
+                        "SDL_JOYSTICK_HIDAPI_PS5" : "0",
                         "SDL_GAMECONTROLLERCONFIG": sdl_mapping,
                         "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
@@ -331,6 +333,7 @@ class RyujinxGenerator(Generator):
         if rom_nameq == 'ryujinx_config.xci_config':
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
         else:
+            # subprocess.run(["batocera-mouse", "hide"], check=False)
             commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage", "-f", rom]
 
 

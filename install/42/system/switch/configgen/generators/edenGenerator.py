@@ -231,17 +231,12 @@ def detect_bus_from_hidraw(hidraw_path: str):
 
 def list_sdl_gamepads(sdlversion):
 
-    # os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
-    # os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"
-    # os.environ["SDL_JOYSTICK_HIDAPI_XBOX_ONE"] = "0"
-    # os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
-    # os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"
-    # os.environ["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
-    # os.environ["SDL_JOYSTICK_HIDAPI_PS5"] = "0"
-
     os.environ["SDL_JOYSTICK_HIDAPI"] = "1"
     os.environ["SDL_JOYSTICK_HIDAPI_XBOX"] = "0"   #it's disable in yuzu for xbox
     os.environ["SDL_JOYSTICK_HIDAPI_STEAMDECK"] = "0"  #reported by frolabroc, not tested myself yet
+    os.environ["SDL_JOYSTICK_HIDAPI_SWITCH"] = "0"
+    os.environ["SDL_JOYSTICK_HIDAPI_PS4"] = "0"
+    os.environ["SDL_JOYSTICK_HIDAPI_PS5"] = "0"    
     os.environ["SDL_GAMECONTROLLERCONFIG_FILE"] = "/userdata/system/switch/configgen/gamecontrollerdb.txt"
 
     sdl2.SDL_ClearError()
@@ -470,7 +465,6 @@ class EdenGenerator(Generator):
 
         if use_rom:
             commandArray.extend(["-g", rom])
-
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
@@ -928,9 +922,6 @@ class EdenGenerator(Generator):
     def setButton(emulator, key, padGuid, padInputs, port):
          # it would be better to pass the joystick num instead of the guid because 2 joysticks may have the same guid
          if key in padInputs:
-
-             if emulator in ['citron', 'sudachi'] and key in ['left', 'right', 'up', 'down']:
-                 return ("hat:0,pad:0,direction:{},guid:{},port:{},engine:sdl").format(key, padGuid, port)
 
              input = padInputs[key]
              
