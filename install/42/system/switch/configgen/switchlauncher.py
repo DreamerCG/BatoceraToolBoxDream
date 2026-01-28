@@ -18,6 +18,8 @@ from pathlib import Path
 rom = None
 if "-rom" in sys.argv:
     rom = sys.argv[sys.argv.index("-rom") + 1]
+if "-emulator" in sys.argv:
+    emulator_name = sys.argv[sys.argv.index("-emulator") + 1]
 
 def _new_get_generator(emulator: str):
     
@@ -61,6 +63,12 @@ def _new_load_system_config(system_name: str, /) -> dict[str, Any]:
             DEFAULTS_DIR / "configgen-defaults-arch.yml",
         )
 
+    if emulator_name == "ryujinx-emu":
+        defaults.setdefault("options", {})["hud_support"] = False
+    else:
+        defaults.setdefault("options", {})["hud_support"] = True
+
+
     data: dict[str, Any] = {
         "emulator": defaults.get("emulator"),
         "core": defaults.get("core"),
@@ -71,9 +79,6 @@ def _new_load_system_config(system_name: str, /) -> dict[str, Any]:
 
     return data
 
-
-
-#configgen.Emulator._load_system_config = _new_load_system_config
 configgen.emulatorlauncher.get_generator = _new_get_generator
 configgen.Emulator._load_system_config = _new_load_system_config
 

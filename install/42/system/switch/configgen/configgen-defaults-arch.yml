@@ -2,7 +2,7 @@ default:
   emulator:
   core:
   options:
-    hud_support: true
+    hud_support: false
     forceNoBezel:   true
 
 switch:

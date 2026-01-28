@@ -852,8 +852,6 @@ class EdenGenerator(Generator):
                     pad.inputs = sdl_gamepads[pad.device_path]['inputs']
                 #fallback to inputs from ES, we use original pad.inputs
 
-
-
                 #port index is by guid
                 if pad.guid not in guid_port:
                     guid_port[pad.guid] = 0

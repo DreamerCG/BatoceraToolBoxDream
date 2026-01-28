@@ -94,6 +94,10 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 	echo "[$(date)] Distant URL          : $URL_BASE"
     
     # Téléchargement des nouveaux fichiers
+    curl -L "$URL_BASE/configgen-defaults.yml" -o "$DIR_CONFIGGEN/configgen-defaults.yml"
+    echo "[$(date)] Mise à jour de configgen-defaults.yml"
+    curl -L "$URL_BASE/configgen-defaults-arch.yml" -o "$DIR_CONFIGGEN/configgen-defaults-arch.yml"
+    echo "[$(date)] Mise à jour de configgen-defaults-arch.yml"
     curl -L "$URL_BASE/switchlauncher.py" -o "$DIR_CONFIGGEN/switchlauncher.py"
     echo "[$(date)] Mise à jour de switchlauncher"
     curl -L "$URL_BASE/generators/edenGenerator.py" -o "$DIR_GENERATOR/edenGenerator.py"
@@ -127,8 +131,6 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     chmod a+x "$DIR_GENERATOR/ryujinxloadfirmware.sh"
 
     #On Verifie si les roms suivants existe dans /userdata/roms/switch/
-
-
 	gamelist_file="/userdata/roms/switch/gamelist.xml"
 	# Ensure the gamelist.xml exists
 	if [ ! -f "$gamelist_file" ]; then
