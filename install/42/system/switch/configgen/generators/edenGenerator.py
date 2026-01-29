@@ -686,7 +686,7 @@ class EdenGenerator(Generator):
         if system.isOptSet('gpuaccuracy'):
             yuzuConfig.set("Renderer", "gpu_accuracy", system.config["gpuaccuracy"])
         else:
-            yuzuConfig.set("Renderer", "gpu_accuracy", "0")
+            yuzuConfig.set("Renderer", "gpu_accuracy", 1")
         yuzuConfig.set("Renderer", "gpu_accuracy\\default", "false")
 
         # Vsync
