@@ -403,7 +403,7 @@ class EdenGenerator(Generator):
         # Yuzu User XDG 
         if os.path.exists("/userdata/system/switch/bin/xdgfix/xdg-open"):
             st = os.stat("/userdata/system/switch/bin/xdgfix/xdg-open")
-            os.chmod("/userdata/system/switch/bin/xdgfix/folder-open", st.st_mode | stat.S_IEXEC)
+            os.chmod("/userdata/system/switch/bin/xdgfix/xdg-open", st.st_mode | stat.S_IEXEC)
 
         # YUZU USER SAVE
         ensure_symlink(
