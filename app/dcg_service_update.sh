@@ -135,6 +135,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     chmod a+x "$DIR_GENERATOR/edenGenerator.py"
     chmod a+x "$DIR_GENERATOR/ryujinxGenerator.py"
     chmod a+x "$DIR_GENERATOR/ryujinxloadfirmware.sh"
+    chmod a+x "$DIR_SWITCH_LOCAL_BIN/folder-open"
 
     #On Verifie si les roms suivants existe dans /userdata/roms/switch/
 	gamelist_file="/userdata/roms/switch/gamelist.xml"
