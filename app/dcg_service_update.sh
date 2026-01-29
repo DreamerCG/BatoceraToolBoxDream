@@ -111,7 +111,6 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -sL "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
     curl -sL "$ULR_BIN/folder-open" -o "$DIR_SWITCH_LOCAL_BIN/xdgfix/xdg-open"
-    echo "[$(date)] $ULR_BIN/folder-open vers $DIR_SWITCH_LOCAL_BIN/xdgfix/xdg-open"
     echo "[$(date)] Mise à jour de bin/xdgfix/xdg-open"
 
     curl -sL "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"

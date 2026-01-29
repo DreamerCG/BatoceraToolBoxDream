@@ -267,9 +267,9 @@ class RyujinxGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/mods"))
 
         # Ryujinx User XDG 
-        if os.path.exists("/userdata/system/switch/bin/xdgfig/xdg-open"):
-            st = os.stat("/userdata/system/switch/bin/xdgfig/xdg-open")
-            os.chmod("/userdata/system/switch/bin/xdgfig/xdg-open", st.st_mode | stat.S_IEXEC)
+        if os.path.exists("/userdata/system/switch/bin/xdgfix/xdg-open"):
+            st = os.stat("/userdata/system/switch/bin/xdgfix/xdg-open")
+            os.chmod("/userdata/system/switch/bin/xdgfix/xdg-open", st.st_mode | stat.S_IEXEC)
             
     #Link Ryujinx User save/mods folder (bis/user)/(bis/system/save)
         # #USER SAVE (bis/user)-------
