@@ -398,6 +398,10 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/mods"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/save"))
 
+        if os.path.exists("/userdata/system/switch/bin/folder-open"):
+            st = os.stat("/userdata/system/switch/bin/folder-open")
+            os.chmod("/userdata/system/switch/bin/folder-open", st.st_mode | stat.S_IEXEC)
+
         # Yuzu User XDG 
         ensure_symlink(
             "/userdata/system/switch/bin/folder-open",
@@ -686,7 +690,7 @@ class EdenGenerator(Generator):
         if system.isOptSet('gpuaccuracy'):
             yuzuConfig.set("Renderer", "gpu_accuracy", system.config["gpuaccuracy"])
         else:
-            yuzuConfig.set("Renderer", "gpu_accuracy", 1")
+            yuzuConfig.set("Renderer", "gpu_accuracy", "1")
         yuzuConfig.set("Renderer", "gpu_accuracy\\default", "false")
 
         # Vsync
@@ -722,14 +726,24 @@ class EdenGenerator(Generator):
             yuzuConfig.set("Renderer", "fullscreen_mode", "1")
             yuzuConfig.set("Renderer", "fullscreen_mode\\default", "true")
 
-
-        # Resolution scaler
-        if system.isOptSet('resolution_scale'):
-            yuzuConfig.set("Renderer", "resolution_setup", system.config["resolution_scale"])
-            yuzuConfig.set("Renderer", "resolution_setup\\default", "false")
-        else:
-            yuzuConfig.set("Renderer", "resolution_setup", "2")
-            yuzuConfig.set("Renderer", "resolution_setup\\default", "true")
+        if emulator == "citron-emu":
+            # Resolution scaler
+            if system.isOptSet('citron_resolution_scale'):
+                print ("Use Resolution Scale for Citron:",system.config["citron_resolution_scale"], file=sys.stderr)
+                yuzuConfig.set("Renderer", "resolution_setup", system.config["citron_resolution_scale"])
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "false")
+            else:
+                yuzuConfig.set("Renderer", "resolution_setup", "2")
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "true")
+        else:        
+            # Resolution scaler
+            if system.isOptSet('resolution_scale'):
+                print ("Use Resolution Scale for Eden :",system.config["resolution_scale"], file=sys.stderr)
+                yuzuConfig.set("Renderer", "resolution_setup", system.config["resolution_scale"])
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "false")
+            else:
+                yuzuConfig.set("Renderer", "resolution_setup", "2")
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "true")
 
         # Scaling filter
         if system.isOptSet('scale_filter'):
