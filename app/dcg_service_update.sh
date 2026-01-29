@@ -110,7 +110,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de Game Controller DB SDL"
     curl -sL "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
-    curl -sL "$ULR_BIN/folder-open" -o "$DIR_SWITCH_LOCAL_BIN/folder-open"
+    curl -sL "$ULR_BIN/folder-open" -o "$DIR_SWITCH_LOCAL_BIN/xdgfix/xdg-open"
     echo "[$(date)] $ULR_BIN/folder-open vers $DIR_SWITCH_LOCAL_BIN/xdgfix/xdg-open"
     echo "[$(date)] Mise à jour de bin/xdgfix/xdg-open"
 
@@ -118,14 +118,14 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de configgen-version.txt"
 
     # Mise à jour du Switch Features
-    curl -fL \
+    curl -fsL \
     "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/configs/emulationstation/es_features_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
 
     echo "[$(date)] Mise à jour de es_features_switch"
 
     # Mise à jour du Switch System
-    curl -fL \
+    curl -fsL \
     "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/configs/emulationstation/es_systems_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_systems_switch.cfg"
 
