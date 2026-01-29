@@ -25,6 +25,7 @@ from configgen.input import Input, InputDict, InputMapping
 
 
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/configgen/sdl2/"
+os.environ["PATH"] = "/userdata/system/switch/bin/xdgfix:" + os.environ.get("PATH", "")
 
 import sdl2
 from sdl2 import joystick
@@ -266,14 +267,14 @@ class RyujinxGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/mods"))
 
         # Ryujinx User XDG 
-        if os.path.exists("/userdata/system/switch/bin/folder-open"):
-            st = os.stat("/userdata/system/switch/bin/folder-open")
-            os.chmod("/userdata/system/switch/bin/folder-open", st.st_mode | stat.S_IEXEC)
+        if os.path.exists("/userdata/system/switch/bin/xdgfig/xdg-open"):
+            st = os.stat("/userdata/system/switch/bin/xdgfig/xdg-open")
+            os.chmod("/userdata/system/switch/bin/xdgfig/folder-open", st.st_mode | stat.S_IEXEC)
             
-        ensure_symlink(
-            "/userdata/system/switch/bin/folder-open",
-            "/usr/bin/xdg-open"
-        )
+        # ensure_symlink(
+        #     "/userdata/system/switch/bin/folder-open",
+        #     "/usr/bin/xdg-open"
+        # )
 
 
     #Link Ryujinx User save/mods folder (bis/user)/(bis/system/save)

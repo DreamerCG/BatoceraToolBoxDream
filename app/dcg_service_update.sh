@@ -84,10 +84,10 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
     URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/images"
 
-
     mkdir -p "$DIR_TOOLBOX"
     mkdir -p "$DIR_CONFIGGEN"
     mkdir -p "$DIR_GENERATOR"
+    mkdir -p "$DIR_SWITCH_LOCAL_BIN/xdgfix"
     mkdir -p "$DIR_ROM_IMAGES_SWITCH"
 
 	echo "[$(date)] Configgen Local Dir   : $DIR_CONFIGGEN"
@@ -111,8 +111,8 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
     curl -L "$ULR_BIN/folder-open" -o "$DIR_SWITCH_LOCAL_BIN/folder-open"
-    echo "[$(date)] $ULR_BIN/folder-open vers $DIR_SWITCH_LOCAL_BIN/folder-open"
-    echo "[$(date)] Mise à jour de bin/folder-open"
+    echo "[$(date)] $ULR_BIN/folder-open vers $DIR_SWITCH_LOCAL_BIN/xdgfix/xdg-open"
+    echo "[$(date)] Mise à jour de bin/xdgfix/xdg-open"
 
     curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
     echo "[$(date)] Mise à jour de configgen-version.txt"
