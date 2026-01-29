@@ -73,6 +73,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     DIR_ROM_SWITCH="/userdata/roms/switch"
     DIR_ROM_IMAGES_SWITCH="/userdata/roms/switch/images"
     DIR_ROM_PORT="/userdata/roms/ports"
+    DIR_SWITCH_LOCAL_BIN="/userdata/system/switch/bin"
     DIR_CONFIGGEN="/userdata/system/switch/configgen"
     DIR_GENERATOR="/userdata/system/switch/configgen/generators"
 
@@ -109,7 +110,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de Game Controller DB SDL"
     curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
-    curl -L "$ULR_BIN/generators/folder-open" -o "$DIR_GENERATOR/folder-open"
+    curl -L "$ULR_BIN/folder-open" -o "$DIR_SWITCH_LOCAL_BIN/folder-open"
     echo "[$(date)] Mise à jour de bin/folder-open"
 
     curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
