@@ -79,6 +79,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     # echo "[$(date)] DEBUG folder_version=$folder_update_version"
 
     URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/switch/configgen/"
+    ULR_BIN="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/switch/extra/packages/"
 	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
     URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/images"
 
@@ -108,6 +109,9 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de Game Controller DB SDL"
     curl -L "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
+    curl -L "$ULR_BIN/generators/folder-open" -o "$DIR_GENERATOR/folder-open"
+    echo "[$(date)] Mise à jour de bin/folder-open"
+
     curl -L "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
     echo "[$(date)] Mise à jour de configgen-version.txt"
 

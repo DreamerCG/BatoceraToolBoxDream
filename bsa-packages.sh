@@ -50,6 +50,10 @@ unpack_packages_common() {
 	# UNPACK NSZ
 	unpack_packages_nsz
 
+	#Install Folder Open Hack Fix of XDG OPEN
+	bin_folder_open = folder-open
+	copy_make_executable "$bin_folder_open" "$switch_install_script_dir" "$switch_bin_dir"
+
 	# INSTALL XDOTOOL
 	# DOWNLOAD XDOTOOL IF MISSING
 	pkg_desc="XDOTOOL"

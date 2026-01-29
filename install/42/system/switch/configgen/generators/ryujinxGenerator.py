@@ -51,6 +51,17 @@ def getCurrentCard() -> str | None:
     for val in out.decode().splitlines():
         return val # return the first line
 
+def ensure_symlink(target, link_path):
+    if os.path.exists(link_path):
+        if not os.path.islink(link_path):
+            shutil.rmtree(link_path)
+            os.symlink(target, link_path)
+        else:
+            if os.readlink(link_path) != target:
+                os.unlink(link_path)
+                os.symlink(target, link_path)
+    else:
+        os.symlink(target, link_path)
 
 def sdlmapping_to_controller(mapping, guid):
 
@@ -253,6 +264,13 @@ class RyujinxGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/save/save_user"))
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/save/save_system"))
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/mods"))
+
+        # Yuzu User XDG 
+        ensure_symlink(
+            "/userdata/system/switch/bin/folder-open",
+            "/usr/bin/xdg-open"
+        )
+
 
     #Link Ryujinx User save/mods folder (bis/user)/(bis/system/save)
         # #USER SAVE (bis/user)-------
