@@ -623,15 +623,15 @@ class RyujinxGenerator(Generator):
         else:
             data['enable_texture_recompression'] = False
 
-        dri_path = getCurrentCard()
+        # dri_path = getCurrentCard()
 
-        with open(dri_path + '/device/vendor', "r") as vendor_file:
-            vendor_id = vendor_file.read().strip().upper().replace("0X","0x")
+        # with open(dri_path + '/device/vendor', "r") as vendor_file:
+        #     vendor_id = vendor_file.read().strip().upper().replace("0X","0x")
 
-        with open(dri_path + '/device/device', "r") as device_file:
-            device_id = device_file.read().strip().upper().replace("0X","0x")
+        # with open(dri_path + '/device/device', "r") as device_file:
+        #     device_id = device_file.read().strip().upper().replace("0X","0x")
 
-        data['preferred_gpu'] = vendor_id + '_' + device_id
+        # data['preferred_gpu'] = vendor_id + '_' + device_id
 
         with open(RyujinxConfigFile, "w") as outfile:
             outfile.write(json.dumps(data, indent=2))
