@@ -30,6 +30,9 @@ post_install_common() {
 		message "both" "$addon_log" "- Preconfiguration en FR pour la switch"		
 	fi
 
+	# Fix No bezel for Switch
+	grep -q "^switch.bezel=" "$CONFIG_FILE" || echo "switch.bezel=none" >> "$CONFIG_FILE"
+
 	# Installation de la base de donnes SDL Controller port
 	cp -f "$switch_install_script_dir/install/gamecontrollerdb.txt" "$switch_configgen_dir/gamecontrollerdb.txt" 2>>"$stderr_log"	
 
