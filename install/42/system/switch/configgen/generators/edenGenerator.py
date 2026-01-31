@@ -570,7 +570,7 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\name", "Exit citron")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\group", "Main Window")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\keyseq", "Ctrl+Q")
-        yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\controller_keyseq", "Y+ZL")
+        yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\controller_keyseq", "Minus+Plus")        
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\context", "1")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\repeat", "false")
 
