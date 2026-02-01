@@ -408,11 +408,6 @@ class RyujinxGenerator(Generator):
         else:
             data['docked_mode'] = bool(1)
 
-        if system.isOptSet('ryu_enable_discord_integration'):
-            data['enable_discord_integration'] = bool(int(system.config["ryu_enable_discord_integration"]))
-        else:
-            data['enable_discord_integration'] = bool(1)
-
         #V-Sync
         if system.isOptSet('ryu_vsync'):
             data['enable_vsync'] = bool(int(system.config["ryu_vsync"]))

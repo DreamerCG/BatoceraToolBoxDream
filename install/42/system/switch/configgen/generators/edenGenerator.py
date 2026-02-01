@@ -549,11 +549,6 @@ class EdenGenerator(Generator):
         if not yuzuConfig.has_section("UI"):
             yuzuConfig.add_section("UI")
 
-        if system.isOptSet('yuzu_enable_discord_presence'):
-            yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
-        else:
-            yuzuConfig.set("UI", "enable_discord_presence", "false")
-
         yuzuConfig.set("UI", "enable_discord_presence\\default", "false")
 
         yuzuConfig.set("UI", "check_for_updates_on_start", "false")
@@ -914,6 +909,16 @@ class EdenGenerator(Generator):
                 yuzuConfig.set("Controls", player_nb_str + "_connected\\default", "false")
                 yuzuConfig.set("Controls", player_nb_str + "_vibration_enabled", "true")
                 yuzuConfig.set("Controls", player_nb_str + "_vibration_enabled\\default", "false")
+                
+                # Vibration
+                if system.isOptSet('yuzu_rumble'):
+                    yuzuConfig.set("Controls", player_nb_str + "_vibration_enabled", system.config["yuzu_rumble"])
+                    yuzuConfig.set("Controls", player_nb_str + "_vibration_enabled\\default", "false")
+                else:
+                    yuzuConfig.set("Controls", player_nb_str + "_vibration_enabled", "true")
+                    yuzuConfig.set("Controls", player_nb_str + "_vibration_enabled\\default", "true")
+                
+                
                 nplayer += 1
         else:
             if yuzuoldConfig is not None:
