@@ -388,6 +388,10 @@ class EdenGenerator(Generator):
         if not os.path.exists("/userdata/system/configs/"+emudir):
             st = os.symlink("/userdata/system/configs/yuzu","/userdata/system/configs/"+emudir)
 
+        cachedir = ".cache/" + emudir
+        mkdir_if_not_exists(Path("/userdata/system/.cache"))
+        mkdir_if_not_exists(Path("/userdata/system/" + cachedir))
+
         #Create Save/Mods Folder
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/user/save"))
@@ -484,9 +488,15 @@ class EdenGenerator(Generator):
                         "XDG_CONFIG_DIRS":"/etc/xdg",
                         "XDG_CURRENT_DESKTOP":"XFCE",
                         "DESKTOP_SESSION":"XFCE",
+                        "SDL_JOYSTICK_HIDAPI":"1",
+                        "SDL_JOYSTICK_HIDAPI_STEAMDECK":"0",
+                        "SDL_JOYSTICK_HIDAPI_PS4":"0",
+                        "SDL_JOYSTICK_HIDAPI_PS5":"0",
+                        "SDL_JOYSTICK_HIDAPI_SWITCH":"0",
+                        "SDL_JOYSTICK_HIDAPI_XBOX":"0",                        
                         "XDG_CONFIG_HOME":"/userdata/system/configs",
                         "XDG_DATA_HOME":"/userdata/system/configs",
-                        "XDG_CACHE_HOME":"/userdata/system/configs",
+                        "XDG_CACHE_HOME":"/userdata/system/.cache",
                         "QT_FONT_DPI":"96",
                         "QT_SCALE_FACTOR":"1",
                         "GDK_SCALE":"1",
@@ -535,13 +545,19 @@ class EdenGenerator(Generator):
         # ini file
         yuzuConfig = CaseSensitiveRawConfigParser()
         yuzuConfig.optionxform=str
-        yuzuoldConfig = CaseSensitiveRawConfigParser()
-        yuzuoldConfig.optionxform=str
+        # yuzuoldConfig = CaseSensitiveRawConfigParser()
+        # yuzuoldConfig.optionxform=str
+
+        # if os.path.exists(yuzuConfigFile):
+        #     yuzuoldConfig.read(yuzuConfigFile)
+
+        # if os.path.exists(yuzuConfigTemplateFile):
+        #     yuzuConfig.read(yuzuConfigTemplateFile)
 
         if os.path.exists(yuzuConfigFile):
-            yuzuoldConfig.read(yuzuConfigFile)
-
-        if os.path.exists(yuzuConfigTemplateFile):
+            yuzuConfig.read(yuzuConfigFile)
+        # Sinon première création depuis template
+        elif os.path.exists(yuzuConfigTemplateFile):
             yuzuConfig.read(yuzuConfigTemplateFile)
 
 
@@ -557,10 +573,13 @@ class EdenGenerator(Generator):
         if emulator == "citron-emu":
             yuzuConfig.set("UI", "UIGameList\\cache_game_list", "false")
             yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "false")
-
+        else:
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list", "true")
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "true")
 
         #citron shortcuts
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\size", "1")#adjust to number of shortcut sets
+        
         #exit citron
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\name", "Exit citron")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\group", "Main Window")
@@ -568,6 +587,33 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\controller_keyseq", "Minus+Plus")        
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\context", "1")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\repeat", "false")
+
+
+        #exit eden
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\KeySeq", "Ctrl+Q")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Controller_KeySeq", "Minus+Plus")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Context\\default", "true")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Context", "1")
+
+        #fullscreen eden
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\KeySeq", "F11")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Controller_KeySeq", "Home+B")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Context\\default", "true")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Context", "1")
+
+        #pause eden
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\KeySeq", "F4")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Controller_KeySeq", "")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Context\\default", "true")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Context", "1")
+
+
 
         yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan", "true")
         yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan\\default", "false")
@@ -920,11 +966,11 @@ class EdenGenerator(Generator):
                 
                 
                 nplayer += 1
-        else:
-            if yuzuoldConfig is not None:
-                old_controls = yuzuoldConfig.items("Controls")
-                for option, value in old_controls:
-                    yuzuConfig.set("Controls", option, value)
+        # else:
+        #     if yuzuoldConfig is not None:
+        #         old_controls = yuzuoldConfig.items("Controls")
+        #         for option, value in old_controls:
+        #             yuzuConfig.set("Controls", option, value)
 
     # telemetry section
         if not yuzuConfig.has_section("WebService"):
