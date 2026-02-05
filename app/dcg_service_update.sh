@@ -98,6 +98,8 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     # Téléchargement des nouveaux fichiers
     curl -sL "$URL_BASE/configgen-defaults.yml" -o "$DIR_CONFIGGEN/configgen-defaults.yml"
     echo "[$(date)] Mise à jour de configgen-defaults.yml"
+    curl -sL "$URL_BASE/qt-config.ini.template" -o "$DIR_CONFIGGEN/qt-config.ini.template"
+    echo "[$(date)] Mise à jour de qt-config.ini.template"    
     curl -sL "$URL_BASE/configgen-defaults-arch.yml" -o "$DIR_CONFIGGEN/configgen-defaults-arch.yml"
     echo "[$(date)] Mise à jour de configgen-defaults-arch.yml"
     curl -sL "$URL_BASE/switchlauncher.py" -o "$DIR_CONFIGGEN/switchlauncher.py"
