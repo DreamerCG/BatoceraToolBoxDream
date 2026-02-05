@@ -545,14 +545,6 @@ class EdenGenerator(Generator):
         # ini file
         yuzuConfig = CaseSensitiveRawConfigParser()
         yuzuConfig.optionxform=str
-        # yuzuoldConfig = CaseSensitiveRawConfigParser()
-        # yuzuoldConfig.optionxform=str
-
-        # if os.path.exists(yuzuConfigFile):
-        #     yuzuoldConfig.read(yuzuConfigFile)
-
-        # if os.path.exists(yuzuConfigTemplateFile):
-        #     yuzuConfig.read(yuzuConfigTemplateFile)
 
         if os.path.exists(yuzuConfigFile):
             yuzuConfig.read(yuzuConfigFile)
@@ -993,6 +985,7 @@ class EdenGenerator(Generator):
 
         with open(yuzuConfigFile, 'w') as configfile:
             yuzuConfig.write(configfile)
+
 
     @staticmethod
     def setButton(emulator, key, padGuid, padInputs, port):
