@@ -321,7 +321,10 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/Contents"))
-
+        mkdir_if_not_exists(Path("/userdata/roms/switch_update"))
+        mkdir_if_not_exists(Path("/userdata/roms/switch_update/dlc"))
+        mkdir_if_not_exists(Path("/userdata/roms/switch_update/update"))
+        
         #Link Yuzu firmware/key folder
         # YUZU KEYS
         ensure_symlink(
@@ -474,11 +477,18 @@ class EdenGenerator(Generator):
                         "XDG_CONFIG_DIRS":"/etc/xdg",
                         "XDG_CURRENT_DESKTOP":"XFCE",
                         "DESKTOP_SESSION":"XFCE",
-
+                        "SDL_JOYSTICK_HIDAPI":"1",
+                        "SDL_JOYSTICK_HIDAPI_STEAMDECK":"0",
+                        "SDL_JOYSTICK_HIDAPI_PS4":"0",
+                        "SDL_JOYSTICK_HIDAPI_PS5":"0",
+                        "SDL_JOYSTICK_HIDAPI_SWITCH":"0",
+                        "SDL_JOYSTICK_HIDAPI_XBOX":"0",   
                         "QT_FONT_DPI":"96",
                         "QT_SCALE_FACTOR":"1",
                         "GDK_SCALE":"1",
-                        "XDG_CACHE_HOME":"/userdata/system/.cache",
+                        "XDG_CONFIG_HOME":"/userdata/system/configs",
+                        "XDG_DATA_HOME":"/userdata/system/configs",
+                        "XDG_CACHE_HOME":"/userdata/system/.cache",                        
                         "QT_QPA_PLATFORM": "xcb",
                         "USER":"root",
                         "LANG":"en_US.UTF-8",
@@ -547,8 +557,21 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "check_for_updates_on_start", "false")
         yuzuConfig.set("UI", "check_for_updates_on_start\\default", "false")
 
+        if emulator == "citron-emu":
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list", "false")
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "false")
+        else:
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list", "true")
+            yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "true")
+
+        if emulator == "eden-emu":
+            yuzuConfig.set("UI", "Paths\\external_content_dirs\\size", "2")
+            yuzuConfig.set("UI", "Paths\\external_content_dirs\\1\\path", "/userdata/roms/switch_update/dlc/")
+            yuzuConfig.set("UI", "Paths\\external_content_dirs\\2\\path", "/userdata/roms/switch_update/update/")
+
         #citron shortcuts
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\size", "1")#adjust to number of shortcut sets
+        
         #exit citron
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\name", "Exit citron")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\group", "Main Window")
@@ -556,6 +579,39 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\controller_keyseq", "Y+ZL")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\context", "1")
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\1\\repeat", "false")
+
+        #exit eden
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\KeySeq", "Ctrl+Q")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Controller_KeySeq", "Minus+Plus")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Context\\default", "true")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Exit%20eden\\Context", "1")
+
+        #fullscreen eden
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\KeySeq", "F11")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Controller_KeySeq", "Home+B")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Context\\default", "true")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Fullscreen\\Context", "1")
+
+        #pause eden
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\KeySeq", "F4")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Controller_KeySeq\\default", "false")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Controller_KeySeq", "")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Context\\default", "true")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Continue\\Pause%20Emulation\\Context", "1")
+
+
+        yuzuConfig.set("UI", "Paths\\romsPath", "/userdata/roms/switch")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\deep_scan\\default", "false")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\expanded", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\expanded\\default", "true")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\1\\path", "/userdata/roms/switch")
+        yuzuConfig.set("UI", "Paths\\gamedirs\\size", "3")
 
         # Interface language (citron)
         if system.isOptSet('yuzu_intlanguage'):
