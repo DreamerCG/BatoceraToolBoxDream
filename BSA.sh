@@ -259,7 +259,7 @@ install_menu() {
 	local menu_items=(
 		"Eden|Installation : Eden|on|fn|install_eden"
 		"Eden-PGO|Installation : Eden-PGO|on|fn|install_eden_pgo"
-		"Citron|Installation : Citron|on|fn|install_citron"
+		# "Citron|Installation : Citron|on|fn|install_citron"
 		"Ryujinx|Installation : Ryujinx|on|fn|install_ryujinx"
 	)
 	unset RAN_POST_INSTALL_COMMON
@@ -281,7 +281,7 @@ updates_menu() {
 		"Eden Remote|Mise à jour Eden |off|fn|update_emulator "eden" "remote""
 		"Eden PGO Remote|Mise à jour Eden PGO |off|fn|update_emulator "eden_pgo" "remote""		
 		# "Citron Local|Mise à jour Citron Local|off|fn|update_emulator "citron" "local""
-		"Citron Remote|Mise à jour Citron |off|fn|update_emulator "citron" "remote""
+		# "Citron Remote|Mise à jour Citron |off|fn|update_emulator "citron" "remote""
 		# "Ryujinx Local|Mise à jour Ryujinx Local|off|fn|update_emulator "ryujinx" "local""
 		"Ryujinx Remote|Mise à jour Ryujinx |off|fn|update_emulator "ryujinx" "remote""
 	)
