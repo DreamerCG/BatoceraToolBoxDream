@@ -219,7 +219,8 @@ install_emulator_citron() {
     # Version = avant @
     version="${tag_decoded%%@*}"
 
-    citron_install_url="https://github.com/pkgforge-dev/Citron-AppImage/releases/download/$tag_decoded/Citron-$version-anylinux-x86_64.AppImage"
+    # citron_install_url="https://github.com/pkgforge-dev/Citron-AppImage/releases/download/$tag_decoded/Citron-$version-anylinux-x86_64.AppImage"
+    citron_install_url="https://foclabroc.freeboxos.fr:55973/share/h8_4jY4c_fFsHWrf/citron-emu(2026.02.1-Pathfinder).AppImage"
 
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$citron_install_url" "$switch_install_emus_dir/$citron_install_file" "Citron"
