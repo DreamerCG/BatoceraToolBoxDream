@@ -21,12 +21,13 @@ if "-rom" in sys.argv:
 if "-emulator" in sys.argv:
     emulator_name = sys.argv[sys.argv.index("-emulator") + 1]
 
-def _new_get_generator(emulator: str):
+def _new_get_generator(emulator: str, core: str | None = None):
     
     yuzuemu = {}
     yuzuemu['eden-emu'] = 1
     yuzuemu['citron-emu'] = 1
     yuzuemu['eden-pgo'] = 1
+    yuzuemu['eden-nightly'] = 1
 
     rom_nameq = os.path.basename(rom)
     if rom_nameq == 'ryujinx_config.xci_config':
@@ -44,7 +45,7 @@ def _new_get_generator(emulator: str):
         return RyujinxGenerator()
 
     #fallback to batocera generators
-    return get_generator(emulator)
+    return get_generator(emulator, core)
     
 from configgen.batoceraPaths import DEFAULTS_DIR
 
