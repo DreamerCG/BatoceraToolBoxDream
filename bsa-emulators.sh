@@ -47,9 +47,7 @@ install_emulator_yuzu() {
 install_emulator_eden() {
 
     # Latest version
-    eden_release_version="$(curl -Ls https://git.eden-emu.dev/eden-emu/eden/releases/latest \
-        | grep -o '"tag_name": *"[^"]*"' \
-        | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
+    eden_release_version="$(curl -s https://git.eden-emu.dev/api/v1/repos/eden-emu/eden/releases/latest | jq -r .tag_name)"
 
     # Detect platform
     pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
@@ -87,9 +85,7 @@ install_emulator_eden() {
 install_emulator_eden_pgo() {
 
     # Latest version
-    eden_release_version="$(curl -Ls https://git.eden-emu.dev/eden-emu/eden/releases/latest \
-        | grep -o '"tag_name": *"[^"]*"' \
-        | sed -E 's/.*"tag_name":\s*"([^"]*)".*/\1/')"
+    eden_release_version="$(curl -s https://git.eden-emu.dev/api/v1/repos/eden-emu/eden/releases/latest | jq -r .tag_name)"
 
     # Detect platform
     pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
@@ -124,19 +120,14 @@ install_emulator_eden_pgo() {
 
 
 
-install_emulator_citron_final() {
+install_emulator_citron() {
 	message "log" "$addon_log" "<<< [ INSTALL : CITRON ]>>>"
 
 	# INSTALL/UNPACK EMULATOR
 	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
 	message "log" "$addon_log" "Installing Citron Emulator App"
 	# Get lastest version from database & set the version for download
-	citron_release_html=""
-		citron_release_version="$(curl -Ls https://git.citron-emu.org/Citron/Emulator/releases | grep -Eo '/Citron/Emulator/releases/download/[0-9]+\.[0-9]+\.[0-9]+' | sed -E 's#.*/download/##' | sort -V | tail -n1)"
-	citron_commit_version="$(curl -Ls https://git.citron-emu.org/Citron/Emulator/releases | grep -Eo '/Citron/Emulator/src/commit/[a-f0-9]+' | head -n1 | sed -E 's#.*/commit/([a-f0-9]{9}).*#\1#')"
-	# citron_install_url="https://git.citron-emu.org/Citron/Emulator/releases/download/${citron_release_version}/citron_stable-${citron_commit_version}-linux-x86_64.AppImage"
     citron_install_url="https://foclabroc.freeboxos.fr:55973/share/h8_4jY4c_fFsHWrf/citron-emu(2026.02.1-Pathfinder).AppImage"
-
 
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$citron_install_url" "$switch_install_emus_dir/$citron_install_file" "Citron"
@@ -146,7 +137,7 @@ install_emulator_citron_final() {
 }
 
 # Version PKG FORGE - Spécial Thanks @Foclabroc
-install_emulator_citron() {
+install_emulator_citron_old() {
 
 	message "log" "$addon_log" "<<< [ INSTALL : CITRON ]>>>"
 
