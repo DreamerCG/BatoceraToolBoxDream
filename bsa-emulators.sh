@@ -136,51 +136,6 @@ install_emulator_citron() {
 	fi
 }
 
-# Version PKG FORGE - Spécial Thanks @Foclabroc
-install_emulator_citron_old() {
-
-	message "log" "$addon_log" "<<< [ INSTALL : CITRON ]>>>"
-
-	# INSTALL/UNPACK EMULATOR
-	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
-	message "log" "$addon_log" "Installing Citron Emulator App"
-	# Get lastest version from database & set the version for download
-    page=$(curl -Ls "https://github.com/pkgforge-dev/Citron-AppImage/tags")
-
-    if [[ -z "$page" ]]; then
-        echo "ERROR Citron: unable to download tags page"
-        echo "STATUS_CITRON=ERREUR" >> "$STATUS_FILE"
-        return
-    fi
-
-    # Dernier tag stable (URL encodé)
-    tag=$(echo "$page" |
-        grep -Eo '/pkgforge-dev/Citron-AppImage/releases/tag/[^"]+' |
-        grep -v nightly |
-        head -n1 |
-        sed 's#.*/##')
-
-    if [[ -z "$tag" ]]; then
-        echo "ERROR Citron: no stable tag found"
-        echo "STATUS_CITRON=ERREUR" >> "$STATUS_FILE"
-        return
-    fi
-
-    # Décodage %40 ? @
-    tag_decoded="${tag//%40/@}"
-
-    # Version = avant @
-    version="${tag_decoded%%@*}"
-
-    # citron_install_url="https://github.com/pkgforge-dev/Citron-AppImage/releases/download/$tag_decoded/Citron-$version-anylinux-x86_64.AppImage"
-    citron_install_url="https://foclabroc.freeboxos.fr:55973/share/h8_4jY4c_fFsHWrf/citron-emu(2026.02.1-Pathfinder).AppImage"
-
-	# If missing from local storage then attempt to download latest version
-	download_missing_file "$citron_install_url" "$switch_install_emus_dir/$citron_install_file" "Citron"
-	if [ $wget_exit_code -eq 0 ]; then
-		copy_make_executable "$citron_install_file" "$switch_install_emus_dir" "$citron_emu_dir"
-	fi
-}
 
 
 
