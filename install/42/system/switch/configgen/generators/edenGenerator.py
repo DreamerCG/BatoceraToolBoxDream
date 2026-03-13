@@ -572,10 +572,10 @@ class EdenGenerator(Generator):
             yuzuConfig.set("UI", "UIGameList\\cache_game_list", "true")
             yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "true")
 
-        if emulator == "eden-emu":
-            yuzuConfig.set("UI", "Paths\\external_content_dirs\\size", "2")
-            yuzuConfig.set("UI", "Paths\\external_content_dirs\\1\\path", "/userdata/roms/switch_update/dlc/")
-            yuzuConfig.set("UI", "Paths\\external_content_dirs\\2\\path", "/userdata/roms/switch_update/update/")
+        # Common external path (dlc/update)
+        yuzuConfig.set("UI", "Paths\\external_content_dirs\\size", "2")
+        yuzuConfig.set("UI", "Paths\\external_content_dirs\\1\\path", "/userdata/roms/switch_update/dlc/")
+        yuzuConfig.set("UI", "Paths\\external_content_dirs\\2\\path", "/userdata/roms/switch_update/update/")
 
         #citron shortcuts
         yuzuConfig.set("UI", "Shortcuts\\shortcuts\\size", "1")#adjust to number of shortcut sets
@@ -645,6 +645,16 @@ class EdenGenerator(Generator):
         else:
             yuzuConfig.set("UI", "select_user_on_boot", "true")
             yuzuConfig.set("UI", "select_user_on_boot\\default", "true")
+
+        # Skip Citron animation/message
+        yuzuConfig.set("UI", "showIntroAnimation", "false")
+        yuzuConfig.set("UI", "showIntroAnimation\\default", "false")
+        yuzuConfig.set("UI", "farewellShown", "true")
+        yuzuConfig.set("UI", "farewellShown\\default", "false")
+
+        # Confirm exit off
+        yuzuConfig.set("UI", "confirmStop", "2")
+        yuzuConfig.set("UI", "confirmStop\\default", "false")
 
 
     # Core section

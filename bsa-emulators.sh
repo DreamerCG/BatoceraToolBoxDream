@@ -127,7 +127,7 @@ install_emulator_citron() {
 	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
 	message "log" "$addon_log" "Installing Citron Emulator App"
 	# Get lastest version from database & set the version for download
-    citron_install_url="https://foclabroc.freeboxos.fr:55973/share/h8_4jY4c_fFsHWrf/citron-emu(2026.02.1-Pathfinder).AppImage"
+    citron_install_url="https://foclabroc.freeboxos.fr:55973/share/oZ4k4wPXDTu-fy3g/citron-emu(2026.03.12).AppImage"
 
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$citron_install_url" "$switch_install_emus_dir/$citron_install_file" "Citron"
