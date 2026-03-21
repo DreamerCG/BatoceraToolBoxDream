@@ -609,7 +609,7 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\KeySeq\\default", "false")
         yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\KeySeq", "Ctrl+v")
         yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\Controller_KeySeq\\default", "false")
-        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\Controller_KeySeq", "Home+X")
+        yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\Controller_KeySeq", "Home+Y")
         yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\Context\\default", "true")
         yuzuConfig.set("UI", "Shortcuts\\Main%20Window\\Toggle%20Performance%20Overlay\\Context", "0")
         
