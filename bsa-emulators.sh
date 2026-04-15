@@ -7,7 +7,7 @@ SOURCED_EMULATORS=true
 
 
 # INSTALL RYUJINX APPIMAGE
-install_emulator_ryujinx() {
+install_emulator_ryujinx_old() {
 	message "log" "$addon_log" "<<< [ INSTALL RYUJINX APPIMAGE ]>>>"
 
 	# INSTALL/UNPACK EMULATOR
@@ -24,6 +24,24 @@ install_emulator_ryujinx() {
 	fi
 }
 
+
+# INSTALL RYUJINX APPIMAGE
+install_emulator_ryujinx() {
+	message "log" "$addon_log" "<<< [ INSTALL RYUJINX APPIMAGE ]>>>"
+
+	# INSTALL/UNPACK EMULATOR
+	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
+	message "log" "$addon_log" "Installing Ryujinx Emulator App"
+	# Get lastest version from database & set the version for download
+	ryujinx_release_html="$(curl -s "https://git.ryujinx.app/Ryubing/Canary/releases")"
+	ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/1.3.269/ryujinx-canary-1.3.269-x64.AppImage"
+	
+	# If missing from local storage then attempt to download latest version
+	download_missing_file "$ryujinx_install_url" "$switch_install_emus_dir/$ryujinx_install_file" "Ryujinx (Ryubing)"
+	if [ $wget_exit_code -eq 0 ]; then
+		copy_make_executable "$ryujinx_install_file" "$switch_install_emus_dir" "$ryujinx_emu_dir"
+	fi
+}
 
 # INSTALL YUZU APPIMAGE
 install_emulator_yuzu() {
