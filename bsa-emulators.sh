@@ -24,7 +24,6 @@ install_emulator_ryujinx_old() {
 	fi
 }
 
-
 # INSTALL RYUJINX APPIMAGE
 install_emulator_ryujinx() {
 	message "log" "$addon_log" "<<< [ INSTALL RYUJINX APPIMAGE ]>>>"
@@ -33,9 +32,15 @@ install_emulator_ryujinx() {
 	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
 	message "log" "$addon_log" "Installing Ryujinx Emulator App"
 	# Get lastest version from database & set the version for download
-	ryujinx_release_html="$(curl -s "https://git.ryujinx.app/Ryubing/Canary/releases")"
-	ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/1.3.269/ryujinx-canary-1.3.269-x64.AppImage"
-	
+	ryujinx_release_html="$(curl -s "https://git.ryujinx.app/Ryubing/Canary/releases" | jq -r .tag_name)"
+    # Récupère la première version trouvée
+    release=$(echo "$ryujinx_release_html" \
+        | grep -oP 'releases/download/\K[0-9.]+' \
+        | head -n1)    
+    ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/${release}/ryujinx-canary-${release}-x64.AppImage"
+    
+    message "both" "$addon_log" "Ryujinx Version : $release"
+
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$ryujinx_install_url" "$switch_install_emus_dir/$ryujinx_install_file" "Ryujinx (Ryubing)"
 	if [ $wget_exit_code -eq 0 ]; then
@@ -59,13 +64,11 @@ install_emulator_yuzu() {
 	fi
 }
 
-
-
 # INSTALL EDEN APPIMAGE
 install_emulator_eden() {
 
     # Latest version
-    eden_release_version="$(curl -s https://git.eden-emu.dev/api/v1/repos/eden-emu/eden/releases/latest | jq -r .tag_name)"
+    eden_release_version="$(curl -s https://stable.eden-emu.dev/latest/release.json | jq -r .tag_name)"
 
     # Detect platform
     pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
@@ -85,8 +88,8 @@ install_emulator_eden() {
             ;;
     esac
 
-    eden_install_url="https://git.eden-emu.dev/eden-emu/eden/releases/download/${eden_release_version}/${eden_appimage}"
-
+    eden_install_url="https://stable.eden-emu.dev/${eden_release_version}/${eden_appimage}"
+   
     message "both" "$addon_log" "Platform detected : $platform"
     message "both" "$addon_log" "Eden Version : $eden_appimage"
     message "both" "$addon_log" "Download URL       : $eden_install_url"
@@ -98,12 +101,10 @@ install_emulator_eden() {
     fi
 }
 
-
-
 install_emulator_eden_pgo() {
 
     # Latest version
-    eden_release_version="$(curl -s https://git.eden-emu.dev/api/v1/repos/eden-emu/eden/releases/latest | jq -r .tag_name)"
+    eden_release_version="$(curl -s https://stable.eden-emu.dev/latest/release.json | jq -r .tag_name)"
 
     # Detect platform
     pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
@@ -123,7 +124,7 @@ install_emulator_eden_pgo() {
             ;;
     esac
 
-    eden_install_url="https://git.eden-emu.dev/eden-emu/eden/releases/download/${eden_release_version}/${eden_appimage}"
+    eden_install_url="https://stable.eden-emu.dev/${eden_release_version}/${eden_appimage}"
 
     message "both" "$addon_log" "Platform detected : $platform"
     message "both" "$addon_log" "Eden Version : $eden_appimage"
@@ -135,6 +136,43 @@ install_emulator_eden_pgo() {
         copy_make_executable "$eden_pgo_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
     fi
 }
+
+
+# install_emulator_eden_nightly() {
+
+#     # Latest version
+#     eden_release_version="$(curl -s https://nightly.eden-emu.dev/latest/release.json | jq -r .tag_name)"
+
+#     # Detect platform
+#     pname="$(tr '[:upper:]' '[:lower:]' < /sys/class/dmi/id/product_name 2>/dev/null)"
+
+#     case "$pname" in
+#         jupiter|galileo|*"steam deck"*)
+#             platform="steamdeck"
+#             eden_appimage="Eden-Linux-${eden_release_version}-steamdeck-gcc-standard.AppImage"
+#             ;;
+#         *rc71l*|*"rog ally"*|*"rog-ally"*)
+#             platform="rog-ally"
+#             eden_appimage="Eden-Linux-${eden_release_version}-rog-ally-gcc-standard.AppImage"
+#             ;;
+#         *)
+#             platform="generic"
+#             eden_appimage="Eden-Linux-${eden_release_version}-amd64-gcc-standard.AppImage"
+#             ;;
+#     esac
+
+#     eden_install_url="https://nightly.eden-emu.dev/${eden_release_version}/${eden_appimage}"
+   
+#     message "both" "$addon_log" "Platform detected : $platform"
+#     message "both" "$addon_log" "Eden Version : $eden_appimage"
+#     message "both" "$addon_log" "Download URL       : $eden_install_url"
+
+#     # Download & install
+#     download_missing_file "$eden_install_url" "$switch_install_emus_dir/$eden_install_file" "Eden"
+#     if [ $wget_exit_code -eq 0 ]; then
+#         copy_make_executable "$eden_install_file" "$switch_install_emus_dir" "$eden_emu_dir"
+#     fi
+# }
 
 
 
