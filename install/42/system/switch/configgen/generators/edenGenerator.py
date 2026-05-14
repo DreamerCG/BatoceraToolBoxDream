@@ -565,6 +565,10 @@ class EdenGenerator(Generator):
         yuzuConfig.set("UI", "check_for_updates_on_start", "false")
         yuzuConfig.set("UI", "check_for_updates_on_start\\default", "false")
 
+        yuzuConfig.set("UI", "check_for_updates", "false")
+        yuzuConfig.set("UI", "check_for_updates\\default", "false")
+
+
         if emulator == "citron-emu":
             yuzuConfig.set("UI", "UIGameList\\cache_game_list", "false")
             yuzuConfig.set("UI", "UIGameList\\cache_game_list\\default", "false")
