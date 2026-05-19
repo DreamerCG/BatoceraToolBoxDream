@@ -13,7 +13,7 @@ case "$batocera_version" in
 	41)
 		folder_version=41
 		;;
-	4[2-3])
+	4[2-4])
 		folder_version=42
 		;;
 	*)
