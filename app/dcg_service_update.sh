@@ -118,10 +118,16 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -sL "$VERSION_URL" -o "$DIR_TOOLBOX/configgen-version.txt"
     echo "[$(date)] Mise à jour de configgen-version.txt"
 
+    # Mise à jour du BSA
+    curl -fsL \
+    "https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/refs/heads/main/BSA.sh" \
+    -o "$DIR_EMULATIONSTATION/BSA.sh"
+
+
     # Mise à jour du Switch Features
     curl -fsL \
     "https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/$folder_update_version/system/configs/emulationstation/es_features_switch.cfg" \
-    -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
+    -o "$DIR_TOOLBOX/es_features_switch.cfg"
 
     echo "[$(date)] Mise à jour de es_features_switch"
 
