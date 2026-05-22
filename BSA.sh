@@ -19,7 +19,7 @@ if [ ! -f "$VERSION_FILE" ]; then
 	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
 	echo "========================================="
 	echo
-	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
+	curl -sL https://dreamercg.s.gy/switch | bash
 	curl -sL https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/app/dcg_service_update.sh | bash
 	echo
 	echo "========================================="
@@ -382,7 +382,7 @@ main_menu() {
 
 update_bsa_toolbox() {
                 clear
-                DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash"
+                DISPLAY=:0.0 xterm -fs 12 -maximized -fg white -bg black -fa "DejaVuSansMono" -en UTF-8 -e bash -c "DISPLAY=:0.0  curl -sL https://dreamercg.s.gy/switch | bash"
 }
 
 
