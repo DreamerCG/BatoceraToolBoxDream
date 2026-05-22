@@ -5,7 +5,7 @@ reset
 clear
 
 VERSION_FILE="/userdata/DreamerCGToolBox/version-toolbox.txt"
-VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/refs/heads/main/version-toolbox.txt"
+VERSION_URL="https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/refs/heads/main/version-toolbox.txt"
 
 # Cas 1 : fichier de version absent → installation
 if [ ! -f "$VERSION_FILE" ]; then
@@ -20,7 +20,7 @@ if [ ! -f "$VERSION_FILE" ]; then
 	echo "========================================="
 	echo
 	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
-	curl -sL https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/app/dcg_service_update.sh | bash
+	curl -sL https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/app/dcg_service_update.sh | bash
 	echo
 	echo "========================================="
 	echo "   🔄 Redémarrage EmulationStation       "

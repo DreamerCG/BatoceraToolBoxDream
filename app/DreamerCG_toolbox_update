@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # BATOCERA - SWITCH ADD-ON
 
-curl -sL https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/app/dcg_service_update.sh | bash
+curl -sL https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/app/dcg_service_update.sh | bash

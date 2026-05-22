@@ -5,7 +5,7 @@ LOG_DIR="/userdata/DreamerCGToolBox/logs"
 LOG="$LOG_DIR/update_toolbox.log"
 
 VERSION_FILE="/userdata/DreamerCGToolBox/configgen-version.txt"
-VERSION_URL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/configgen-version.txt"
+VERSION_URL="https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/configgen-version.txt"
 
 echo "[$(date)] Batocera Version   : $VERSION_URL"
 
@@ -79,10 +79,10 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 
     # echo "[$(date)] DEBUG folder_version=$folder_update_version"
 
-    URL_BASE="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/switch/configgen"
-    ULR_BIN="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/switch/extra/packages"
-	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch"
-    URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/roms/switch/images"
+    URL_BASE="https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/$folder_update_version/system/switch/configgen"
+    ULR_BIN="https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/$folder_update_version/system/switch/extra/packages"
+	URL_ROM_INSTALL="https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/roms/switch"
+    URL_ROM_IMAGE_INSTALL="https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/roms/switch/images"
 
     mkdir -p "$DIR_TOOLBOX"
     mkdir -p "$DIR_CONFIGGEN"
@@ -108,7 +108,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     echo "[$(date)] Mise à jour de EdenGenerator"
     curl -sL "$URL_BASE/generators/ryujinxGenerator.py" -o "$DIR_GENERATOR/ryujinxGenerator.py"
     echo "[$(date)] Mise à jour de ryujinxGenerator"
-    curl -sL "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/gamecontrollerdb.txt" -o "$DIR_CONFIGGEN/gamecontrollerdb.txt"
+    curl -sL "https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/gamecontrollerdb.txt" -o "$DIR_CONFIGGEN/gamecontrollerdb.txt"
     echo "[$(date)] Mise à jour de Game Controller DB SDL"
     curl -sL "$URL_BASE/generators/ryujinxloadfirmware.sh" -o "$DIR_GENERATOR/ryujinxloadfirmware.sh"
     echo "[$(date)] Mise à jour de ryujinxloadfirmware"
@@ -120,14 +120,14 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
 
     # Mise à jour du Switch Features
     curl -fsL \
-    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/configs/emulationstation/es_features_switch.cfg" \
+    "https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/$folder_update_version/system/configs/emulationstation/es_features_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_features_switch.cfg"
 
     echo "[$(date)] Mise à jour de es_features_switch"
 
     # Mise à jour du Switch System
     curl -fsL \
-    "https://raw.githubusercontent.com/DreamerCG/BatoceraToolBoxDream/main/install/$folder_update_version/system/configs/emulationstation/es_systems_switch.cfg" \
+    "https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/main/install/$folder_update_version/system/configs/emulationstation/es_systems_switch.cfg" \
     -o "$DIR_EMULATIONSTATION/es_systems_switch.cfg"
 
     echo "[$(date)] Mise à jour de es_systems_switch"
