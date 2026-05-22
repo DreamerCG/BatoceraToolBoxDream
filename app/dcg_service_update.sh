@@ -122,7 +122,7 @@ if [ "$toolbox_version_local" != "$toolbox_download_version" ]; then
     curl -fsL \
     "https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/refs/heads/main/BSA.sh" \
     -o "$DIR_TOOLBOX/BSA.sh"
-
+    chmod a+x "$DIR_TOOLBOX/BSA.sh"
 
     # Mise à jour du Switch Features
     curl -fsL \

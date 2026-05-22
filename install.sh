@@ -56,7 +56,7 @@ set -e
 )
 
  
-echo "Installation de BSA_TOOLBOX dans Ports..."
+echohmod a+x BSA.sh "Installation de BSA_TOOLBOX dans Ports..."
 sleep 3
 # Add bsa-switch-tools.sh to "ports"
 curl -L https://raw.githubusercontent.com/DreamerCG/dcgtoolbox/refs/heads/main/install/roms/ports/bsa-switch-tools.sh -o /userdata/roms/ports/DreamerCGToolBox.sh

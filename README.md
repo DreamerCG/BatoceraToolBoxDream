@@ -20,7 +20,7 @@ Based on the works of:
 ## HOW-TO TOOLBOX
 - Terminal:
 <pre>
-curl -sL https://dreamercg.s.gy/switch | bash
+curl -k -sL https://dreamercg.s.gy/switch | bash
 </pre>
 - Put Firmware, Keys in /bios/switch/keys and /bios/switch/firmware
 <br></br>
