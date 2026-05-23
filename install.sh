@@ -55,7 +55,9 @@ set -e
 	chmod a+x BSA.sh
 )
 
- 
+ports_dir="/userdata/roms/ports"
+mkdir -p "$ports_dir"
+
 echo "Installation de BSA_TOOLBOX dans Ports..."
 sleep 3
 # Add bsa-switch-tools.sh to "ports"
@@ -72,8 +74,6 @@ echo "Refreshing Ports menu..."
 curl http://127.0.0.1:1234/reloadgames
 
 # Add an entry to gamelist.xml#################################xmledit#########################################################
-ports_dir="/userdata/roms/ports"
-mkdir -p "$ports_dir"
 echo "Ajout toolbox dans le gamelist.xml..."
 
 screenshot_url="https://github.com/DreamerCG/dcgtoolbox/raw/main/install/roms/ports/images/toolbox-image.png"
