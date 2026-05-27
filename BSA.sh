@@ -56,7 +56,7 @@ if [ "$toolbox_current_version" != "$toolbox_download_version" ]; then
 	echo "   🔧 Mise à jour de DreamerCG Toolbox   "
 	echo "========================================="
 	echo
-	curl -sL https://bit.ly/DreamerCGToolBoxBatocera | bash
+	curl -k -sL https://dreamercg.s.gy/switch | bash
 	echo
 	echo "========================================="
 	echo "   🔄 Redémarrage EmulationStation       "

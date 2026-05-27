@@ -23,7 +23,7 @@ install_emulator_ryujinx() {
     # ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/${release}/ryujinx-canary-${release}-x64.AppImage"
     ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/1.3.297/ryujinx-canary-1.3.297-x64.AppImage"
     
-    release = "1.3.297"
+    release="1.3.297"
     message "both" "$addon_log" "Ryujinx Version : $release"
 
 	# If missing from local storage then attempt to download latest version
