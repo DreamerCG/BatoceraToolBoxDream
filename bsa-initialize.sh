@@ -28,6 +28,10 @@ initialize_common() {
 	message "log" "$addon_log" "Creating Switch System Directory => /userdata/system/switch"
 	mkdir -p "$switch_system_dir" 2>>"$stderr_log"
 
+	# CREATE SWITCH SYSTEM EXTRA DIRECTORY
+	message "log" "$addon_log" "Creating Switch System Extra Directory => /userdata/system/switch/extra"
+	mkdir -p "$switch_system_dir/extra" 2>>"$stderr_log"
+
 	# CREATE SWITCH LOGS DIRECTORY
 	message "log" "$addon_log" "Creating Switch System Logs Directory => /userdata/system/switch/logs"
 	mkdir -p "$switch_logs_dir" 2>>"$stderr_log"

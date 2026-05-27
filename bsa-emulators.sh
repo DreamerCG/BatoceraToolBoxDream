@@ -24,6 +24,9 @@ install_emulator_ryujinx() {
     #ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/1.3.297/ryujinx-canary-1.3.297-x64.AppImage"
     message "both" "$addon_log" "Ryujinx Version : $release"
 
+    #Installation du wrapper pour Ryujinx
+    copy_make_executable "ryu_wrapper" "$switch_install_extra_dir" "$switch_system_dir/extra/ryu_wrapper"
+
 	# If missing from local storage then attempt to download latest version
 	download_missing_file "$ryujinx_install_url" "$switch_install_emus_dir/$ryujinx_install_file" "Ryujinx (Ryubing)"
 	if [ $wget_exit_code -eq 0 ]; then

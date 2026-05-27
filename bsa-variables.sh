@@ -91,6 +91,8 @@ switch_install_scripts_dir="$switch_install_script_dir/install/$folder_version/s
 switch_install_configs_dir="$switch_install_script_dir/install/$folder_version/system/configs"
 # INSTALLATION: CONFIG GENERATORS :: Configuration Generation Scripts
 switch_install_configgen_dir="$switch_install_script_dir/install/$folder_version/system/switch/configgen"
+# INSTALLATION: CONFIG EXTRA :: Configuration EXTRA Scripts
+switch_install_extra_dir="$switch_install_script_dir/install/$folder_version/system/switch/extra"
 # INSTALLATION: ROMS :: Roms to Install in Post
 switch_install_roms_dir="$switch_install_script_dir/roms"
 # INSTALLATION: SWITCH ROMS :: Switch Roms to Install in Post
