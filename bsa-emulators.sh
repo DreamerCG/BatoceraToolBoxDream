@@ -15,15 +15,11 @@ install_emulator_ryujinx() {
 	# EMULATOR INSTALL ARCHIVE/APP NOT FOUND LOCALLY THEN ATTEMPT TO DOWNLOAD
 	message "log" "$addon_log" "Installing Ryujinx Emulator App"
 	# Get lastest version from database & set the version for download
-	ryujinx_release_html="$(curl -s "https://git.ryujinx.app/Ryubing/Canary/releases")"
-    # Récupère la première version trouvée
-    release=$(echo "$ryujinx_release_html" \
-        | grep -oP 'releases/download/\K[0-9.]+' \
-        | head -n1)    
+    release=$(curl -fsL https://git.ryujinx.app/Ryubing/Canary/releases | grep -m1 -oP '/releases/tag/\K[0-9]+\.[0-9]+\.[0-9]+')    
     ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/${release}/ryujinx-canary-${release}-x64.AppImage"
-    #ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/1.3.297/ryujinx-canary-1.3.297-x64.AppImage"
     message "both" "$addon_log" "Ryujinx Version : $release"
-
+    message "both" "$addon_log" "Ryujinx url : $ryujinx_install_url"
+    
     #Installation du wrapper pour Ryujinx
     copy_make_executable "ryu_wrapper" "$switch_install_extra_dir" "$switch_system_dir/extra/ryu_wrapper"
 
