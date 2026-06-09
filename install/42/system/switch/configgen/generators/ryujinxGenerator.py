@@ -20,9 +20,12 @@ from configgen import Command as Command
 from configgen.batoceraPaths import CONFIGS, HOME, ROMS, SAVES, CACHE, mkdir_if_not_exists
 from configgen.controller import generate_sdl_game_controller_config
 from configgen.generators.Generator import Generator
-from configgen.utils.configparser import CaseSensitiveRawConfigParser
-from configgen.input import Input, InputDict, InputMapping
+try:
+    from configgen.utils.configparser import CaseSensitiveRawConfigParser
+except ImportError:
+    from batocera_common.configparser import CaseSensitiveRawConfigParser
 
+from configgen.input import Input, InputDict, InputMapping
 
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/configgen/sdl2/"
 os.environ["PATH"] = "/userdata/system/switch/bin/xdgfix:" + os.environ.get("PATH", "")

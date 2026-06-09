@@ -21,7 +21,10 @@ from configgen import Command as Command
 from configgen.batoceraPaths import CONFIGS, HOME, ROMS, SAVES, mkdir_if_not_exists
 from configgen.controller import generate_sdl_game_controller_config
 from configgen.generators.Generator import Generator
-from configgen.utils.configparser import CaseSensitiveRawConfigParser
+try:
+    from configgen.utils.configparser import CaseSensitiveRawConfigParser
+except ImportError:
+    from batocera_common.configparser import CaseSensitiveRawConfigParser
 from configgen.input import Input, InputDict, InputMapping
 from datetime import datetime
 from evdev import InputDevice, ecodes
