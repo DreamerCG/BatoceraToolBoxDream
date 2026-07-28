@@ -16,7 +16,8 @@ install_emulator_ryujinx() {
 	message "log" "$addon_log" "Installing Ryujinx Emulator App"
 	# Get lastest version from database & set the version for download
     release=$(curl -fsL https://git.ryujinx.app/Ryubing/Canary/releases | grep -m1 -oP '/releases/tag/\K[0-9]+\.[0-9]+\.[0-9]+')    
-    ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/${release}/ryujinx-canary-${release}-x64.AppImage"
+    # ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/${release}/ryujinx-canary-${release}-x64.AppImage"
+    ryujinx_install_url="https://git.ryujinx.app/Ryubing/Canary/releases/download/1.3.320/ryujinx-canary-1.3.320-x64.AppImage"
     message "both" "$addon_log" "Ryujinx Version : $release"
     message "both" "$addon_log" "Ryujinx url : $ryujinx_install_url"
     
